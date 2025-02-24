@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Checkout - Little Fashion</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-icons.css" rel="stylesheet">
+    <link href="css/tooplate-little-fashion.css" rel="stylesheet">
+    <style>
+        .checkout-form {
+            background-color: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        .checkout-form h2 {
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .form-control {
+            border-radius: 10px;
+        }
+        .btn-primary {
+            background-color: #0d6efd;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+            transform: translateY(-2px);
+        }
+        .cart-item {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+        .cart-item img {
+            max-width: 80px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <!-- Insérez votre navigation ici -->
+    </nav>
+
+    <main>
+        <section class="checkout-section section-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-12 mx-auto">
+                        <div class="checkout-form">
+                            <h2>Checkout</h2>
+                            <div id="cart-items">
+                                <!-- Les articles du panier seront insérés ici -->
+                            </div>
+                            <form id="checkout-form">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="address" class="form-label">Address</label>
+                                    <input type="text" class="form-control" id="address" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="city" class="form-label">City</label>
+                                    <input type="text" class="form-control" id="city" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="zip" class="form-label">ZIP Code</label>
+                                    <input type="text" class="form-control" id="zip" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="country" class="form-label">Country</label>
+                                    <select class="form-select" id="country" required>
+                                        <option value="">Select a country</option>
+                                        <option value="US">United States</option>
+                                        <option value="CA">Canada</option>
+                                        <option value="UK">United Kingdom</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Proceed to Payment</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <!-- Insérez votre footer ici -->
+    </footer>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Initialisation EmailJS
+        (function() {
+            emailjs.init('z4uG1w3b8JueLdvkV'); // Remplacez par votre User ID
+        })();
+
+        $(document).ready(function() {
+            // Chargement du panier
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartItemsContainer = $('#cart-items');
+            let total = 0;
+
+            // Affichage des articles
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                cartItemsContainer.append(`
+                    <div class="cart-item">
+                        <div class="row align-items-center">
+                            <div class="col-3">
+                                <img src="images/product/evan-mcdougall-qnh1odlqOmk-unsplash.jpeg" alt="${item.name}" class="img-fluid">
+                            </div>
+                            <div class="col-6">
+                                <h5>${item.name}</h5>
+                                <p>Taille: ${item.size}, Quantité: ${item.quantity}</p>
+                            </div>
+                            <div class="col-3 text-end">
+                                <p>$${itemTotal.toFixed(2)}</p>
+                                <button class="btn btn-danger btn-sm remove-btn" data-id="${item.id}">Supprimer</button>
+                            </div>
+                        </div>
+                    </div>
+                `);
+            });
+
+            // Affichage du total
+            cartItemsContainer.append(`
+                <div class="cart-total mt-3">
+                    <h4 class="text-end">Total: $${total.toFixed(2)}</h4>
+                </div>
+            `);
+
+            // Gestion de la commande
+            $('#checkout-form').submit(async function(e) {
+                e.preventDefault();
+
+                // Récupération des données
+                const formData = {
+                    name: $('#name').val(),
+                    email: $('#email').val(),
+                    address: $('#address').val() + ', ' + $('#city').val() + ', ' + $('#zip').val() + ', ' + $('#country').val(),
+                    cartItems: cart.map(item => 
+                        `${item.name} (Taille: ${item.size}, Quantité: ${item.quantity}) - $${(item.price * item.quantity).toFixed(2)}`
+                    ).join('<br>'),
+                    total: `$${total.toFixed(2)}`
+                };
+
+                try {
+                    // Envoi via EmailJS
+                    await emailjs.send(
+                        'service_zulomgw', // Service ID
+                        'template_22lvzgl', // Template ID
+                        formData
+                    );
+
+                    // Réinitialisation et redirection
+                    localStorage.removeItem('cart');
+                    window.location.href = '/';
+                } catch (error) {
+                    console.error('Erreur:', error);
+                    alert('Erreur lors de la commande : ' + error.message);
+                }
+            });
+
+            // Suppression d'article
+            $(document).on('click', '.remove-btn', function() {
+                const itemId = $(this).data('id');
+                const newCart = cart.filter(item => item.id !== itemId);
+                localStorage.setItem('cart', JSON.stringify(newCart));
+                location.reload();
+            });
+        });
+    </script>
+</body>
+</html>

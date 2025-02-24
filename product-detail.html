@@ -53,8 +53,7 @@ https://www.tooplate.com/view/2127-little-fashion
 
                     <div class="d-lg-none">
                         <a href="sign-in.html" class="bi-person custom-icon me-3"></a>
-
-                        <a href="product-detail.html" class="bi-bag custom-icon"></a>
+                        <a href="checkout.html" class="bi-bag custom-icon" data-count="0"></a>
                     </div>
 
                     <div class="collapse navbar-collapse" id="navbarNav">
@@ -82,14 +81,13 @@ https://www.tooplate.com/view/2127-little-fashion
 
                         <div class="d-none d-lg-block">
                             <a href="sign-in.html" class="bi-person custom-icon me-3"></a>
-
-                            <a href="product-detail.html" class="bi-bag custom-icon"></a>
+                            <a href="checkout.html" class="bi-bag custom-icon" data-count="0"></a>
                         </div>
                     </div>
                 </div>
             </nav>
 
-            <header class="site-header section-padding d-flex justify-content-center align-items-center">
+            <!-- <header class="site-header section-padding d-flex justify-content-center align-items-center">
                 <div class="container">
                     <div class="row">
 
@@ -102,7 +100,7 @@ https://www.tooplate.com/view/2127-little-fashion
                     </div>
                 </div>
             </header>
-
+ -->
             <section class="product-detail section-padding">
                 <div class="container">
                     <div class="row">
@@ -133,24 +131,34 @@ https://www.tooplate.com/view/2127-little-fashion
 
                             <div class="product-cart-thumb row">
                                 <div class="col-lg-6 col-12">
-                                    
                                     <select class="form-select cart-form-select" id="inputGroupSelect01">
-                                        <option selected>Quantity</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
                                         <option value="4">4</option>
                                         <option value="5">5</option>
                                     </select>
-                                </div>
+                                </div><br><br>
 
+                                <div class="product-cart-thumb row">
+                                    <div class="col-12 mb-3">
+                                        <h6>Select Size:</h6>
+                                        <div class="btn-group" role="group" aria-label="Size selection">
+                                            <button type="button" class="btn btn-outline-secondary size-btn" data-size="XS">XS</button>
+                                            <button type="button" class="btn btn-outline-secondary size-btn" data-size="S">S</button>
+                                            <button type="button" class="btn btn-outline-secondary size-btn" data-size="M">M</button>
+                                            <button type="button" class="btn btn-outline-secondary size-btn" data-size="L">L</button>
+                                            <button type="button" class="btn btn-outline-secondary size-btn" data-size="XL">XL</button>
+                                            <button type="button" class="btn btn-outline-secondary size-btn" data-size="2XL">2XL</button>
+                                        </div>
+                                    </div>
+                            
                                 <div class="col-lg-6 col-12 mt-4 mt-lg-0">
-                                    <button type="submit" class="btn custom-btn cart-btn" data-bs-toggle="modal" data-bs-target="#cart-modal">Add to Cart</button>
+                                    <button id="add-to-cart-btn" type="button" class="btn custom-btn cart-btn">Add to Cart</button>
                                 </div>
-
+                            
                                 <p>
                                     <a href="#" class="product-additional-link">Details</a>
-
                                     <a href="#" class="product-additional-link">Delivery and Payment</a>
                                 </p>
                             </div>
@@ -297,10 +305,10 @@ https://www.tooplate.com/view/2127-little-fashion
             </div>
         </footer>
 
-        <!-- CART MODAL -->
-        <div class="modal fade" id="cart-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content border-0">
+            <!-- CART MODAL -->
+            <div class="modal fade" id="cart-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content border-0">
                     <div class="modal-header flex-column">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -329,24 +337,117 @@ https://www.tooplate.com/view/2127-little-fashion
                             </div>
                         </div>
                     </div>
-
+                    
                     <div class="modal-footer">
                         <div class="row w-50">
-                            <button type="button" class="btn custom-btn cart-btn ms-lg-4">Checkout</button>
+                            <button type="button" class="btn custom-btn cart-btn ms-lg-4" id="checkout-btn">Checkout</button>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
-
+        
         <!-- JAVASCRIPT FILES -->
+        <script src="js/jquery.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                let selectedSize = '';
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+                $('.size-btn').click(function() {
+                    $('.size-btn').removeClass('active');
+                    $(this).addClass('active');
+                    selectedSize = $(this).data('size');
+                });
+
+                $('#add-to-cart-btn').click(function() {
+                    if (!selectedSize) {
+                        alert('Please select a size');
+                        return;
+                    }
+
+                    // Récupère la quantité sélectionnée
+                    const selectedQuantity = parseInt($('#inputGroupSelect01').val());
+
+                    const product = {
+                        id: 1, // Remplacez par un ID unique si nécessaire
+                        name: 'Tree pot',
+                        price: 25,
+                        size: selectedSize,
+                        quantity: selectedQuantity // Utilise la quantité sélectionnée
+                    };
+
+                    // Vérifie si le produit existe déjà
+                    const existingProductIndex = cart.findIndex(item => 
+                        item.id === product.id && 
+                        item.size === product.size
+                    );
+
+                    if (existingProductIndex > -1) {
+                        // Met à jour la quantité si le produit existe
+                        cart[existingProductIndex].quantity += selectedQuantity;
+                    } else {
+                        // Ajoute le nouveau produit
+                        cart.push(product);
+                    }
+
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    updateCartCount();
+                    alert('Product added to cart');
+                });
+
+                function updateCartCount() {
+                    const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+                    $('.bi-bag').attr('data-count', cartCount);
+                }
+
+                updateCartCount();
+            });
+        </script>
+        <script src="js/jquery.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#cart-btn').click(function() {
+                    var quantity = $('#inputGroupSelect01').val();
+                    if (quantity == 'Quantity') {
+                        alert('Veuillez selectionner une quantitée.');
+                    }
+                });
+                $('#checkout-btn').click(function() {
+                    var quantity = $('#inputGroupSelect01').val();
+                    if (quantity !== 'Quantity') {
+                        window.location.href = 'checkout.html'; // Replace 'checkout-form.html' with your desired checkout form page
+                    } else {
+                        alert('Veuillez selectionner une quantitée.');
+                    }
+                });
+
+
+                // Add your JavaScript code here
+                // For example, to update the total price in the cart modal:
+                $('#inputGroupSelect01').change(function() {
+                    var quantity = $(this).val();
+                    var price = 24.99; // Replace with the actual price of the product
+                    var totalPrice = quantity * price;
+                    $('.product-p strong span').text('$' + totalPrice);
+                });
+            });
+        </script>
+        <script src="js/bootstrap.bundle.min.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#checkout-btn').click(function() {
+                    window.location.href = 'checkout.html'; // Replace 'checkout-form.html' with your desired checkout form page
+                });
+            });
+        </script>
+        <script src="js/bootstrap.bundle.min.js"></script>
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.bundle.min.js"></script>
         <script src="js/Headroom.js"></script>
         <script src="js/jQuery.headroom.js"></script>
         <script src="js/slick.min.js"></script>
         <script src="js/custom.js"></script>
-
     </body>
 </html>
