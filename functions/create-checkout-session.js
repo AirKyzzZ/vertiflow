@@ -2,7 +2,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const EmailJS = require('@emailjs/browser');
 
 exports.handler = async (event) => {
-    // ... [votre code existant] ...
+    // testing public
 
     // Envoi d'email avec EmailJS
     await EmailJS.send(
