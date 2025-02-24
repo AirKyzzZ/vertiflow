@@ -155,29 +155,32 @@
         $('#checkout-form').submit(async function(e) {
             e.preventDefault();
 
-            // Récupération des données
             const customerInfo = {
                 name: $('#name').val(),
                 email: $('#email').val(),
                 address: $('#address').val() + ', ' + $('#city').val() + ', ' + $('#zip').val() + ', ' + $('#country').val(),
             };
 
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
             try {
-                // Créer une session de paiement Stripe
                 const response = await fetch('/.netlify/functions/create-checkout-session', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ cart, customerInfo }),
                 });
 
-                const { id } = await response.json();
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error || 'Erreur serveur');
+                }
 
-                // Rediriger vers Stripe
+                const { id } = await response.json();
                 await stripe.redirectToCheckout({ sessionId: id });
 
             } catch (error) {
                 console.error('Erreur:', error);
-                alert('Erreur lors du paiement');
+                alert(`Erreur: ${error.message}`);
             }
         });
 
