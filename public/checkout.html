@@ -266,23 +266,26 @@
 
         function sendConfirmationEmail(customerInfo, total, cart) {
         const templateParams = {
-            to_name: customerInfo.name,
-            to_email: customerInfo.email,
-            amount: total.toFixed(2),
-            items: cart.map(item => `${item.name} (x${item.quantity})`).join(', ')
+            name: customerInfo.name,
+            email: customerInfo.email,
+            address: customerInfo.address,
+            city: customerInfo.city,
+            zip: customerInfo.zip,
+            country: customerInfo.country,
+            total: total.toFixed(2),
+            cartItems: cart.map(item => `<tr><td>${item.name}</td><td>${item.quantity}</td><td>${item.price.toFixed(2)} €</td></tr>`).join("")
         };
 
-        // Remplacer SERVICE_ID et TEMPLATE_ID
-        return emailjs.send('service_zulomgw', 'template_22lvzgl', templateParams)
-            .then(response => {
-            console.log('E-mail envoyé!', response);
-            return true;
-            })
-            .catch(error => {
-            console.error("Erreur d'envoi :", error);
-            throw error; // Propager l'erreur
+        console.log("📨 Envoi de l'email avec ces paramètres :", templateParams);
+
+        emailjs.send("service_zulomgw", "template_22lvzgl", templateParams)
+            .then(function(response) {
+                console.log("✅ Email envoyé avec succès :", response);
+            }, function(error) {
+                console.log("❌ Erreur lors de l'envoi de l'email :", error);
             });
-        }
+    }
+
     });
   </script>
 </body>
