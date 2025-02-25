@@ -124,8 +124,8 @@
     // Initialisation de Stripe avec votre clé publique
     const stripe = Stripe('pk_test_51Qw8utImMzY0wzqJNFtPtitAQxz3xIwmqjxfuUrlcfoAWiKm82waE74boIn4rUt0319oInH6JjlRLovkPsqQa5Du00cUXVblNw');
 
-    // Initialisation d'EmailJS (remplacez "EMAILJS_USER_ID" par votre identifiant EmailJS)
-    emailjs.init("EMAILJS_USER_ID");
+    // Initialisation d'EmailJS (remplacez "z4uG1w3b8JueLdvkV" par votre identifiant EmailJS)
+    emailjs.init("z4uG1w3b8JueLdvkV");
 
     $(document).ready(function() {
       // Chargement du panier
@@ -262,7 +262,7 @@
 
       // Fonction d'envoi d'e-mail via EmailJS
       // Remplacez tous les identifiants par vos vraies valeurs EmailJS
-        emailjs.init("EMAILJS_USER_ID"); // Remplacer VOTRE_USER_ID
+        emailjs.init("z4uG1w3b8JueLdvkV"); // Remplacer VOTRE_USER_ID
 
         function sendConfirmationEmail(customerInfo, total, cart) {
         const templateParams = {
@@ -273,7 +273,7 @@
         };
 
         // Remplacer SERVICE_ID et TEMPLATE_ID
-        return emailjs.send('EMAILJS_SERVICE_ID', 'EMAILJS_TEMPLATE_ID', templateParams)
+        return emailjs.send('service_zulomgw', 'template_22lvzgl', templateParams)
             .then(response => {
             console.log('E-mail envoyé!', response);
             return true;
