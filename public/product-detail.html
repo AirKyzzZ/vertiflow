@@ -114,12 +114,12 @@ https://www.tooplate.com/view/2127-little-fashion
                         <div class="col-lg-6 col-12">
                             <div class="product-info d-flex">
                                 <div>
-                                    <h2 class="product-title mb-0">Tree pot</h2>
+                                    <h2 class="product-title mb-0">T-shirt Unisex CLIMB (Noir)</h2>
 
                                     <p class="product-p">Original package design from house</p>
                                 </div>
 
-                                <small class="product-price text-muted ms-auto mt-auto mb-5">$25</small>
+                                <small class="product-price text-muted ms-auto mt-auto mb-5">24.99€</small>
                             </div>
 
                             <div class="product-description">
@@ -192,7 +192,7 @@ https://www.tooplate.com/view/2127-little-fashion
                                 <div class="product-info d-flex">
                                     <div>
                                         <h5 class="product-title mb-0">
-                                            <a href="product-detail.html" class="product-title-link">Tree pot</a>
+                                            <a href="product-detail.html" class="product-title-link">T-shirt Unisex CLIMB (Noir)</a>
                                         </h5>
 
                                         <p class="product-p">Original package design from house</p>
@@ -320,7 +320,7 @@ https://www.tooplate.com/view/2127-little-fashion
                             </div>
 
                             <div class="col-lg-6 col-12 mt-3 mt-lg-0">
-                                <h3 class="modal-title" id="exampleModalLabel">Tree pot</h3>
+                                <h3 class="modal-title" id="exampleModalLabel">T-shirt Unisex CLIMB (Noir)</h3>
 
                                 <p class="product-price text-muted mt-3">$25</p>
 
@@ -348,62 +348,6 @@ https://www.tooplate.com/view/2127-little-fashion
         </div>
         
         <!-- JAVASCRIPT FILES -->
-        <script src="js/jquery.min.js"></script>
-        <script>
-            $(document).ready(function() {
-                let selectedSize = '';
-                let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-                $('.size-btn').click(function() {
-                    $('.size-btn').removeClass('active');
-                    $(this).addClass('active');
-                    selectedSize = $(this).data('size');
-                });
-
-                $('#add-to-cart-btn').click(function() {
-                    if (!selectedSize) {
-                        alert('Please select a size');
-                        return;
-                    }
-
-                    // Récupère la quantité sélectionnée
-                    const selectedQuantity = parseInt($('#inputGroupSelect01').val());
-
-                    const product = {
-                        id: 1, // Remplacez par un ID unique si nécessaire
-                        name: 'Tree pot',
-                        price: 25,
-                        size: selectedSize,
-                        quantity: selectedQuantity // Utilise la quantité sélectionnée
-                    };
-
-                    // Vérifie si le produit existe déjà
-                    const existingProductIndex = cart.findIndex(item => 
-                        item.id === product.id && 
-                        item.size === product.size
-                    );
-
-                    if (existingProductIndex > -1) {
-                        // Met à jour la quantité si le produit existe
-                        cart[existingProductIndex].quantity += selectedQuantity;
-                    } else {
-                        // Ajoute le nouveau produit
-                        cart.push(product);
-                    }
-
-                    localStorage.setItem('cart', JSON.stringify(cart));
-                    updateCartCount();
-                    alert('Product added to cart');
-                });
-
-                function updateCartCount() {
-                    const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
-                    $('.bi-bag').attr('data-count', cartCount);
-                }
-
-                updateCartCount();
-            });
-        </script>
         <script src="js/jquery.min.js"></script>
         <script>
             $(document).ready(function() {
@@ -435,13 +379,6 @@ https://www.tooplate.com/view/2127-little-fashion
         </script>
         <script src="js/bootstrap.bundle.min.js"></script>
         <script src="js/jquery.min.js"></script>
-        <script>
-            $(document).ready(function() {
-                $('#checkout-btn').click(function() {
-                    window.location.href = 'checkout.html'; // Replace 'checkout-form.html' with your desired checkout form page
-                });
-            });
-        </script>
         <script src="js/bootstrap.bundle.min.js"></script>
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.bundle.min.js"></script>
