@@ -96,7 +96,8 @@
                                         <option value="UK">United Kingdom</option>
                                     </select>
                                 </div>
-                                <button type="submit" class="btn btn-primary w-100">Proceed to Payment</button>
+                                <div id="payment-element" style="margin-top: 20px;"></div>
+                                <button id="submit-payment" class="btn btn-primary w-100" style="margin-top: 10px;">Payer</button>
                             </form>
                         </div>
                     </div>
@@ -112,8 +113,47 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="https://js.stripe.com/v3/"></script>
+    <script>
+    function showPaymentElement(clientSecret) {
+        // Initialisez Stripe avec votre clé publique
+        const stripe = Stripe('pk_live_51Qw8utImMzY0wzqJq3XWQMeZQtYhTycdzcBjBjOqlCJuHDs9zNSwf1jamRIcLOWM8Xgwjxt4b2JUJ08fuqJ1utJN00jRe8WGxJ'); // assurez-vous d'utiliser la clé publique
+      
+        const appearance = {
+          /* Vous pouvez personnaliser l'apparence ici */
+        };
+        const options = {
+          layout: {
+            type: 'accordion',
+            defaultCollapsed: false,
+            radios: false,
+            spacedAccordionItems: true,
+          }
+        };
+      
+        const elements = stripe.elements({ clientSecret, appearance });
+        const paymentElement = elements.create('payment', options);
+        paymentElement.mount('#payment-element');
+      
+        // Gérer le clic sur le bouton de paiement
+        document.getElementById('submit-payment').addEventListener('click', async () => {
+          const { error } = await stripe.confirmPayment({
+            elements,
+            confirmParams: {
+              // Redirigez vers une page de succès ou affichez un message de confirmation
+              return_url: 'https://vertiflow.netlify.app/success.html',
+            },
+          });
+      
+          if (error) {
+            // Affichez l'erreur à l'utilisateur si besoin
+            console.error(error);
+            alert(error.message);
+          }
+        });
+      }
+</script>      
 <script>
-    const stripe = Stripe('pk_test_votre_cle_publique_stripe'); // Remplacez par votre clé publique Stripe
+    const stripe = Stripe('pk_live_51Qw8utImMzY0wzqJq3XWQMeZQtYhTycdzcBjBjOqlCJuHDs9zNSwf1jamRIcLOWM8Xgwjxt4b2JUJ08fuqJ1utJN00jRe8WGxJ'); // Remplacez par votre clé publique Stripe
 
     $(document).ready(function() {
         // Chargement du panier
@@ -153,36 +193,47 @@
 
         // Gestion de la commande
         $('#checkout-form').submit(async function(e) {
-            e.preventDefault();
+        e.preventDefault();
 
-            const customerInfo = {
-                name: $('#name').val(),
-                email: $('#email').val(),
-                address: $('#address').val() + ', ' + $('#city').val() + ', ' + $('#zip').val() + ', ' + $('#country').val(),
-            };
+        // Récupérer les informations utilisateur et le panier
+        const customerInfo = {
+            name: $('#name').val(),
+            email: $('#email').val(),
+            address: $('#address').val() + ', ' + $('#city').val() + ', ' + $('#zip').val() + ', ' + $('#country').val(),
+        };
 
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-            try {
-                const response = await fetch('/.netlify/functions/create-checkout-session', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ cart, customerInfo }),
-                });
-
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.error || 'Erreur serveur');
-                }
-
-                const { id } = await response.json();
-                await stripe.redirectToCheckout({ sessionId: id });
-
-            } catch (error) {
-                console.error('Erreur:', error);
-                alert(`Erreur: ${error.message}`);
-            }
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        // Calculer le total en centimes (ici, vous devez adapter selon votre devise et le format attendu)
+        let total = 0;
+        cart.forEach(item => {
+            total += item.price * item.quantity;
         });
+        const amount = Math.round(total * 100); // par exemple, pour EUR
+
+        try {
+            const response = await fetch('/.netlify/functions/create-payment-intent', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ amount, customerInfo }),
+            });
+
+            if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.error || 'Erreur serveur');
+            }
+
+            const { clientSecret } = await response.json();
+
+            // Passez à l'affichage du Payment Element
+            showPaymentElement(clientSecret);
+
+        } catch (error) {
+            console.error('Erreur:', error);
+            alert(`Erreur: ${error.message}`);
+        }
+        });
+
 
         // Suppression d'article
         $(document).on('click', '.remove-btn', function() {
