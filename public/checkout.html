@@ -254,7 +254,7 @@
             alert(error.message);
           } else {
             if (paymentIntent && paymentIntent.status === 'succeeded') {
-              sendConfirmationEmail(customerInfo, total, cart);
+              await sendConfirmationEmail(customerInfo, total, cart);
               window.location.href = 'https://vertiflow.netlify.app/success.html';
             }
           }
