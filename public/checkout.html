@@ -1,280 +1,284 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Checkout - Little Fashion</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap" rel="stylesheet">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/bootstrap-icons.css" rel="stylesheet">
-    <link href="css/tooplate-little-fashion.css" rel="stylesheet">
-    <style>
-        .checkout-form {
-            background-color: #f8f9fa;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-        }
-        .checkout-form h2 {
-            color: #333;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-        .form-control {
-            border-radius: 10px;
-        }
-        .btn-primary {
-            background-color: #0d6efd;
-            border: none;
-            border-radius: 10px;
-            padding: 10px 20px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-        .btn-primary:hover {
-            background-color: #0b5ed7;
-            transform: translateY(-2px);
-        }
-        .cart-item {
-            background-color: #fff;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 15px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-        }
-        .cart-item img {
-            max-width: 80px;
-            border-radius: 5px;
-        }
-    </style>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Checkout - Little Fashion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/bootstrap-icons.css" rel="stylesheet">
+  <link href="css/tooplate-little-fashion.css" rel="stylesheet">
+  <style>
+    .checkout-form {
+      background-color: #f8f9fa;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    .checkout-form h2 {
+      color: #333;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    .form-control {
+      border-radius: 10px;
+    }
+    .btn-primary {
+      background-color: #0d6efd;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 20px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+      background-color: #0b5ed7;
+      transform: translateY(-2px);
+    }
+    .cart-item {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    }
+    .cart-item img {
+      max-width: 80px;
+      border-radius: 5px;
+    }
+  </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg">
-        <!-- Insérez votre navigation ici -->
-    </nav>
+  <nav class="navbar navbar-expand-lg">
+    <!-- Insérez votre navigation ici -->
+  </nav>
 
-    <main>
-        <section class="checkout-section section-padding">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-12 mx-auto">
-                        <div class="checkout-form">
-                            <h2>Checkout</h2>
-                            <div id="cart-items">
-                                <!-- Les articles du panier seront insérés ici -->
-                            </div>
-                            <form id="checkout-form">
-                                <div class="mb-3">
-                                    <label for="name" class="form-label">Full Name</label>
-                                    <input type="text" class="form-control" id="name" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Email Address</label>
-                                    <input type="email" class="form-control" id="email" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="address" class="form-label">Address</label>
-                                    <input type="text" class="form-control" id="address" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="city" class="form-label">City</label>
-                                    <input type="text" class="form-control" id="city" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="zip" class="form-label">ZIP Code</label>
-                                    <input type="text" class="form-control" id="zip" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="country" class="form-label">Country</label>
-                                    <select class="form-select" id="country" required>
-                                        <option value="">Select a country</option>
-                                        <option value="US">United States</option>
-                                        <option value="CA">Canada</option>
-                                        <option value="UK">United Kingdom</option>
-                                    </select>
-                                </div>
-                                <!-- Ajoutez ces éléments dans votre body, par exemple après le formulaire -->
-                                <div id="payment-element" style="margin-top: 20px;"></div>
-                                <button id="submit-payment" class="btn btn-primary w-100" style="margin-top: 10px; display:none;"></button>
-                            </form>
-                        </div>
-                    </div>
+  <main>
+    <section class="checkout-section section-padding">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-12 mx-auto">
+            <div class="checkout-form">
+              <h2>Checkout</h2>
+              <div id="cart-items">
+                <!-- Les articles du panier seront insérés ici -->
+              </div>
+              <form id="checkout-form">
+                <div class="mb-3">
+                  <label for="name" class="form-label">Full Name</label>
+                  <input type="text" class="form-control" id="name" required>
                 </div>
-            </div>
-        </section>
-    </main>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email Address</label>
+                  <input type="email" class="form-control" id="email" required>
+                </div>
+                <div class="mb-3">
+                  <label for="address" class="form-label">Address</label>
+                  <input type="text" class="form-control" id="address" required>
+                </div>
+                <div class="mb-3">
+                  <label for="city" class="form-label">City</label>
+                  <input type="text" class="form-control" id="city" required>
+                </div>
+                <div class="mb-3">
+                  <label for="zip" class="form-label">ZIP Code</label>
+                  <input type="text" class="form-control" id="zip" required>
+                </div>
+                <div class="mb-3">
+                  <label for="country" class="form-label">Country</label>
+                  <select class="form-select" id="country" required>
+                    <option value="">Select a country</option>
+                    <option value="US">United States</option>
+                    <option value="CA">Canada</option>
+                    <option value="UK">United Kingdom</option>
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Valider vos informations</button>
+              </form>
 
-    <footer class="site-footer">
-        <!-- Insérez votre footer ici -->
-    </footer>
+              <!-- Conteneur pour le Payment Element et le bouton de paiement -->
+              <div id="payment-container" style="display:none; margin-top:20px;">
+                <div id="payment-element"></div>
+                <button id="submit-payment" class="btn btn-primary w-100" style="margin-top:10px;"></button>
+              </div>
 
-    <script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.bundle.min.js"></script>
-<script src="https://js.stripe.com/v3/"></script>
-<!-- Assurez-vous que EmailJS est bien inclus (par exemple via CDN) -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-
-<script>
-  // Initialisation de Stripe avec votre clé publique
-  const stripe = Stripe('pk_live_51Qw8utImMzY0wzqJq3XWQMeZQtYhTycdzcBjBjOqlCJuHDs9zNSwf1jamRIcLOWM8Xgwjxt4b2JUJ08fuqJ1utJN00jRe8WGxJ'); // Remplacez par votre clé publique Stripe
-
-  // Initialisation d'EmailJS (remplacez "YOUR_USER_ID" par votre identifiant EmailJS)
-  emailjs.init("EMAILJS_USER_ID");
-
-  $(document).ready(function() {
-    // Chargement du panier
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const cartItemsContainer = $('#cart-items');
-    let total = 0;
-
-    // Affichage des articles du panier
-    cart.forEach(item => {
-      const itemTotal = item.price * item.quantity;
-      total += itemTotal;
-      cartItemsContainer.append(`
-        <div class="cart-item">
-          <div class="row align-items-center">
-            <div class="col-3">
-              <img src="images/product/evan-mcdougall-qnh1odlqOmk-unsplash.jpeg" alt="${item.name}" class="img-fluid">
-            </div>
-            <div class="col-6">
-              <h5>${item.name}</h5>
-              <p>Taille: ${item.size}, Quantité: ${item.quantity}</p>
-            </div>
-            <div class="col-3 text-end">
-              <p>$${itemTotal.toFixed(2)}</p>
-              <button class="btn btn-danger btn-sm remove-btn" data-id="${item.id}">Supprimer</button>
             </div>
           </div>
         </div>
-      `);
-    });
-
-    // Affichage du total du panier
-    cartItemsContainer.append(`
-      <div class="cart-total mt-3">
-        <h4 class="text-end">Total: $${total.toFixed(2)}</h4>
       </div>
-    `);
+    </section>
+  </main>
 
-    // Gestion du formulaire de checkout
-    $('#checkout-form').submit(async function(e) {
-      e.preventDefault();
+  <footer class="site-footer">
+    <!-- Insérez votre footer ici -->
+  </footer>
 
-      // Récupérer les informations utilisateur saisies dans le formulaire
-      const customerInfo = {
-        name: $('#name').val(),
-        email: $('#email').val(),
-        address: $('#address').val() + ', ' + $('#city').val() + ', ' + $('#zip').val() + ', ' + $('#country').val(),
-      };
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
-      // Recharger le panier et recalculer le total
+  <script>
+    // Initialisation de Stripe avec votre clé publique
+    const stripe = Stripe('pk_live_51Qw8utImMzY0wzqJq3XWQMeZQtYhTycdzcBjBjOqlCJuHDs9zNSwf1jamRIcLOWM8Xgwjxt4b2JUJ08fuqJ1utJN00jRe8WGxJ');
+
+    // Initialisation d'EmailJS (remplacez "EMAILJS_USER_ID" par votre identifiant EmailJS)
+    emailjs.init("EMAILJS_USER_ID");
+
+    $(document).ready(function() {
+      // Chargement du panier
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const cartItemsContainer = $('#cart-items');
       let total = 0;
+
+      // Affichage des articles du panier
       cart.forEach(item => {
-        total += item.price * item.quantity;
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+        cartItemsContainer.append(`
+          <div class="cart-item">
+            <div class="row align-items-center">
+              <div class="col-3">
+                <img src="images/product/evan-mcdougall-qnh1odlqOmk-unsplash.jpeg" alt="${item.name}" class="img-fluid">
+              </div>
+              <div class="col-6">
+                <h5>${item.name}</h5>
+                <p>Taille: ${item.size}, Quantité: ${item.quantity}</p>
+              </div>
+              <div class="col-3 text-end">
+                <p>$${itemTotal.toFixed(2)}</p>
+                <button class="btn btn-danger btn-sm remove-btn" data-id="${item.id}">Supprimer</button>
+              </div>
+            </div>
+          </div>
+        `);
       });
-      const amount = Math.round(total * 100); // montant en centimes
 
-      try {
-        // Appeler la fonction Netlify pour créer le PaymentIntent
-        const response = await fetch('/.netlify/functions/create-payment-intent', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ amount, customerInfo }),
+      // Affichage du total du panier
+      cartItemsContainer.append(`
+        <div class="cart-total mt-3">
+          <h4 class="text-end">Total: $${total.toFixed(2)}</h4>
+        </div>
+      `);
+
+      // Gestion du formulaire de checkout
+      $('#checkout-form').submit(async function(e) {
+        e.preventDefault();
+
+        // Récupérer les informations utilisateur saisies dans le formulaire
+        const customerInfo = {
+          name: $('#name').val(),
+          email: $('#email').val(),
+          address: $('#address').val() + ', ' + $('#city').val() + ', ' + $('#zip').val() + ', ' + $('#country').val(),
+        };
+
+        // Recharger le panier et recalculer le total
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let total = 0;
+        cart.forEach(item => {
+          total += item.price * item.quantity;
         });
+        const amount = Math.round(total * 100); // montant en centimes
 
-        if (!response.ok) {
-          const error = await response.json();
-          throw new Error(error.error || 'Erreur serveur');
+        try {
+          // Appeler la fonction Netlify pour créer le PaymentIntent
+          const response = await fetch('/.netlify/functions/create-payment-intent', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ amount, customerInfo }),
+          });
+
+          if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.error || 'Erreur serveur');
+          }
+
+          const { clientSecret } = await response.json();
+
+          // Masquer le formulaire de checkout
+          $('#checkout-form').hide();
+
+          // Afficher le conteneur de paiement
+          $('#payment-container').show();
+
+          // Afficher le Payment Element avec le montant sur le bouton
+          showPaymentElement(clientSecret, total, customerInfo, cart);
+        } catch (error) {
+          console.error('Erreur:', error);
+          alert(`Erreur: ${error.message}`);
         }
+      });
 
-        const { clientSecret } = await response.json();
+      // Suppression d'article du panier
+      $(document).on('click', '.remove-btn', function() {
+        const itemId = $(this).data('id');
+        const newCart = cart.filter(item => item.id !== itemId);
+        localStorage.setItem('cart', JSON.stringify(newCart));
+        location.reload();
+      });
 
-        // Afficher le Payment Element avec le montant sur le bouton
-        showPaymentElement(clientSecret, total, customerInfo, cart);
-      } catch (error) {
-        console.error('Erreur:', error);
-        alert(`Erreur: ${error.message}`);
+      // Fonction pour afficher le Payment Element
+      function showPaymentElement(clientSecret, total, customerInfo, cart) {
+        console.log("showPaymentElement appelé avec clientSecret:", clientSecret);
+
+        const elements = stripe.elements({ clientSecret, appearance: {} });
+        const options = {
+          layout: {
+            type: 'accordion',
+            defaultCollapsed: false,
+            radios: false,
+            spacedAccordionItems: true,
+          }
+        };
+        const paymentElement = elements.create('payment', options);
+        paymentElement.mount('#payment-element');
+
+        const submitBtn = document.getElementById('submit-payment');
+        submitBtn.style.display = 'block';
+        submitBtn.textContent = `Payer ${total.toFixed(2)} €`;
+
+        submitBtn.addEventListener('click', async () => {
+          const { error, paymentIntent } = await stripe.confirmPayment({
+            elements,
+            confirmParams: {
+              return_url: 'https://vertiflow.netlify.app/success.html',
+            },
+            redirect: 'if_required'
+          });
+
+          if (error) {
+            console.error(error);
+            alert(error.message);
+          } else {
+            if (paymentIntent && paymentIntent.status === 'succeeded') {
+              sendConfirmationEmail(customerInfo, total, cart);
+              window.location.href = 'https://vertiflow.netlify.app/success.html';
+            }
+          }
+        });
+      }
+
+      // Fonction d'envoi d'e-mail via EmailJS
+      function sendConfirmationEmail(customerInfo, total, cart) {
+        const templateParams = {
+          to_name: customerInfo.name,
+          to_email: customerInfo.email,
+          amount: total.toFixed(2),
+          items: cart.map(item => `${item.name} (x${item.quantity})`).join(', ')
+        };
+
+        emailjs.send('EMAILJS_SERVICE_ID', 'EMAILJS_TEMPLATE_ID', templateParams)
+          .then(response => {
+            console.log('E-mail envoyé avec succès!', response.status, response.text);
+          })
+          .catch(error => {
+            console.error("Erreur lors de l'envoi de l'e-mail :", error);
+          });
       }
     });
-
-    // Suppression d'article du panier
-    $(document).on('click', '.remove-btn', function() {
-      const itemId = $(this).data('id');
-      const newCart = cart.filter(item => item.id !== itemId);
-      localStorage.setItem('cart', JSON.stringify(newCart));
-      location.reload();
-    });
-
-    // Fonction pour afficher le Payment Element
-    function showPaymentElement(clientSecret, total, customerInfo, cart) {
-      // Initialisation des éléments Stripe avec le clientSecret
-      const elements = stripe.elements({ clientSecret, appearance: {} });
-      const options = {
-        layout: {
-          type: 'accordion',
-          defaultCollapsed: false,
-          radios: false,
-          spacedAccordionItems: true,
-        }
-      };
-      const paymentElement = elements.create('payment', options);
-      paymentElement.mount('#payment-element');
-
-      // Afficher le bouton de paiement et mettre à jour son texte pour afficher le montant
-      const submitBtn = document.getElementById('submit-payment');
-      submitBtn.style.display = 'block';
-      submitBtn.textContent = `Payer ${total.toFixed(2)} €`;
-
-      // Ajout du gestionnaire d'événement sur le bouton de paiement
-      submitBtn.addEventListener('click', async () => {
-        const { error, paymentIntent } = await stripe.confirmPayment({
-          elements,
-          // Vous pouvez configurer une URL de redirection en cas d'authentification supplémentaire
-          confirmParams: {
-            return_url: 'https://vertiflow.netlify.app/success.html', // Remplacez par votre URL de succès
-          },
-          redirect: 'if_required'
-        });
-
-        if (error) {
-          console.error(error);
-          alert(error.message);
-        } else {
-          // Si le paiement est effectué (sans redirection nécessaire)
-          if (paymentIntent && paymentIntent.status === 'succeeded') {
-            // Envoyer l'e-mail de confirmation via EmailJS
-            sendConfirmationEmail(customerInfo, total, cart);
-            // Redirection vers la page de succès
-            window.location.href = 'https://vertiflow.netlify.app/success.html';
-          }
-        }
-      });
-    }
-
-    // Fonction d'envoi d'e-mail via EmailJS
-    function sendConfirmationEmail(customerInfo, total, cart) {
-      // Préparez les paramètres à envoyer dans l'e-mail
-      const templateParams = {
-        to_name: customerInfo.name,
-        to_email: customerInfo.email,
-        amount: total.toFixed(2),
-        items: cart.map(item => `${item.name} (x${item.quantity})`).join(', ')
-      };
-
-      emailjs.send('EMAILJS_SERVICE_ID', 'EMAILJS_TEMPLATE_ID', templateParams)
-        .then(response => {
-          console.log('E-mail envoyé avec succès!', response.status, response.text);
-        })
-        .catch(error => {
-          console.error("Erreur lors de l'envoi de l'e-mail :", error);
-        });
-    }
-  });
-</script>
+  </script>
 </body>
 </html>
