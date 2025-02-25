@@ -101,67 +101,83 @@ https://www.tooplate.com/view/2127-little-fashion
                 </div>
             </header>
  -->
-            <section class="product-detail section-padding">
-                <div class="container">
-                    <div class="row">
-
-                        <div class="col-lg-6 col-12">
-                            <div class="product-thumb">
-                                <img src="images/product/evan-mcdougall-qnh1odlqOmk-unsplash.jpeg" class="img-fluid product-image" alt="">
-                            </div>
+ <section class="product-detail section-padding">
+    <div class="container">
+        <div class="row">
+            <!-- Left Column: Product Image -->
+            <div class="col-lg-6 col-12">
+                <div class="product-thumb" id="main-product-thumb">
+                    <div class="position-relative">
+                        <img src="images/product/evan-mcdougall-qnh1odlqOmk-unsplash.jpeg" 
+                             class="img-fluid product-image" 
+                             alt=""
+                             id="main-product-image"
+                             data-images='["images/product/evan-mcdougall-qnh1odlqOmk-unsplash.jpeg", "images/product/image2.jpg", "images/product/image3.jpg"]'>
+                        <div class="image-nav-arrows">
+                            <button class="nav-arrow prev-arrow">&lt;</button>
+                            <button class="nav-arrow next-arrow">&gt;</button>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Mobile Zoom Popup -->
+            <div id="zoom-popup" class="zoom-popup">
+                <span class="close-zoom">&times;</span>
+                <div class="popup-content">
+                <img id="zoomed-image" src="" alt="Zoomed Image">
+                </div>
+            </div>
+            <!-- Right Column: Product Info -->
+            <div class="col-lg-6 col-12">
+                <div class="product-info d-flex">
+                    <div>
+                        <h2 class="product-title mb-0">T-shirt Unisex CLIMB (Noir)</h2>
+                        <p class="product-p">Original package design from house</p>
+                    </div>
+                    <small class="product-price text-muted ms-auto mt-auto mb-5">24.99€</small>
+                </div>
 
-                        <div class="col-lg-6 col-12">
-                            <div class="product-info d-flex">
-                                <div>
-                                    <h2 class="product-title mb-0">T-shirt Unisex CLIMB (Noir)</h2>
+                <div class="product-description">
+                    <strong class="d-block mt-4 mb-2">Description</strong>
+                    <p class="lead mb-5">Over three years in business, We’ve had the chance to work on a variety of projects, with companies</p>
+                </div>
 
-                                    <p class="product-p">Original package design from house</p>
-                                </div>
+                <div class="product-cart-thumb row">
+                    <div class="col-lg-6 col-12">
+                        <select class="form-select cart-form-select" id="inputGroupSelect01">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
 
-                                <small class="product-price text-muted ms-auto mt-auto mb-5">24.99€</small>
-                            </div>
+                    <div class="col-12 mb-3">
+                        <h6>Select Size:</h6>
+                        <div class="btn-group" role="group" aria-label="Size selection">
+                            <button type="button" class="btn btn-outline-secondary size-btn" data-size="XS">XS</button>
+                            <button type="button" class="btn btn-outline-secondary size-btn" data-size="S">S</button>
+                            <button type="button" class="btn btn-outline-secondary size-btn" data-size="M">M</button>
+                            <button type="button" class="btn btn-outline-secondary size-btn" data-size="L">L</button>
+                            <button type="button" class="btn btn-outline-secondary size-btn" data-size="XL">XL</button>
+                            <button type="button" class="btn btn-outline-secondary size-btn" data-size="2XL">2XL</button>
+                        </div>
+                    </div>
 
-                            <div class="product-description">
+                    <div class="col-lg-6 col-12 mt-4 mt-lg-0">
+                        <button id="add-to-cart-btn" type="button" class="btn custom-btn cart-btn">Add to Cart</button>
+                    </div>
 
-                                <strong class="d-block mt-4 mb-2">Description</strong>
-
-                                <p class="lead mb-5">Over three years in business, We’ve had the chance to work on a variety of projects, with companies</p>
-                            </div>
-
-                            <div class="product-cart-thumb row">
-                                <div class="col-lg-6 col-12">
-                                    <select class="form-select cart-form-select" id="inputGroupSelect01">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select>
-                                </div><br><br>
-
-                                <div class="product-cart-thumb row">
-                                    <div class="col-12 mb-3">
-                                        <h6>Select Size:</h6>
-                                        <div class="btn-group" role="group" aria-label="Size selection">
-                                            <button type="button" class="btn btn-outline-secondary size-btn" data-size="XS">XS</button>
-                                            <button type="button" class="btn btn-outline-secondary size-btn" data-size="S">S</button>
-                                            <button type="button" class="btn btn-outline-secondary size-btn" data-size="M">M</button>
-                                            <button type="button" class="btn btn-outline-secondary size-btn" data-size="L">L</button>
-                                            <button type="button" class="btn btn-outline-secondary size-btn" data-size="XL">XL</button>
-                                            <button type="button" class="btn btn-outline-secondary size-btn" data-size="2XL">2XL</button>
-                                        </div>
-                                    </div>
-                            
-                                <div class="col-lg-6 col-12 mt-4 mt-lg-0">
-                                    <button id="add-to-cart-btn" type="button" class="btn custom-btn cart-btn">Add to Cart</button>
-                                </div>
-                            
-                                <p>
-                                    <a href="#" class="product-additional-link">Details</a>
-                                    <a href="#" class="product-additional-link">Delivery and Payment</a>
-                                </p>
-                            </div>
+                    <p>
+                        <a href="#" class="product-additional-link">Details</a>
+                        <a href="#" class="product-additional-link">Delivery and Payment</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
                         </div>
 

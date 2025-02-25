@@ -3,8 +3,9 @@
 <head>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <meta charset="utf-8">
+  <link rel="icon" type="image/x-icon" href="images/logo-transparent.png">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Checkout - Little Fashion</title>
+  <title>Panier - VertiFlow</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap" rel="stylesheet">
@@ -61,13 +62,13 @@
         <div class="row">
           <div class="col-lg-8 col-12 mx-auto">
             <div class="checkout-form">
-              <h2>Checkout</h2>
+              <h2>Panier</h2>
               <div id="cart-items">
                 <!-- Les articles du panier seront insérés ici -->
               </div>
               <form id="checkout-form">
                 <div class="mb-3">
-                  <label for="name" class="form-label">Full Name</label>
+                  <label for="name" class="form-label">Nom Complet</label>
                   <input type="text" class="form-control" id="name" required>
                 </div>
                 <div class="mb-3">
@@ -148,7 +149,7 @@
                 <p>Taille: ${item.size}, Quantité: ${item.quantity}</p>
               </div>
               <div class="col-3 text-end">
-                <p>$${itemTotal.toFixed(2)}</p>
+                <p>${itemTotal.toFixed(2)}€</p>
                 <button class="btn btn-danger btn-sm remove-btn" data-id="${item.id}">Supprimer</button>
               </div>
             </div>
@@ -159,7 +160,7 @@
       // Affichage du total du panier
       cartItemsContainer.append(`
         <div class="cart-total mt-3">
-          <h4 class="text-end">Total: $${total.toFixed(2)}</h4>
+          <h4 class="text-end">Total: ${total.toFixed(2)}€</h4>
         </div>
       `);
 

@@ -60,7 +60,7 @@ $(document).ready(function() {
       var quantity = $(this).val();
       var price = 24.99; // Replace with the actual price of the product
       var totalPrice = quantity * price;
-      $('.product-p strong span').text('$' + totalPrice);
+      $('.product-p strong span').text(totalPrice + '€');
   });
 });
 $(document).ready(function() {
@@ -84,8 +84,8 @@ $(document).ready(function() {
 
       const product = {
           id: 1, // Remplacez par un ID unique si nécessaire
-          name: 'Tree pot',
-          price: 25,
+          name: 'T-shirt Unisex CLIMB (Noir)',
+          price: 24.99,
           size: selectedSize,
           quantity: selectedQuantity // Utilise la quantité sélectionnée
       };
@@ -115,4 +115,80 @@ $(document).ready(function() {
   }
 
   updateCartCount();
+});
+
+$(document).ready(function() {
+  const mainProductThumb = $('#main-product-thumb');
+  const mainProductImage = $('#main-product-image');
+  const zoomPopup = $('#zoom-popup');
+  const zoomedImage = $('#zoomed-image');
+
+  let isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+  // Image Navigation
+  let currentImageIndex = 0;
+  const images = JSON.parse(mainProductImage.attr('data-images'));
+
+  $('.nav-arrow').on('click', function(e) {
+      e.stopPropagation(); // Prevent event bubbling
+      
+      currentImageIndex = $(this).hasClass('prev-arrow') 
+          ? (currentImageIndex - 1 + images.length) % images.length
+          : (currentImageIndex + 1) % images.length;
+      
+      mainProductImage.attr('src', images[currentImageIndex]);
+      mainProductThumb.removeClass('zoomed');
+  });
+
+  // Desktop: Mouse-follow Zoom
+  if (!isMobile) {
+      mainProductThumb.on('mousemove', function(e) {
+          if (mainProductThumb.hasClass('zoomed')) {
+              const container = $(this);
+              const img = mainProductImage;
+              const containerWidth = container.width();
+              const containerHeight = container.height();
+              
+              const posX = e.pageX - container.offset().left;
+              const posY = e.pageY - container.offset().top;
+              
+              const x = (posX / containerWidth) * 100;
+              const y = (posY / containerHeight) * 100;
+              
+              img.css('transform-origin', `${x}% ${y}%`);
+              img.css('transform', 'scale(2)');
+          }
+      });
+
+      mainProductThumb.on('mouseleave', function() {
+          mainProductThumb.removeClass('zoomed');
+          mainProductImage.css('transform', 'scale(1)');
+      });
+
+      mainProductThumb.on('click', function() {
+          mainProductThumb.toggleClass('zoomed');
+          if (!mainProductThumb.hasClass('zoomed')) {
+              mainProductImage.css('transform', 'scale(1)');
+          }
+      });
+  }
+
+  // Mobile: Popup Zoom
+  if (isMobile) {
+      mainProductImage.on('click', function() {
+          zoomedImage.attr('src', mainProductImage.attr('src'));
+          zoomPopup.fadeIn();
+      });
+
+      // Close popup when clicking outside the image
+      zoomPopup.on('click', function(e) {
+          if (!$(e.target).closest('#zoomed-image').length) {
+              zoomPopup.fadeOut();
+          }
+      });
+  }
+
+  // Prevent zoom on other product images
+  $('.product-thumb').not('#main-product-thumb').off('hover');
+  $('.product-image').not('#main-product-image').css('cursor', 'default');
 });
