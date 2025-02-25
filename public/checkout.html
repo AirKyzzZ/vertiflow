@@ -55,7 +55,6 @@
   <nav class="navbar navbar-expand-lg">
     <!-- Insérez votre navigation ici -->
   </nav>
-  <button id="test-email" class="btn btn-secondary">Tester l'e-mail</button>
   <main>
     <section class="checkout-section section-padding">
       <div class="container">
@@ -263,7 +262,7 @@
 
       // Fonction d'envoi d'e-mail via EmailJS
       // Remplacez tous les identifiants par vos vraies valeurs EmailJS
-        emailjs.init("VOTRE_USER_ID"); // Remplacer VOTRE_USER_ID
+        emailjs.init("EMAILJS_USER_ID"); // Remplacer VOTRE_USER_ID
 
         function sendConfirmationEmail(customerInfo, total, cart) {
         const templateParams = {
@@ -274,7 +273,7 @@
         };
 
         // Remplacer SERVICE_ID et TEMPLATE_ID
-        return emailjs.send('VOTRE_SERVICE_ID', 'VOTRE_TEMPLATE_ID', templateParams)
+        return emailjs.send('EMAILJS_SERVICE_ID', 'EMAILJS_TEMPLATE_ID', templateParams)
             .then(response => {
             console.log('E-mail envoyé!', response);
             return true;
@@ -284,14 +283,6 @@
             throw error; // Propager l'erreur
             });
         }
-        // Test email
-        document.querySelector('#test-email').addEventListener('click', () => {
-        sendConfirmationEmail(
-            { name: "Test", email: "test@example.com" },
-            99.99,
-            [{ name: "Produit Test", quantity: 1 }]
-        );
-        });
     });
   </script>
 </body>
