@@ -55,7 +55,7 @@
   <nav class="navbar navbar-expand-lg">
     <!-- Insérez votre navigation ici -->
   </nav>
-
+  <button id="test-email" class="btn btn-secondary">Tester l'e-mail</button>
   <main>
     <section class="checkout-section section-padding">
       <div class="container">
@@ -262,22 +262,36 @@
       }
 
       // Fonction d'envoi d'e-mail via EmailJS
-      function sendConfirmationEmail(customerInfo, total, cart) {
+      // Remplacez tous les identifiants par vos vraies valeurs EmailJS
+        emailjs.init("VOTRE_USER_ID"); // Remplacer VOTRE_USER_ID
+
+        function sendConfirmationEmail(customerInfo, total, cart) {
         const templateParams = {
-          to_name: customerInfo.name,
-          to_email: customerInfo.email,
-          amount: total.toFixed(2),
-          items: cart.map(item => `${item.name} (x${item.quantity})`).join(', ')
+            to_name: customerInfo.name,
+            to_email: customerInfo.email,
+            amount: total.toFixed(2),
+            items: cart.map(item => `${item.name} (x${item.quantity})`).join(', ')
         };
 
-        emailjs.send('EMAILJS_SERVICE_ID', 'EMAILJS_TEMPLATE_ID', templateParams)
-          .then(response => {
-            console.log('E-mail envoyé avec succès!', response.status, response.text);
-          })
-          .catch(error => {
-            console.error("Erreur lors de l'envoi de l'e-mail :", error);
-          });
-      }
+        // Remplacer SERVICE_ID et TEMPLATE_ID
+        return emailjs.send('VOTRE_SERVICE_ID', 'VOTRE_TEMPLATE_ID', templateParams)
+            .then(response => {
+            console.log('E-mail envoyé!', response);
+            return true;
+            })
+            .catch(error => {
+            console.error("Erreur d'envoi :", error);
+            throw error; // Propager l'erreur
+            });
+        }
+        // Test email
+        document.querySelector('#test-email').addEventListener('click', () => {
+        sendConfirmationEmail(
+            { name: "Test", email: "test@example.com" },
+            99.99,
+            [{ name: "Produit Test", quantity: 1 }]
+        );
+        });
     });
   </script>
 </body>
