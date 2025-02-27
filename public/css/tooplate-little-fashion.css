@@ -46,6 +46,7 @@ https://www.tooplate.com/view/2127-little-fashion
   padding: 20px 0;
 }
 
+
 .text-overlay {
   text-shadow: 2px 2px 4px rgba(0,0,0,0.8); /* Ombre portée pour le texte */
 }
@@ -362,6 +363,7 @@ strong {
   min-width: 650px;
 }
 
+
 @media (min-width: 1600px) {
   .full-image-img {
     bottom: -200px;
@@ -574,6 +576,7 @@ strong {
 .slick-custom img {
   width: 100%;
   object-fit: cover;
+  filter: blur(1.5px);
 }
 
 .slick-bottom {
@@ -936,10 +939,26 @@ button:focus:not(:focus-visible) {
   background: var(--white-color);
   position: relative;
   transition: all 0.5s ease-out;
+  overflow: hidden;
 }
 
 .product-image {
   transition: all 0.5s ease-out;
+}
+
+.product-thumb .product-image-hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.product-thumb:hover .product-image-hover {
+  opacity: 1;
+}
+.product-thumb:hover .product-image {
+  opacity: 0;
 }
 
 .product-thumb:hover .product-image {
@@ -1282,6 +1301,7 @@ button:focus:not(:focus-visible) {
   .product-thumb {
       cursor: zoom-in;
   }
+
   /* Image Navigation Arrows */
   .image-nav-arrows {
       position: absolute;
