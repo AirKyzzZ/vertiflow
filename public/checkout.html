@@ -53,8 +53,60 @@
   </style>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg">
-    <!-- Insérez votre navigation ici -->
+
+  <main>
+
+      <nav class="navbar navbar-expand-lg">
+          <div class="container">
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+
+              <a class="navbar-brand" href="index.html">
+                  <strong><span>Verti</span> Flow</strong>
+              </a>
+
+              <div class="d-lg-none">
+                  <!-- <a href="sign-in.html" class="bi-person custom-icon me-3"></a>
+-->
+              <a href="checkout.html" class="bi-bag custom-icon" data-count="0"></a>
+              </div>
+
+              <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav mx-auto">
+                      <li class="nav-item">
+                          <a class="nav-link active" href="index.html">Accueil</a>
+                      </li>
+
+                      <li class="nav-item">
+                          <a class="nav-link" href="about.html">L'Origine</a>
+                      </li>
+
+                      <li class="nav-item">
+                          <a class="nav-link" href="products.html">Boutique</a>
+                      </li>
+
+                      <li class="nav-item">
+                          <a class="nav-link" href="blog.html">Blog</a>
+                      </li>
+
+                      <li class="nav-item">
+                          <a class="nav-link" href="faq.html">FAQs</a>
+                      </li>
+
+                      <li class="nav-item">
+                          <a class="nav-link" href="contact.html">Contact</a>
+                      </li>
+                  </ul>
+
+                  <div class="d-none d-lg-block">
+                      <!-- <a href="sign-in.html" class="bi-person custom-icon me-3"></a> -->
+
+                      <a href="checkout.html" class="bi-bag custom-icon" data-count="0"></a>
+                  </div>
+              </div>
+          </div>
+      </nav>
   </nav>
   <main>
     <section class="checkout-section section-padding">
@@ -72,29 +124,49 @@
                   <input type="text" class="form-control" id="name" required>
                 </div>
                 <div class="mb-3">
-                  <label for="email" class="form-label">Email Address</label>
+                  <label for="email" class="form-label">Adresse Mail</label>
                   <input type="email" class="form-control" id="email" required>
                 </div>
                 <div class="mb-3">
-                  <label for="address" class="form-label">Address</label>
+                  <label for="address" class="form-label">Adresse</label>
                   <input type="text" class="form-control" id="address" required>
                 </div>
                 <div class="mb-3">
-                  <label for="city" class="form-label">City</label>
+                  <label for="city" class="form-label">Ville</label>
                   <input type="text" class="form-control" id="city" required>
                 </div>
                 <div class="mb-3">
-                  <label for="zip" class="form-label">ZIP Code</label>
+                  <label for="zip" class="form-label">Code Postal</label>
                   <input type="text" class="form-control" id="zip" required>
                 </div>
                 <div class="mb-3">
-                  <label for="country" class="form-label">Country</label>
+                  <label for="country" class="form-label">Pays</label>
                   <select class="form-select" id="country" required>
-                    <option value="">Select a country</option>
+                    <option value="">Selectionnez un pays</option>
+                    <option value="FR">France</option>
                     <option value="US">United States</option>
                     <option value="CA">Canada</option>
                     <option value="UK">United Kingdom</option>
-                  </select>
+                    <option value="DE">Germany</option>
+                    <option value="IT">Italy</option>
+                    <option value="ES">Spain</option>
+                    <option value="AU">Australia</option>
+                    <option value="IN">India</option>
+                    <option value="JP">Japan</option>
+                    <option value="BR">Brazil</option>
+                    <option value="MX">Mexico</option>
+                    <option value="RU">Russia</option>
+                    <option value="CN">China</option>
+                    <option value="SE">Sweden</option>
+                    <option value="NL">Netherlands</option>
+                    <option value="BE">Belgium</option>
+                    <option value="AT">Austria</option>
+                    <option value="CH">Switzerland</option>
+                    <option value="FI">Finland</option>
+                    <option value="DK">Denmark</option>
+                    <option value="NO">Norway</option>
+                    <option value="PL">Poland</option>
+                  </select>                  
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Valider vos informations</button>
               </form>
@@ -113,8 +185,59 @@
   </main>
 
   <footer class="site-footer">
-    <!-- Insérez votre footer ici -->
-  </footer>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-3 col-10 me-auto mb-4">
+                <h4 class="text-white mb-3"><a href="index.html">Verti</a> Flow</h4>
+                <p class="copyright-text text-muted mt-lg-5 mb-4 mb-lg-0">Copyright © 2025 <strong>VertiFlow</strong></p>
+                <br>
+                <p class="copyright-text">Made by <a href="https://airkyzzz.github.io/" target="_blank">AirKyzzZ</a></p>
+            </div>
+
+            <div class="col-lg-5 col-8">
+                <h5 class="text-white mb-3">Naviguer</h5>
+
+                <ul class="footer-menu d-flex flex-wrap">
+                    <li class="footer-menu-item"><a href="index.html" class="footer-menu-link">Accueil</a></li>
+
+                    <li class="footer-menu-item"><a href="about.html" class="footer-menu-link">L'Origine</a></li>
+
+                    <li class="footer-menu-item"><a href="products.html" class="footer-menu-link">Boutique</a></li>
+
+                    <li class="footer-menu-item"><a href="blog.html" class="footer-menu-link">Blog</a></li>
+
+                    <li class="footer-menu-item"><a href="faq.html" class="footer-menu-link">FAQs</a></li>
+
+                    <li class="footer-menu-item"><a href="contact.html" class="footer-menu-link">Contact</a></li>
+
+                    <li class="footer-menu-item"><a href="mentions-legales.html" class="footer-menu-link">Mentions légales</a></li>
+
+                    <li class="footer-menu-item"><a href="conditions-generales-de-vente.html" class="footer-menu-link">Conditions générales de vente</a></li>
+
+                    <li class="footer-menu-item"><a href="politique-de-confidentialite.html" class="footer-menu-link">Politique de confidentialité</a></li>
+
+                    <li class="footer-menu-item"><a href="conditions-utilisation.html" class="footer-menu-link">Conditions d’utilisation</a></li>
+
+                    <li class="footer-menu-item"><a href="propriete-intellectuelle.html" class="footer-menu-link">Propriété intellectuelle</a></li>
+
+                    <li class="footer-menu-item"><a href="accessibilite.html" class="footer-menu-link">Accessibilité</a></li>
+                </ul>
+            </div>
+
+            <div class="col-lg-3 col-4">
+                <h5 class="text-white mb-3">Réseaux Sociaux</h5>
+
+                <ul class="social-icon">
+
+                    <li><a href="https://www.instagram.com/vertiflowfreerun/" class="social-icon-link bi-instagram"></a></li>
+
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</footer>
 
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.bundle.min.js"></script>
