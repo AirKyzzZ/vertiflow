@@ -3,7 +3,7 @@
 # Vertiflow - La Marque de Parkour
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/35cbc8b8-a05e-4515-bdaf-e4f1732cdcde/deploy-status)](https://app.netlify.com/sites/vertiflow/deploys)  
-[![Visiter Vertiflow](https://img.shields.io/badge/Visiter-Vertiflow-blue?style=flat&logo=netlify)](https://vertiflow.com)  
+[![Visiter Vertiflow](https://img.shields.io/badge/Visiter-Vertiflow-blue?style=flat&logo=netlify)](https://vertiflow.fr)  
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Vertiflow est la marque de parkour et une communauté dédiée aux passionnés. Nous proposons une expérience unique à travers notre boutique en ligne, nos événements et ateliers, ainsi qu'une plateforme collaborative pour promouvoir le parkour.
@@ -28,11 +28,11 @@ Vertiflow réunit passion, innovation et esprit communautaire pour créer une de
 
 ## Communauté
 
-Nous croyons fermement que le parkour est avant tout une communauté. Rejoignez-nous sur [notre site](https://vertiflow.com) pour découvrir les dernières actualités, événements et initiatives. Votre passion et votre engagement font de Vertiflow bien plus qu'une simple boutique en ligne.
+Nous croyons fermement que le parkour est avant tout une communauté. Rejoignez-nous sur [notre site](https://vertiflow.fr) pour découvrir les dernières actualités, événements et initiatives. Votre passion et votre engagement font de Vertiflow bien plus qu'une simple boutique en ligne.
 
 ## Contact
 
-Pour toute question ou suggestion, n'hésitez pas à nous contacter via notre [site officiel](https://vertiflow.com) ou à nous rejoindre sur [GitHub](https://github.com/votre-utilisateur/vertiflow).
+Pour toute question ou suggestion, n'hésitez pas à nous contacter via notre [site officiel](https://vertiflow.fr) ou à nous rejoindre sur [GitHub](https://github.com/votre-utilisateur/vertiflow).
 
 ---
 
