@@ -367,7 +367,7 @@
           const { error, paymentIntent } = await stripe.confirmPayment({
             elements,
             confirmParams: {
-              return_url: 'https://vertiflow.netlify.app/success.html',
+              return_url: 'https://vertiflow.fr/success.html',
             },
             redirect: 'if_required'
           });
@@ -378,7 +378,7 @@
           } else {
             if (paymentIntent && paymentIntent.status === 'succeeded') {
               await sendConfirmationEmail(customerInfo, total, cart);
-              window.location.href = 'https://vertiflow.netlify.app/success.html';
+              window.location.href = 'https://vertiflow.fr/success.html';
             }
           }
         });
