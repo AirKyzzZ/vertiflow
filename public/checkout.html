@@ -292,11 +292,15 @@
         e.preventDefault();
 
         // Récupérer les informations utilisateur saisies dans le formulaire
-        const customerInfo = {
-          name: $('#name').val(),
-          email: $('#email').val(),
-          address: $('#address').val() + ', ' + $('#city').val() + ', ' + $('#zip').val() + ', ' + $('#country').val(),
-        };
+        // Dans la gestion du formulaire (submit event)
+const customerInfo = {
+  name: $('#name').val(),
+  email: $('#email').val(),
+  address: $('#address').val(),
+  city: $('#city').val(),
+  zip: $('#zip').val(),
+  country: $('#country option:selected').text() // Récupère le nom du pays
+};
 
         // Recharger le panier et recalculer le total
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -364,51 +368,61 @@
         submitBtn.textContent = `Payer ${total.toFixed(2)} €`;
 
         submitBtn.addEventListener('click', async () => {
-          const { error, paymentIntent } = await stripe.confirmPayment({
-            elements,
-            confirmParams: {
-              return_url: 'https://vertiflow.fr/success.html',
-            },
-            redirect: 'if_required'
-          });
+  try {
+    const { error, paymentIntent } = await stripe.confirmPayment({
+      elements,
+      confirmParams: { return_url: 'https://vertiflow.fr/success.html' },
+      redirect: 'if_required'
+    });
 
-          if (error) {
-            console.error(error);
-            alert(error.message);
-          } else {
-            if (paymentIntent && paymentIntent.status === 'succeeded') {
-              await sendConfirmationEmail(customerInfo, total, cart);
-              window.location.href = 'https://vertiflow.fr/success.html';
-            }
-          }
-        });
+    if (error) throw error;
+
+    if (paymentIntent?.status === 'succeeded') {
+      await sendConfirmationEmail(customerInfo, total, cart);
+      window.location.href = 'https://vertiflow.fr/success.html';
+    }
+  } catch (error) {
+    console.error("Erreur de paiement :", error);
+    alert(`Paiement échoué : ${error.message}`);
+  }
+});
       }
 
       // Fonction d'envoi d'e-mail via EmailJS
       // Remplacez tous les identifiants par vos vraies valeurs EmailJS
         emailjs.init("z4uG1w3b8JueLdvkV"); // Remplacer VOTRE_USER_ID
 
-        function sendConfirmationEmail(customerInfo, total, cart) {
-        const templateParams = {
-            name: customerInfo.name,
-            email: customerInfo.email,
-            address: customerInfo.address,
-            city: customerInfo.city,
-            zip: customerInfo.zip,
-            country: customerInfo.country,
-            total: total.toFixed(2),
-            cartItems: cart.map(item => `<tr><td>${item.name}</td><td>${item.quantity}</td><td>${item.price.toFixed(2)} €</td></tr>`).join("")
-        };
+        async function sendConfirmationEmail(customerInfo, total, cart) {
+  try {
+    const templateParams = {
+      name: customerInfo.name,
+      email: customerInfo.email,
+      address: `${customerInfo.address}, ${customerInfo.zip} ${customerInfo.city}, ${customerInfo.country}`,
+      total: total.toFixed(2),
+      cartItems: cart.map(item => `
+        <tr>
+          <td>${item.name} (Taille ${item.size})</td>
+          <td>${item.quantity}</td>
+          <td>${(item.price * item.quantity).toFixed(2)}€</td>
+        </tr>
+      `).join("")
+    };
 
-        console.log("📨 Envoi de l'email avec ces paramètres :", templateParams);
-
-        emailjs.send("service_zulomgw", "template_22lvzgl", templateParams)
-            .then(function(response) {
-                console.log("✅ Email envoyé avec succès :", response);
-            }, function(error) {
-                console.log("❌ Erreur lors de l'envoi de l'email :", error);
-            });
-    }
+    console.log("📨 Tentative d'envoi d'email...");
+    
+    const response = await emailjs.send(
+      "service_zulomgw", // Remplacer par votre Service ID
+      "template_22lvzgl", // Remplacer par votre Template ID
+      templateParams
+    );
+    
+    console.log("✅ Email envoyé avec succès :", response);
+    return true;
+  } catch (error) {
+    console.error("❌ Erreur d'envoi d'email :", error);
+    throw error;
+  }
+}
 
     });
   </script>
