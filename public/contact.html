@@ -7,7 +7,8 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Tooplate's Little Fashion - Contact Page</title>
+        <title>VertiFlow - Contactez nous</title>
+        <link rel="icon" type="image/x-icon" href="images/logo-transparent.png">
 
         <!-- CSS FILES -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -49,27 +50,31 @@ https://www.tooplate.com/view/2127-little-fashion
                     </button>
 
                     <a class="navbar-brand" href="index.html">
-                        <strong><span>Little</span> Fashion</strong>
+                        <strong><span>Verti</span> Flow</strong>
                     </a>
 
                     <div class="d-lg-none">
-                        <a href="sign-in.html" class="bi-person custom-icon me-3"></a>
-
-                        <a href="product-detail.html" class="bi-bag custom-icon"></a>
+                        <!-- <a href="sign-in.html" class="bi-person custom-icon me-3"></a>
+ -->
+                    <a href="checkout.html" class="bi-bag custom-icon" data-count="0"></a>
                     </div>
 
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav mx-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="index.html">Home</a>
+                                <a class="nav-link" href="index.html">Accueil</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="about.html">Story</a>
+                                <a class="nav-link" href="about.html">L'Origine</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="products.html">Products</a>
+                                <a class="nav-link" href="products.html">Boutique</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="blog.html">Blog</a>
                             </li>
 
                             <li class="nav-item">
@@ -82,9 +87,9 @@ https://www.tooplate.com/view/2127-little-fashion
                         </ul>
 
                         <div class="d-none d-lg-block">
-                            <a href="sign-in.html" class="bi-person custom-icon me-3"></a>
+                            <!-- <a href="sign-in.html" class="bi-person custom-icon me-3"></a> -->
 
-                            <a href="product-detail.html" class="bi-bag custom-icon"></a>
+                            <a href="checkout.html" class="bi-bag custom-icon" data-count="0"></a>
                         </div>
                     </div>
                 </div>
@@ -96,14 +101,14 @@ https://www.tooplate.com/view/2127-little-fashion
 
                         <div class="col-lg-10 col-12 header-info">
                             <h1>
-                                <span class="d-block text-primary">Say hello to us</span>
-                                <span class="d-block text-dark">love to hear you</span>
+                                <span class="d-block text-primary">Entrons en</span>
+                                <span class="d-block text-dark">contact</span>
                             </h1>
                         </div>
                     </div>
                 </div>
 
-                <img src="images/header/positive-european-woman-has-break-after-work.jpg" class="header-image img-fluid" alt="">
+                <img src="images/intro.jpeg" class="header-image img-fluid" alt="">
             </header>
 
             <section class="contact section-padding">
@@ -111,38 +116,34 @@ https://www.tooplate.com/view/2127-little-fashion
                     <div class="row">
                         
                         <div class="col-lg-6 col-12">
-                            <h2 class="mb-4">Let's <span>begin</span></h2>
+                            <h2 class="mb-4">On est prêts <span>à t’écouter</span></h2>
 
-                            <form class="contact-form me-lg-5 pe-lg-3" role="form">
-
+                            <form class="contact-form me-lg-5 pe-lg-3" action="https://formspree.io/f/xgvawvya" method="POST" role="form">
                                 <div class="form-floating">
                                     <input type="text" name="name" id="name" class="form-control" placeholder="Full name" required>
-
-                                    <label for="name">Full name</label>
+                                    <label for="name">Nom et Prénom</label>
                                 </div>
-
+                            
                                 <div class="form-floating my-4">
                                     <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*" class="form-control" placeholder="Email address" required>
-
-                                    <label for="email">Email address</label>
+                                    <label for="email">Adressse Mail</label>
                                 </div>
-                                
+                            
                                 <div class="form-floating my-4">
-                                    <input type="subject" name="subject" id="subject"class="form-control" placeholder="Subject" required>
-
-                                    <label for="subject">Subject</label>
+                                    <input type="text" name="subject" id="subject" class="form-control" placeholder="Subject" required>
+                                    <label for="subject">Objet</label>
                                 </div>
-
+                            
                                 <div class="form-floating mb-4">
                                     <textarea id="message" name="message" class="form-control" placeholder="Leave a comment here" required style="height: 160px"></textarea>
-
-                                    <label for="message">Tell us about the project</label>
+                                    <label for="message">Parle nous de ton idée</label>
                                 </div>
-
+                            
                                 <div class="col-lg-5 col-6">
-                                    <button type="submit" class="form-control">Send</button>
+                                    <button type="submit" class="form-control">Envoyer</button>
                                 </div>
                             </form>
+                            
                         </div>
 
                         <div class="col-lg-6 col-12 mt-5 ms-auto">
@@ -198,40 +199,49 @@ https://www.tooplate.com/view/2127-little-fashion
                 <div class="row">
 
                     <div class="col-lg-3 col-10 me-auto mb-4">
-                        <h4 class="text-white mb-3"><a href="index.html">Little</a> Fashion</h4>
-                        <p class="copyright-text text-muted mt-lg-5 mb-4 mb-lg-0">Copyright © 2022 <strong>Little Fashion</strong></p>
+                        <h4 class="text-white mb-3"><a href="index.html">Verti</a> Flow</h4>
+                        <p class="copyright-text text-muted mt-lg-5 mb-4 mb-lg-0">Copyright © 2025 <strong>VertiFlow</strong></p>
                         <br>
-                        <p class="copyright-text">Designed by <a href="https://www.tooplate.com/" target="_blank">Tooplate</a></p>
+                        <p class="copyright-text">Made by <a href="https://airkyzzz.github.io/" target="_blank">AirKyzzZ</a></p>
                     </div>
 
                     <div class="col-lg-5 col-8">
-                        <h5 class="text-white mb-3">Sitemap</h5>
+                        <h5 class="text-white mb-3">Naviguer</h5>
 
                         <ul class="footer-menu d-flex flex-wrap">
-                            <li class="footer-menu-item"><a href="about.html" class="footer-menu-link">Story</a></li>
+                            <li class="footer-menu-item"><a href="index.html" class="footer-menu-link">Accueil</a></li>
 
-                            <li class="footer-menu-item"><a href="#" class="footer-menu-link">Products</a></li>
+                            <li class="footer-menu-item"><a href="about.html" class="footer-menu-link">L'Origine</a></li>
 
-                            <li class="footer-menu-item"><a href="#" class="footer-menu-link">Privacy policy</a></li>
+                            <li class="footer-menu-item"><a href="products.html" class="footer-menu-link">Boutique</a></li>
 
-                            <li class="footer-menu-item"><a href="#" class="footer-menu-link">FAQs</a></li>
+                            <li class="footer-menu-item"><a href="blog.html" class="footer-menu-link">Blog</a></li>
 
-                            <li class="footer-menu-item"><a href="#" class="footer-menu-link">Contact</a></li>
+                            <li class="footer-menu-item"><a href="faq.html" class="footer-menu-link">FAQs</a></li>
+
+                            <li class="footer-menu-item"><a href="contact.html" class="footer-menu-link">Contact</a></li>
+
+                            <li class="footer-menu-item"><a href="mentions-legales.html" class="footer-menu-link">Mentions légales</a></li>
+
+                            <li class="footer-menu-item"><a href="conditions-generales-de-vente.html" class="footer-menu-link">Conditions générales de vente</a></li>
+
+                            <li class="footer-menu-item"><a href="politique-de-confidentialite.html" class="footer-menu-link">Politique de confidentialité</a></li>
+
+                            <li class="footer-menu-item"><a href="conditions-utilisation.html" class="footer-menu-link">Conditions d’utilisation</a></li>
+
+                            <li class="footer-menu-item"><a href="propriete-intellectuelle.html" class="footer-menu-link">Propriété intellectuelle</a></li>
+
+                            <li class="footer-menu-item"><a href="accessibilite.html" class="footer-menu-link">Accessibilité</a></li>
                         </ul>
                     </div>
 
                     <div class="col-lg-3 col-4">
-                        <h5 class="text-white mb-3">Social</h5>
+                        <h5 class="text-white mb-3">Réseaux Sociaux</h5>
 
                         <ul class="social-icon">
 
-                            <li><a href="#" class="social-icon-link bi-youtube"></a></li>
+                            <li><a href="https://www.instagram.com/vertiflowfreerun/" class="social-icon-link bi-instagram"></a></li>
 
-                            <li><a href="#" class="social-icon-link bi-whatsapp"></a></li>
-
-                            <li><a href="#" class="social-icon-link bi-instagram"></a></li>
-
-                            <li><a href="#" class="social-icon-link bi-skype"></a></li>
                         </ul>
                     </div>
 
