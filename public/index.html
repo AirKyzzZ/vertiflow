@@ -24,7 +24,73 @@
 
         <link href="css/tooplate-little-fashion.css" rel="stylesheet">
     </head>
-    
+<div class="cookie-consent position-fixed fixed-bottom bg-dark text-white p-3" style="display: none;">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8 mb-3 mb-md-0">
+                <p class="mb-0">Nous utilisons des cookies pour améliorer votre expérience. En continuant, vous acceptez notre 
+                    <a href="politique-de-confidentialite.html" class="text-white">politique de confidentialité</a>.
+                </p>
+            </div>
+            <div class="col-md-4 text-md-end">
+                <div class="d-flex flex-column flex-md-row gap-2 justify-content-end">
+                    <button type="button" class="btn custom-btn btn-sm px-4" onclick="declineCookies()">
+                        Refuser
+                    </button>
+                    <button type="button" class="btn custom-btn btn-sm px-4" onclick="acceptCookies()">
+                        Accepter
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.cookie-consent {
+    z-index: 9999;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+}
+
+.cookie-consent a {
+    text-decoration: underline;
+}
+
+.btn-outline-light:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+</style>
+
+<script>
+// Vérifie si le consentement existe déjà
+function checkCookieConsent() {
+    return localStorage.getItem('cookieConsent');
+}
+
+// Affiche la bannière si aucun consentement n'a été donné
+function showCookieConsent() {
+    if (!checkCookieConsent()) {
+        document.querySelector('.cookie-consent').style.display = 'block';
+    }
+}
+
+// Gestion de l'acceptation
+function acceptCookies() {
+    localStorage.setItem('cookieConsent', 'accepted');
+    document.querySelector('.cookie-consent').style.display = 'none';
+}
+
+// Gestion du refus
+function declineCookies() {
+    localStorage.setItem('cookieConsent', 'declined');
+    document.querySelector('.cookie-consent').style.display = 'none';
+}
+
+// Au chargement de la page
+document.addEventListener('DOMContentLoaded', function() {
+    showCookieConsent();
+});
+</script>
     <body>
 
         <section class="preloader">
