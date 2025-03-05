@@ -191,4 +191,30 @@ $(document).ready(function() {
   // Prevent zoom on other product images
   $('.product-thumb').not('#main-product-thumb').off('hover');
   $('.product-image').not('#main-product-image').css('cursor', 'default');
+// Initialize Hammer.js
+var productThumb = document.getElementById('main-product-thumb');
+var hammer = new Hammer(productThumb);
+
+// Add swipe event listener
+hammer.on('swipeleft', function(event) {
+    var currentImageIndex = $('#main-product-image').data('current-image') || 0;
+    var images = $('#main-product-image').data('images'); // Supprimer JSON.parse()
+
+    if (currentImageIndex < images.length - 1) {
+        currentImageIndex++;
+        $('#main-product-image').attr('src', images[currentImageIndex]);
+        $('#main-product-image').data('current-image', currentImageIndex);
+    }
+});
+
+hammer.on('swiperight', function(event) {
+    var currentImageIndex = $('#main-product-image').data('current-image') || 0;
+    var images = $('#main-product-image').data('images'); // Supprimer JSON.parse()
+
+    if (currentImageIndex > 0) {
+        currentImageIndex--;
+        $('#main-product-image').attr('src', images[currentImageIndex]);
+        $('#main-product-image').data('current-image', currentImageIndex);
+    }
+});
 });
