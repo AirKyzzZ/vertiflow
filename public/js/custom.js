@@ -63,59 +63,67 @@ $(document).ready(function() {
       $('.product-p strong span').text(totalPrice + '€');
   });
 });
-$(document).ready(function() {
-  let selectedSize = '';
-  let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-  $('.size-btn').click(function() {
-      $('.size-btn').removeClass('active');
-      $(this).addClass('active');
-      selectedSize = $(this).data('size');
+  $(document).ready(function() {
+    let selectedSize = '';
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  
+    $('.size-btn').click(function() {
+        $('.size-btn').removeClass('active');
+        $(this).addClass('active');
+        selectedSize = $(this).data('size');
+    });
+  
+    $('#add-to-cart-btn').click(function() {
+        if (!selectedSize) {
+            alert('Please select a size');
+            return;
+        }
+  
+        // Récupère la quantité sélectionnée
+        const selectedQuantity = parseInt($('#inputGroupSelect01').val());
+  
+        // Récupère l'URL de l'image principale du produit
+        const mainImage = $('#main-product-image').attr('src');
+  
+        // Création de l'objet produit incluant l'image
+        const product = {
+            id: 1, // Remplacez par un ID unique si nécessaire
+            name: 'T-shirt Unisex CLIMB (Noir)',
+            price: 24.99,
+            size: selectedSize,
+            quantity: selectedQuantity,
+            image: mainImage
+        };
+  
+        // Vérifie si le produit existe déjà dans le panier (même ID et même taille)
+        const existingProductIndex = cart.findIndex(item =>
+            item.id === product.id &&
+            item.size === product.size
+        );
+  
+        if (existingProductIndex > -1) {
+            // Met à jour la quantité si le produit existe déjà
+            cart[existingProductIndex].quantity += selectedQuantity;
+        } else {
+            // Ajoute le nouveau produit dans le panier
+            cart.push(product);
+        }
+  
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartCount();
+        alert('Product added to cart');
+    });
+  
+    // Fonction updateCartCount() pour mettre à jour le nombre d'articles dans le panier
+    function updateCartCount() {
+        const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+        $('.bi-bag').attr('data-count', cartCount);
+    }
+  
+    updateCartCount();
   });
-
-  $('#add-to-cart-btn').click(function() {
-      if (!selectedSize) {
-          alert('Please select a size');
-          return;
-      }
-
-      // Récupère la quantité sélectionnée
-      const selectedQuantity = parseInt($('#inputGroupSelect01').val());
-
-      const product = {
-          id: 1, // Remplacez par un ID unique si nécessaire
-          name: 'T-shirt Unisex CLIMB (Noir)',
-          price: 24.99,
-          size: selectedSize,
-          quantity: selectedQuantity // Utilise la quantité sélectionnée
-      };
-
-      // Vérifie si le produit existe déjà
-      const existingProductIndex = cart.findIndex(item => 
-          item.id === product.id && 
-          item.size === product.size
-      );
-
-      if (existingProductIndex > -1) {
-          // Met à jour la quantité si le produit existe
-          cart[existingProductIndex].quantity += selectedQuantity;
-      } else {
-          // Ajoute le nouveau produit
-          cart.push(product);
-      }
-
-      localStorage.setItem('cart', JSON.stringify(cart));
-      updateCartCount();
-      alert('Product added to cart');
-  });
-
-  function updateCartCount() {
-      const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
-      $('.bi-bag').attr('data-count', cartCount);
-  }
-
-  updateCartCount();
-});
+  
 
 $(document).ready(function() {
   const mainProductThumb = $('#main-product-thumb');
