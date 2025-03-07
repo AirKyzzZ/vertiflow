@@ -405,7 +405,7 @@ const customerInfo = {
           $('#payment-container').show();
 
           // Afficher le Payment Element avec le montant sur le bouton
-          showPaymentElement(clientSecret, total, customerInfo, cart);
+          showPaymentElement(clientSecret, finalTotal, customerInfo, cart);
         } catch (error) {
           console.error('Erreur:', error);
           alert(`Erreur: ${error.message}`);
@@ -423,7 +423,7 @@ const customerInfo = {
 
 
       // Fonction pour afficher le Payment Element
-      function showPaymentElement(clientSecret, total, customerInfo, cart) {
+      function showPaymentElement(clientSecret, finalTotal, customerInfo, cart) {
         console.log("showPaymentElement appelé avec clientSecret:", clientSecret);
 
         const elements = stripe.elements({ clientSecret, appearance: {} });
@@ -453,7 +453,7 @@ const customerInfo = {
     if (error) throw error;
 
     if (paymentIntent?.status === 'succeeded') {
-      await sendConfirmationEmail(customerInfo, total, cart);
+      await sendConfirmationEmail(customerInfo, finalTotal, cart);
       window.location.href = 'https://vertiflow.fr/success.html';
     }
   } catch (error) {
@@ -467,13 +467,13 @@ const customerInfo = {
       // Remplacez tous les identifiants par vos vraies valeurs EmailJS
         emailjs.init("z4uG1w3b8JueLdvkV"); // Remplacer VOTRE_USER_ID
 
-        async function sendConfirmationEmail(customerInfo, total, cart) {
+        async function sendConfirmationEmail(customerInfo, finalTotal, cart) {
   try {
     const templateParams = {
       name: customerInfo.name,
       email: customerInfo.email,
       address: `${customerInfo.address}, ${customerInfo.zip} ${customerInfo.city}, ${customerInfo.country}`,
-      total: total.toFixed(2),
+      total: finalTotal.toFixed(2),
       cartItems: cart.map(item => `
         <tr>
           <td>${item.name} (Taille ${item.size})</td>
