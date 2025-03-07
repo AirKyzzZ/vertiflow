@@ -313,7 +313,9 @@
 cart.forEach(item => {
   const itemTotal = item.price * item.quantity;
   total += itemTotal; // Ajout de cette ligne pour cumuler le total
-  cartItemsContainer.append(`
+  // Modifiez le template du panier pour inclure la couleur
+// Modifiez cette partie du code d'affichage du panier
+cartItemsContainer.append(`
     <div class="cart-item">
       <div class="row align-items-center">
         <div class="col-12 col-md-3 text-center">
@@ -321,15 +323,18 @@ cart.forEach(item => {
         </div>
         <div class="col-12 col-md-6">
           <h5>${item.name}</h5>
-          <p>Taille: ${item.size}, Quantité: ${item.quantity}</p>
+          <p>Taille: ${item.size}, Couleur: ${item.color}, Quantité: ${item.quantity}</p>
         </div>
         <div class="col-12 col-md-3 text-end">
           <p>${itemTotal.toFixed(2)}€</p>
-          <button class="btn btn-danger btn-sm remove-btn" data-id="${item.id}" data-size="${item.size}">Supprimer</button>
+          <button class="btn btn-danger btn-sm remove-btn" 
+                  data-id="${item.id}" 
+                  data-size="${item.size}"
+                  data-color="${item.color}">Supprimer</button>
         </div>
       </div>
     </div>
-  `);
+`);
 });
 
 
@@ -413,10 +418,18 @@ const customerInfo = {
       });
 
       // Suppression d'article du panier
-      $(document).on('click', '.remove-btn', function() {
+      // Modifiez la gestion de la suppression pour tenir compte de la couleur
+$(document).on('click', '.remove-btn', function() {
     const itemId = $(this).data('id');
     const itemSize = $(this).data('size');
-    const newCart = cart.filter(item => !(item.id === itemId && item.size === itemSize));
+    const itemColor = $(this).data('color');
+    
+    const newCart = cart.filter(item => 
+        !(item.id === itemId && 
+          item.size === itemSize && 
+          item.color === itemColor)
+    );
+    
     localStorage.setItem('cart', JSON.stringify(newCart));
     location.reload();
 });
@@ -476,11 +489,11 @@ const customerInfo = {
       total: finalTotal.toFixed(2),
       cartItems: cart.map(item => `
         <tr>
-          <td>${item.name} (Taille ${item.size})</td>
-          <td>${item.quantity}</td>
-          <td>${(item.price * item.quantity).toFixed(2)}€</td>
+            <td>${item.name} (Taille ${item.size}, ${item.color})</td>
+            <td>${item.quantity}</td>
+            <td>${(item.price * item.quantity).toFixed(2)}€</td>
         </tr>
-      `).join("")
+    `).join("")
     };
 
     console.log("📨 Tentative d'envoi d'email...");

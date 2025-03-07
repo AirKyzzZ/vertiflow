@@ -73,7 +73,36 @@ $(document).ready(function() {
         $(this).addClass('active');
         selectedSize = $(this).data('size');
     });
-  
+    let currentColorImages = [];
+    let selectedColor = 'Noir';
+
+    
+    $(document).on('click', '.color-btn', function() {
+        $('.color-btn').removeClass('active');
+        $(this).addClass('active');
+        selectedColor = $(this).data('color');
+        
+        // Mettre à jour le titre
+        $('.product-title').text(`T-shirt ${selectedColor} CLIMB`);
+        
+        // Mettre à jour les images
+        const mainImage = $(this).data('main-image');
+        const images = JSON.parse($(this).attr('data-images'));
+        
+        // Mettre à jour l'image principale
+        $('#main-product-image').attr('src', mainImage);
+        $('#main-product-image').attr('data-images', JSON.stringify(images));
+        
+        // Réinitialiser la navigation
+        currentColorImages = images;
+        currentImageIndex = 0;
+        
+        // Mettre à jour le zoom mobile
+        if($('#zoom-popup').is(':visible')) {
+            $('#zoomed-image').attr('src', mainImage);
+        }
+    });
+
     $('#add-to-cart-btn').click(function() {
         if (!selectedSize) {
             alert('Please select a size');
@@ -88,10 +117,11 @@ $(document).ready(function() {
   
         // Création de l'objet produit incluant l'image
         const product = {
-            id: 1, // Remplacez par un ID unique si nécessaire
-            name: 'T-shirt Unisex CLIMB (Noir)',
+            id: 1,
+            name: `T-shirt ${selectedColor} CLIMB`,
             price: 24.99,
             size: selectedSize,
+            color: selectedColor,
             quantity: selectedQuantity,
             image: mainImage
         };

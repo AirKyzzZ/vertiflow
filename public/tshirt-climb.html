@@ -113,7 +113,7 @@
                              class="img-fluid" 
                              alt=""
                              id="main-product-image"
-                             data-images='["images/product/back_tshirt.png", "images/product/tshirt3.png", "images/product/tshirt4.png"]'>
+                             data-images='["images/product/back_tshirt.png", "images/product/tshirt3.png", "images/product/tshirt4.png", "images/product/back_tshirt_white.png", "images/product/tshirt3_white.png", "images/product/tshirt4_white.png"]'>
                         <div class="image-nav-arrows">
                             <button class="nav-arrow prev-arrow">&lt;</button>
                             <button class="nav-arrow next-arrow">&gt;</button>
@@ -138,11 +138,6 @@
                     <small class="product-price text-muted ms-auto mt-auto mb-5">24.99€</small>
                 </div>
 
-                <div class="product-description">
-                    <strong class="d-block mt-4 mb-2">Description</strong>
-                    <p class="lead mb-5">Best-seller de VertiFlow, le T-shirt CLIMB allie style, confort et résistance. Conçu pour toutes les activités, il offre une durabilité exceptionnelle et un design épuré qui s’adapte à ton rythme. L’essentiel pour repousser tes limites avec style.</p>
-                </div>
-
                 <div class="product-cart-thumb row">
                     <div class="col-lg-6 col-12">
                         <select style="margin-bottom: 15px;" class="form-select cart-form-select" id="inputGroupSelect01">
@@ -155,6 +150,25 @@
                     </div>
 
                     <div class="col-12 mb-3">
+                        <h6>Choisir la couleur :</h6>
+                        <div class="btn-group color-selector" role="group" aria-label="Color selection">
+                            <button type="button" 
+                                    class="btn btn-outline-secondary color-btn active" 
+                                    data-color="Noir"
+                                    data-main-image="images/product/front_tshirt.png"
+                                    data-images='["images/product/front_tshirt.png", "images/product/back_tshirt.png", "images/product/tshirt3.png", "images/product/tshirt4.png"]'
+                                    style="background-color: black; border: 2px solid white; width: 40px; height: 40px"></button>
+                                    
+                            <button type="button" 
+                                    class="btn btn-outline-secondary color-btn" 
+                                    data-color="Blanc"
+                                    data-main-image="images/product/front_tshirt_white.png"
+                                    data-images='["images/product/front_tshirt_white.png", "images/product/back_tshirt_white.png", "images/product/tshirt3_white.png", "images/product/tshirt4_white.png"]'
+                                    style="background-color: white; border: 2px solid black; width: 40px; height: 40px"></button>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-3">
                         <h6>Choisir la taille :</h6>
                         <div class="btn-group" role="group" aria-label="Size selection">
                             <button type="button" class="btn btn-outline-secondary size-btn" data-size="S">S</button>
@@ -164,23 +178,14 @@
                             <button type="button" class="btn btn-outline-secondary size-btn" data-size="2XL">2XL</button>
                         </div>
                     </div>
-                    <!-- Ajouter après le sélecteur de taille -->
-<div class="col-12 mb-3">
-    <h6>Choisir la couleur :</h6>
-    <div class="btn-group color-selector" role="group" aria-label="Color selection">
-        <button type="button" 
-                class="btn btn-outline-secondary color-btn active" 
-                data-color="Noir" 
-                style="background-color: black; border: 2px solid white; width: 40px; height: 40px"></button>
-        <button type="button" 
-                class="btn btn-outline-secondary color-btn" 
-                data-color="Blanc" 
-                style="background-color: white; border: 2px solid black; width: 40px; height: 40px"></button>
-    </div>
-</div>
 
                     <div class="col-lg-6 col-12 mt-4 mt-lg-0">
                         <button id="add-to-cart-btn" type="button" class="btn custom-btn cart-btn">Ajouter au Panier</button>
+                    </div>
+
+                    <div class="product-description">
+                        <strong class="d-block mt-4 mb-2">Description</strong>
+                        <p class="lead mb-5">Best-seller de VertiFlow, le T-shirt CLIMB allie style, confort et résistance. Conçu pour toutes les activités, il offre une durabilité exceptionnelle et un design épuré qui s’adapte à ton rythme. L’essentiel pour repousser tes limites avec style.</p>
                     </div>
 
                     <p>
