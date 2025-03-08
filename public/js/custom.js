@@ -64,95 +64,100 @@ $(document).ready(function() {
   });
 });
 
-  $(document).ready(function() {
-    let selectedSize = '';
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-  
-    $('.size-btn').click(function() {
+$(document).ready(function() {
+    const productDetail = $('.product-detail');
+    const productId = productDetail.data('product-id');
+    const productNameBase = productDetail.data('product-name-base');
+    const productPrice = parseFloat(productDetail.data('product-price'));
+
+    // Initialisation des variables
+    let selectedSize = $('.size-btn.active').data('size'); // Récupère la taille active par défaut
+    let selectedColor = 'Noir';
+    let currentColorImages = [];
+    let currentImageIndex = 0;
+
+    // Gestion des tailles (DÉPLACÉ EN DEHORS DE LA SECTION COULEUR)
+    $('.size-btn').on('click', function() {
         $('.size-btn').removeClass('active');
         $(this).addClass('active');
         selectedSize = $(this).data('size');
     });
-    let currentColorImages = [];
-    let selectedColor = 'Noir';
 
-    
+    // Gestion des couleurs
     $(document).on('click', '.color-btn', function() {
+        const $this = $(this);
         $('.color-btn').removeClass('active');
-        $(this).addClass('active');
-        selectedColor = $(this).data('color');
+        $this.addClass('active');
         
-        // Mettre à jour le titre
-        $('.product-title').text(`T-shirt ${selectedColor} CLIMB`);
-        
-        // Mettre à jour les images
-        const mainImage = $(this).data('main-image');
-        const images = JSON.parse($(this).attr('data-images'));
-        
-        // Mettre à jour l'image principale
-        $('#main-product-image').attr('src', mainImage);
-        $('#main-product-image').attr('data-images', JSON.stringify(images));
-        
-        // Réinitialiser la navigation
-        currentColorImages = images;
+        selectedColor = $this.data('color');
+        currentColorImages = JSON.parse($this.attr('data-images'));
         currentImageIndex = 0;
-        
-        // Mettre à jour le zoom mobile
-        if($('#zoom-popup').is(':visible')) {
-            $('#zoomed-image').attr('src', mainImage);
-        }
+
+        // Mise à jour du titre
+        $('.product-title-main').text(`${productNameBase} ${selectedColor}`);
+
+        // Mise à jour des images
+        $('#main-product-image')
+            .attr('src', $this.data('main-image'))
+            .attr('data-images', JSON.stringify(currentColorImages));
     });
 
+    // Gestion du panier
     $('#add-to-cart-btn').click(function() {
         if (!selectedSize) {
-            alert('Please select a size');
+            alert('Veuillez sélectionner une taille');
             return;
         }
-  
-        // Récupère la quantité sélectionnée
-        const selectedQuantity = parseInt($('#inputGroupSelect01').val());
-  
-        // Récupère l'URL de l'image principale du produit
-        const mainImage = $('#main-product-image').attr('src');
-  
-        // Création de l'objet produit incluant l'image
+
         const product = {
-            id: 1,
-            name: `T-shirt ${selectedColor} CLIMB`,
-            price: 24.99,
+            id: productId,
+            name: `${productNameBase} ${selectedColor}`,
+            price: productPrice,
             size: selectedSize,
             color: selectedColor,
-            quantity: selectedQuantity,
-            image: mainImage
+            quantity: parseInt($('#inputGroupSelect01').val()),
+            image: $('#main-product-image').attr('src')
         };
-  
-        // Vérifie si le produit existe déjà dans le panier (même ID et même taille)
-        const existingProductIndex = cart.findIndex(item =>
-            item.id === product.id &&
-            item.size === product.size
+        
+        // Logique d'ajout au panier
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const existingIndex = cart.findIndex(item => 
+            item.id === product.id && 
+            item.size === product.size && 
+            item.color === product.color
         );
-  
-        if (existingProductIndex > -1) {
-            // Met à jour la quantité si le produit existe déjà
-            cart[existingProductIndex].quantity += selectedQuantity;
+
+        if (existingIndex > -1) {
+            cart[existingIndex].quantity += product.quantity;
         } else {
-            // Ajoute le nouveau produit dans le panier
             cart.push(product);
         }
-  
+
         localStorage.setItem('cart', JSON.stringify(cart));
         updateCartCount();
-        alert('Product added to cart');
+        alert('Produit ajouté au panier');
     });
+
+    function updateCartCount() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const count = cart.reduce((acc, item) => acc + item.quantity, 0);
+        $('.bi-bag').attr('data-count', count);
+    }
+
+    // Initialisation
+    const defaultColorBtn = $('.color-btn.active');
+    currentColorImages = JSON.parse(defaultColorBtn.attr('data-images'));
+    updateCartCount();
+});
   
     // Fonction updateCartCount() pour mettre à jour le nombre d'articles dans le panier
-    function updateCartCount() {
+ /*    function updateCartCount() {
         const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
         $('.bi-bag').attr('data-count', cartCount);
     }
   
     updateCartCount();
-  });
+  }); */
   
 
 $(document).ready(function() {
