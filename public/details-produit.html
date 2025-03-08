@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>VertiFlow - Détails Produits</title>
+    <link rel="icon" type="image/x-icon" href="images/logo-transparent.png">
+    
+    <!-- CSS FILES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link href="css/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/slick.css"/>
+    <link href="css/tooplate-little-fashion.css" rel="stylesheet">
+
+    <style>
+        .spec-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 2rem;
+            transition: transform 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .spec-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .spec-card h3 {
+            border-bottom: 2px solid #dee2e6;
+            padding-bottom: 1rem;
+            color: #2b2d42;
+        }
+
+        .bi {
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+            color: #2b2d42;
+            vertical-align: middle;
+        }
+
+        .progress {
+            background-color: #e9ecef;
+            border-radius: 10px;
+            height: 8px;
+        }
+
+        .progress-bar {
+            border-radius: 10px;
+            background: #28a745;
+        }
+
+        .ethics-note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1.5rem;
+            border-radius: 5px;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="preloader">
+        <div class="spinner">
+            <span class="sk-inner-circle"></span>
+        </div>
+    </section>
+
+    <main>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <a class="navbar-brand" href="index.html">
+                    <strong><span>Verti</span> Flow</strong>
+                </a>
+
+                <div class="d-lg-none">
+                    <!-- <a href="sign-in.html" class="bi-person custom-icon me-3"></a>
+-->
+                <a href="checkout.html" class="bi-bag custom-icon" data-count="0"></a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Accueil</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">L'Origine</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link active" href="products.html">Boutique</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="blog.html">Blog</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="faq.html">FAQs</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="contact.html">Contact</a>
+                        </li>
+                    </ul>
+
+                    <div class="d-none d-lg-block">
+                        <!-- <a href="sign-in.html" class="bi-person custom-icon me-3"></a> -->
+
+                        <a href="checkout.html" class="bi-bag custom-icon" data-count="0"></a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <section class="product-specs section-padding">
+            <div class="container">
+                <div class="row justify-content-center text-center">
+                    <div class="col-lg-10">
+                        <h2 class="mb-5" style="margin-top: 35px;">Détails <span>Techniques</span></h2>
+
+                        <!-- T-shirt -->
+                        <div class="spec-card">
+                            <h3 class="mb-4">T-shirt CLIMB <small class="text-muted">(Gildan 5000)</small></h3>
+                            <div class="row text-start">
+                                <div class="col-md-6">
+                                    <p class="text-muted"><i class="bi bi-rulers"></i> <strong>Tailles :</strong> S-XXL</p>
+                                    <p class="text-muted"><i class="bi bi-basket"></i> 100% Coton peigné 5.3 oz</p>
+                                    <p class="text-muted"><i class="bi bi-shield-check"></i> Certification Oeko-Tex 100</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="text-muted"><i class="bi bi-recycle"></i> 30% Coton recyclé</p>
+                                    <p class="text-muted"><i class="bi bi-gear"></i> Col rond renforcé</p>
+                                    <p class="text-muted"><i class="bi bi-printer"></i> Sérigraphie eco-solvant</p>
+                                </div>
+                            </div>
+                            <div class="sustainability mt-4">
+                                <div class="progress mb-2">
+                                    <div class="progress-bar" role="progressbar" style="width: 85%"></div>
+                                </div>
+                                <small class="text-muted">Fabriqué par Printful via des partenaires certifiés WRAP</small>
+                            </div>
+                        </div>
+
+                        <!-- Hoodie -->
+                        <div class="spec-card">
+                            <h3 class="mb-4">Hoodie Definition <small class="text-muted">(Cotton Heritage M2580)</small></h3>
+                            <div class="row text-start">
+                                <div class="col-md-6">
+                                    <p class="text-muted"><i class="bi bi-rulers"></i> Tailles : S-XXL</p>
+                                    <p class="text-muted"><i class="bi bi-basket"></i> 50% Coton / 50% Polyester</p>
+                                    <p class="text-muted"><i class="bi bi-thermometer-sun"></i> 8 oz, coupe regular fit</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="text-muted"><i class="bi bi-snow"></i> Double épaisseur capuche</p>
+                                    <p class="text-muted"><i class="bi bi-heart"></i> Poche kangourou doublée</p>
+                                    <p class="text-muted"><i class="bi bi-palette"></i> Teinture low-impact</p>
+                                </div>
+                            </div>
+                            <div class="sustainability mt-4">
+                                <div class="progress mb-2">
+                                    <div class="progress-bar" role="progressbar" style="width: 78%"></div>
+                                </div>
+                                <small class="text-muted">Production selon normes ISO 14001</small>
+                            </div>
+                        </div>
+
+                        <!-- Shorts -->
+                        <div class="spec-card">
+                            <h3 class="mb-4">Shorts Performance <small class="text-muted">(Maille All Over)</small></h3>
+                            <div class="row text-start">
+                                <div class="col-md-6">
+                                    <p class="text-muted"><i class="bi bi-rulers"></i> Tailles : XXS-XXL</p>
+                                    <p class="text-muted"><i class="bi bi-basket"></i> 92% Polyester / 8% Spandex</p>
+                                    <p class="text-muted"><i class="bi bi-speedometer"></i> Poids : 160 g/m²</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="text-muted"><i class="bi bi-wind"></i> Respirabilité optimisée</p>
+                                    <p class="text-muted"><i class="bi bi-arrow-repeat"></i> Séchage rapide</p>
+                                    <p class="text-muted"><i class="bi bi-lightning"></i> Résistance aux déchirures</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Accessoires -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="spec-card">
+                                    <h4>Coque iPhone</h4>
+                                    <p class="text-muted"><i class="bi bi-phone"></i> ABS renforcé 2mm</p>
+                                    <p class="text-muted"><i class="bi bi-shield-shaded"></i> Bords anti-chocs</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="spec-card">
+                                    <h4>Cache-Cou VF</h4>
+                                    <p class="text-muted"><i class="bi bi-droplet"></i> 95% Polyester / 5% Spandex</p>
+                                    <p class="text-muted"><i class="bi bi-house-gear"></i> Lavable machine</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ethics-note">
+                            <p class="text-muted">🏭 Tous nos produits sont fabriqués à la demande par Printful pour limiter le gaspillage.<br>
+                            🚚 Expédition sous 2-5 jours ouvrés depuis nos centres certifiés Fair Trade.<br>
+                            🌱 Emballages 100% recyclables et sans plastique.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="site-footer">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-3 col-10 me-auto mb-4">
+                        <h4 class="text-white mb-3"><a href="index.html">Verti</a> Flow</h4>
+                        <p class="copyright-text text-muted mt-lg-5 mb-4 mb-lg-0">Copyright © 2025 <strong>VertiFlow</strong></p>
+                        <br>
+                        <p class="copyright-text">Made by <a href="https://airkyzzz.github.io/" target="_blank">AirKyzzZ</a></p>
+                    </div>
+
+                    <div class="col-lg-5 col-8">
+                        <h5 class="text-white mb-3">Naviguer</h5>
+
+                        <ul class="footer-menu d-flex flex-wrap">
+                            <li class="footer-menu-item"><a href="index.html" class="footer-menu-link">Accueil</a></li>
+
+                            <li class="footer-menu-item"><a href="about.html" class="footer-menu-link">L'Origine</a></li>
+
+                            <li class="footer-menu-item"><a href="products.html" class="footer-menu-link">Boutique</a></li>
+
+                            <li class="footer-menu-item"><a href="blog.html" class="footer-menu-link">Blog</a></li>
+
+                            <li class="footer-menu-item"><a href="faq.html" class="footer-menu-link">FAQs</a></li>
+
+                            <li class="footer-menu-item"><a href="contact.html" class="footer-menu-link">Contact</a></li>
+
+                            <li class="footer-menu-item"><a href="mentions-legales.html" class="footer-menu-link">Mentions légales</a></li>
+
+                            <li class="footer-menu-item"><a href="conditions-generales-de-vente.html" class="footer-menu-link">Conditions générales de vente</a></li>
+
+                            <li class="footer-menu-item"><a href="politique-de-confidentialite.html" class="footer-menu-link">Politique de confidentialité</a></li>
+
+                            <li class="footer-menu-item"><a href="conditions-utilisation.html" class="footer-menu-link">Conditions d’utilisation</a></li>
+
+                            <li class="footer-menu-item"><a href="propriete-intellectuelle.html" class="footer-menu-link">Propriété intellectuelle</a></li>
+
+                            <li class="footer-menu-item"><a href="accessibilite.html" class="footer-menu-link">Accessibilité</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-3 col-4">
+                        <h5 class="text-white mb-3">Réseaux Sociaux</h5>
+
+                        <ul class="social-icon">
+
+                            <li><a href="https://www.instagram.com/vertiflowfreerun/" class="social-icon-link bi-instagram"></a></li>
+                            <li><a href="https://www.tiktok.com/@vertiflow" class="social-icon-link bi-tiktok"></a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- JAVASCRIPT FILES -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/Headroom.js"></script>
+    <script src="js/jQuery.headroom.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/custom.js"></script>
+</body>
+</html>
