@@ -1,4 +1,8 @@
-
+function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const count = cart.reduce((acc, item) => acc + item.quantity, 0);
+    $('.bi-bag').attr('data-count', count);
+}
   (function ($) {
   
   "use strict";
@@ -38,6 +42,7 @@
 });
 
 $(document).ready(function() {
+updateCartCount();
   $('#cart-btn').click(function() {
       var quantity = $('#inputGroupSelect01').val();
       if (quantity == 'Quantity') {
@@ -158,6 +163,7 @@ $(document).ready(function() {
   
     updateCartCount();
   }); */
+
   
 
 $(document).ready(function() {
