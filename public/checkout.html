@@ -341,15 +341,13 @@ cartItemsContainer.append(`
 
       // Affichage du total du panier
       if (cart.length > 0) {
-  const vat = total * 0.20; // TVA à 20%
   const shipping = 6.99;    // Frais de livraison
-  const finalTotal = total + vat + shipping; // Total final incluant TVA et livraison
+  const finalTotal = total + shipping;
 
   cartItemsContainer.append(`
     <div class="cart-total mt-3">
       <h4 class="text-end">Total: ${finalTotal.toFixed(2)}€</h4>
       <p class="text-end" style="font-size:0.8em; margin:0;">
-        TVA : ${vat.toFixed(2)}€<br>
         Livraison rapide : ${shipping.toFixed(2)}€
       </p>
     </div>
@@ -379,10 +377,9 @@ const customerInfo = {
       total += item.price * item.quantity;
     });
 
-    // Calculer la TVA (20%) et ajouter les frais de livraison (6,99€ s'il y a au moins un article)
-    const vat = total * 0.20;
+
     const shipping = cart.length > 0 ? 6.99 : 0;
-    const finalTotal = total + vat + shipping;
+    const finalTotal = total + shipping;
 
     // Montant en centimes pour Stripe
     const amount = Math.round(finalTotal * 100);
