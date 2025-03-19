@@ -375,15 +375,14 @@ const customerInfo = {
 };
 
     // Recharger le panier et recalculer le total
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    let total = 0;
-    cart.forEach(item => {
-      total += item.price * item.quantity;
-    });
+    cart = JSON.parse(localStorage.getItem('cart')) || [];
+        total = 0;
+        cart.forEach(item => {
+          total += item.price * item.quantity;
+        });
+        const shipping = cart.length > 0 ? 6.99 : 0;
+        let finalTotal = total + shipping;
 
-
-    const shipping = cart.length > 0 ? 6.99 : 0;
-    const finalTotal = total + shipping;
 
     const promoCode = $('#promo-code').val().trim();
         if (promoCode.toUpperCase() === 'METZ57') {
