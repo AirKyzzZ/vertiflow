@@ -158,7 +158,6 @@
               </div>
           </div>
       </nav>
-  </nav>
   <main>
     <section class="checkout-section section-padding">
       <div class="container">
@@ -308,7 +307,7 @@
 
     $(document).ready(function() {
       // Chargement du panier
-      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
       const cartItemsContainer = $('#cart-items');
       let total = 0;
 
@@ -461,7 +460,7 @@ $(document).on('click', '.remove-btn', function() {
         submitBtn.style.display = 'block';
         submitBtn.textContent = `Payer ${finalTotal.toFixed(2)} €`;
 
-        submitBtn.addEventListener('click', async () => {
+          submitBtn.onclick = async () => {
   try {
     const { error, paymentIntent } = await stripe.confirmPayment({
       elements,
@@ -479,8 +478,7 @@ $(document).on('click', '.remove-btn', function() {
     console.error("Erreur de paiement :", error);
     alert(`Paiement échoué : ${error.message}`);
   }
-});
-      }
+};
 
       // Fonction d'envoi d'e-mail via EmailJS
       // Remplacez tous les identifiants par vos vraies valeurs EmailJS
@@ -517,8 +515,7 @@ $(document).on('click', '.remove-btn', function() {
     throw error;
   }
 }
-
-    });
+}});
   </script>
 </body>
 </html>
