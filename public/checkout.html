@@ -319,7 +319,7 @@ cart.forEach(item => {
   // Modifiez le template du panier pour inclure la couleur
 // Modifiez cette partie du code d'affichage du panier
 cartItemsContainer.append(`
-    <div class="cart-item">
+    <div id="display-total" class="cart-item">
       <div class="row align-items-center">
         <div class="col-12 col-md-3 text-center">
           <img src="${item.image}" alt="${item.name}" class="img-fluid">
@@ -387,6 +387,7 @@ const customerInfo = {
         if (promoCode.toUpperCase() === 'METZ57') {
           finalTotal = finalTotal * 0.85; // Appliquer une réduction de 15%
           console.log('Code promo valide : réduction appliquée');
+          $('#display-total h4').text(`Total: ${finalTotal.toFixed(2)}€`);
         }
 
     // Montant en centimes pour Stripe
