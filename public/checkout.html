@@ -219,6 +219,10 @@
                     <option value="PL">Poland</option>
                   </select>                  
                 </div>
+                <div class="mb-3">
+                  <label for="promo-code" class="form-label">Code Promo</label>
+                  <input type="text" class="form-control" id="promo-code" placeholder="Entrez votre code promo">
+                </div>
                 <button type="submit" class="btn btn-primary w-100">Valider vos informations</button>
               </form>
 
@@ -380,6 +384,12 @@ const customerInfo = {
 
     const shipping = cart.length > 0 ? 6.99 : 0;
     const finalTotal = total + shipping;
+
+    const promoCode = $('#promo-code').val().trim();
+        if (promoCode.toUpperCase() === 'METZ57') {
+          finalTotal = finalTotal * 0.85; // Appliquer une réduction de 15%
+          console.log('Code promo valide : réduction appliquée');
+        }
 
     // Montant en centimes pour Stripe
     const amount = Math.round(finalTotal * 100);
