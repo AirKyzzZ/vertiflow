@@ -315,9 +315,7 @@
 // Affichage des articles du panier
 cart.forEach(item => {
   const itemTotal = item.price * item.quantity;
-  total += itemTotal; // Ajout de cette ligne pour cumuler le total
-  // Modifiez le template du panier pour inclure la couleur
-// Modifiez cette partie du code d'affichage du panier
+  total += itemTotal; 
 cartItemsContainer.append(`
     <div class="cart-item">
       <div class="row align-items-center">
@@ -384,7 +382,7 @@ const customerInfo = {
 
 
     const promoCode = $('#promo-code').val().trim();
-        if (promoCode.toUpperCase() === 'supercodepromodezinzin') {
+        if (promoCode.toUpperCase() === 'LATESTE33') {
           finalTotal = finalTotal * 0.85; // Appliquer une réduction de 15%
           console.log('Code promo valide : réduction appliquée');
           $('.cart-total h4').text(`Total: ${finalTotal.toFixed(2)}€`);
