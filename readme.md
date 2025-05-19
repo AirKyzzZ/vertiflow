@@ -24,7 +24,7 @@ Vertiflow réunit passion, innovation et esprit communautaire pour créer une de
 - **Boutique en Ligne** : Explorez une sélection d'équipements et d'accessoires conçus spécialement pour le parkour.
 - **Événements & Ateliers** : Participez à des sessions d'entraînement, des ateliers et des événements dédiés au parkour.
 - **Plateforme Communautaire** : Rejoignez et échangez avec d'autres passionnés de parkour à travers nos forums et réseaux sociaux.
-- **Code Open Source** : Bien que ce projet ne soit pas destiné à être copié, le code source est disponible sur [GitHub](https://github.com/votre-utilisateur/vertiflow) pour ceux qui souhaitent explorer son fonctionnement.
+- **Code Open Source** : Bien que ce projet ne soit pas destiné à être copié, le code source est disponible sur [GitHub](https://github.com/AirKyzzZ/vertiflow) pour ceux qui souhaitent explorer son fonctionnement.
 
 ## Communauté
 
@@ -32,7 +32,7 @@ Nous croyons fermement que le parkour est avant tout une communauté. Rejoignez-
 
 ## Contact
 
-Pour toute question ou suggestion, n'hésitez pas à nous contacter via notre [site officiel](https://vertiflow.fr) ou à nous rejoindre sur [GitHub](https://github.com/votre-utilisateur/vertiflow).
+Pour toute question ou suggestion, n'hésitez pas à nous contacter via notre [site officiel](https://vertiflow.fr) ou à nous rejoindre sur [GitHub](https://github.com/AirKyzzZ/vertiflow).
 
 ---
 
