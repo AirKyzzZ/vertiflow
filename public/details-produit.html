@@ -61,6 +61,59 @@
             border-radius: 5px;
             margin-top: 3rem;
         }
+
+        .size-guide {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        }
+
+        .nav-pills .nav-link {
+            color: #2b2d42;
+            border-radius: 25px;
+            padding: 0.7rem 1.5rem;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-pills .nav-link.active {
+            background-color: #2b2d42;
+            color: white;
+        }
+
+        .nav-pills .nav-link:hover:not(.active) {
+            background-color: #f8f9fa;
+        }
+
+        .table {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .table thead th {
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+            color: #2b2d42;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .measurement-tips .alert {
+            border-radius: 10px;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .measurement-tips .bi {
+            margin-right: 0.5rem;
+        }
+
+        .measurement-tips ul li {
+            margin-bottom: 0.5rem;
+        }
     </style>
 </head>
 
@@ -144,7 +197,7 @@
                                 <p class="text-muted"><i class="bi bi-recycle"></i> 30% Coton recyclé</p>
                                 <p class="text-muted"><i class="bi bi-gear"></i> Col rond renforcé</p>
                                 <p class="text-muted"><i class="bi bi-printer"></i> Sérigraphie eco-solvant</p>
-                                <p class="text-muted"><i class="bi bi-flag"></i> Fabriqué en Lettonie</p>
+                                <p class="text-muted"><i class="bi bi-flag"></i> Assemblé en Lettonie</p>
                             </div>
                         </div>
                             <div class="sustainability mt-4">
@@ -169,7 +222,7 @@
                                     <p class="text-muted"><i class="bi bi-snow"></i> Double épaisseur capuche</p>
                                     <p class="text-muted"><i class="bi bi-heart"></i> Poche kangourou doublée</p>
                                     <p class="text-muted"><i class="bi bi-palette"></i> Teinture low-impact</p>
-                                    <p class="text-muted"><i class="bi bi-flag"></i> Fabriqué en Lettonie</p>
+                                    <p class="text-muted"><i class="bi bi-flag"></i> Assemblé en Lettonie</p>
                                 </div>
                             </div>
                             <div class="sustainability mt-4">
@@ -191,27 +244,84 @@
                                 </div>
                                 <div class="col-md-6">
                                     <p class="text-muted"><i class="bi bi-wind"></i> Respirabilité optimisée</p>
-                                    <p class="text-muted"><i class="bi bi-arrow-repeat"></i> Séchage rapide</p>
-                                    <p class="text-muted"><i class="bi bi-lightning"></i> Résistance aux déchirures</p>
                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- Débardeur -->
+                        <div class="spec-card">
+                            <h3 class="mb-4">Débardeur VF <small class="text-muted">(Bella + Canvas 3480)</small></h3>
+                            <div class="row text-start">
+                                <div class="col-md-6">
+                                    <p class="text-muted"><i class="bi bi-rulers"></i> Tailles : XS-2XL</p>
+                                    <p class="text-muted"><i class="bi bi-basket"></i> 100% Coton peigné</p>
+                                    <p class="text-muted"><i class="bi bi-speedometer"></i> Poids : 145 g/m²</p>
+                                    <p class="text-muted"><i class="bi bi-shield-check"></i> Certification WRAP</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="text-muted"><i class="bi bi-wind"></i> Tissu léger et respirant</p>
+                                    <p class="text-muted"><i class="bi bi-gear"></i> Coupe athlétique</p>
+                                    <p class="text-muted"><i class="bi bi-printer"></i> Impression DTG écologique</p>
+                                    <p class="text-muted"><i class="bi bi-flag"></i> Assemblé en Lettonie</p>
+                                </div>
+                            </div>
+                            <div class="sustainability mt-4">
+                                <div class="progress mb-2">
+                                    <div class="progress-bar" role="progressbar" style="width: 82%"></div>
+                                </div>
+                                <small class="text-muted">Production éthique certifiée WRAP</small>
+                            </div>
+                        </div>
+
+                        <!-- Bob -->
+                        <div class="spec-card">
+                            <h3 class="mb-4">Bob VF <small class="text-muted">(Flexfit 5003)</small></h3>
+                            <div class="row text-start">
+                                <div class="col-md-6">
+                                    <p class="text-muted"><i class="bi bi-rulers"></i> Tailles : Unique (réglable)</p>
+                                    <p class="text-muted"><i class="bi bi-basket"></i> 100% Coton sergé</p>
+                                    <p class="text-muted"><i class="bi bi-shield-check"></i> Protection UV</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="text-muted"><i class="bi bi-droplet"></i> Traitement hydrofuge</p>
+                                    <p class="text-muted"><i class="bi bi-heart"></i> Bandeau intérieur confort</p>
+                                    <p class="text-muted"><i class="bi bi-printer"></i> Broderie haute qualité</p>
+                                </div>
+                            </div>
+                            <div class="sustainability mt-4">
+                                <div class="progress mb-2">
+                                    <div class="progress-bar" role="progressbar" style="width: 75%"></div>
+                                </div>
+                                <small class="text-muted">Production responsable certifiée</small>
+                            </div>
+                        </div>
+
+                        <!-- Shorts All Over -->
+                        <div class="spec-card">
+                            <h3 class="mb-4">Short Performance All Over <small class="text-muted">(Athletic Unisexe)</small></h3>
+                            <div class="row text-start">
+                                <div class="col-md-6">
+                                    <p class="text-muted"><i class="bi bi-rulers"></i> Tailles : XS-2XL</p>
+                                    <p class="text-muted"><i class="bi bi-basket"></i> 82% Polyester / 18% Spandex</p>
+                                    <p class="text-muted"><i class="bi bi-speedometer"></i> Poids : 200 g/m²</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="text-muted"><i class="bi bi-wind"></i> Tissu 4-way stretch</p>
+                                    <p class="text-muted"><i class="bi bi-moisture"></i> Technologie wicking</p>
+                                    <p class="text-muted"><i class="bi bi-printer"></i> Impression sublimation all-over</p>
+                                </div>
+                            </div>
+                            <div class="sustainability mt-4">
+                                <div class="progress mb-2">
+                                    <div class="progress-bar" role="progressbar" style="width: 80%"></div>
+                                </div>
+                                <small class="text-muted">Production avec encres écologiques</small>
                             </div>
                         </div>
 
                         <!-- Accessoires -->
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="spec-card">
-                                    <h4>Coque iPhone</h4>
-                                    <p class="text-muted"><i class="bi bi-phone"></i> ABS renforcé 2mm</p>
-                                    <p class="text-muted"><i class="bi bi-shield-shaded"></i> Bords anti-chocs</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="spec-card">
-                                    <h4>Cache-Cou VF</h4>
-                                    <p class="text-muted"><i class="bi bi-droplet"></i> 95% Polyester / 5% Spandex</p>
-                                    <p class="text-muted"><i class="bi bi-house-gear"></i> Lavable machine</p>
-                                </div>
                             </div>
                         </div>
 
@@ -220,6 +330,257 @@
                             🚚 Expédition sous 2-5 jours ouvrés depuis nos centres certifiés Fair Trade.<br>
                             🌱 Emballages 100% recyclables.</p>
                         </div>
+
+                        <!-- Guide des Tailles -->
+                        <section class="size-guide mt-5">
+                            <h2 class="mb-4">Guide des <span>Tailles</span></h2>
+                            
+                            <div class="size-guide-tabs">
+                                <!-- Navigation des onglets -->
+                                <ul class="nav nav-pills mb-4 justify-content-center" id="sizeGuideTab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" id="tshirt-tab" data-bs-toggle="pill" data-bs-target="#tshirt" type="button" role="tab">
+                                            <i class="bi bi-tshirt"></i> T-shirt & Débardeur
+                                        </button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="hoodie-tab" data-bs-toggle="pill" data-bs-target="#hoodie" type="button" role="tab">
+                                            <i class="bi bi-hoodie"></i> Hoodie
+                                        </button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="shorts-tab" data-bs-toggle="pill" data-bs-target="#shorts" type="button" role="tab">
+                                            <i class="bi bi-shorts"></i> Shorts
+                                        </button>
+                                    </li>
+                                </ul>
+
+                                <!-- Contenu des onglets -->
+                                <div class="tab-content" id="sizeGuideTabContent">
+                                    <!-- T-shirt & Débardeur -->
+                                    <div class="tab-pane fade show active" id="tshirt" role="tabpanel">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Taille</th>
+                                                        <th>Tour de poitrine (cm)</th>
+                                                        <th>Longueur (cm)</th>
+                                                        <th>Largeur épaules (cm)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>S</td>
+                                                        <td>91-97</td>
+                                                        <td>71</td>
+                                                        <td>44</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>M</td>
+                                                        <td>97-102</td>
+                                                        <td>74</td>
+                                                        <td>47</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>L</td>
+                                                        <td>102-107</td>
+                                                        <td>76</td>
+                                                        <td>50</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>XL</td>
+                                                        <td>107-117</td>
+                                                        <td>79</td>
+                                                        <td>53</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2XL</td>
+                                                        <td>117-127</td>
+                                                        <td>81</td>
+                                                        <td>56</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <!-- Hoodie -->
+                                    <div class="tab-pane fade" id="hoodie" role="tabpanel">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Taille</th>
+                                                        <th>Tour de poitrine (cm)</th>
+                                                        <th>Longueur (cm)</th>
+                                                        <th>Longueur manches (cm)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>S</td>
+                                                        <td>94-99</td>
+                                                        <td>69</td>
+                                                        <td>84</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>M</td>
+                                                        <td>99-104</td>
+                                                        <td>71</td>
+                                                        <td>86</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>L</td>
+                                                        <td>104-114</td>
+                                                        <td>74</td>
+                                                        <td>88</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>XL</td>
+                                                        <td>114-124</td>
+                                                        <td>76</td>
+                                                        <td>90</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2XL</td>
+                                                        <td>124-134</td>
+                                                        <td>79</td>
+                                                        <td>92</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <!-- Shorts -->
+                                    <div class="tab-pane fade" id="shorts" role="tabpanel">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Taille</th>
+                                                        <th>Tour de taille (cm)</th>
+                                                        <th>Tour de hanches (cm)</th>
+                                                        <th>Longueur (cm)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>XS</td>
+                                                        <td>63-68</td>
+                                                        <td>88-93</td>
+                                                        <td>43</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>S</td>
+                                                        <td>68-73</td>
+                                                        <td>93-98</td>
+                                                        <td>44</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>M</td>
+                                                        <td>73-78</td>
+                                                        <td>98-103</td>
+                                                        <td>45</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>L</td>
+                                                        <td>78-83</td>
+                                                        <td>103-108</td>
+                                                        <td>46</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>XL</td>
+                                                        <td>83-88</td>
+                                                        <td>108-113</td>
+                                                        <td>47</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2XL</td>
+                                                        <td>88-93</td>
+                                                        <td>113-118</td>
+                                                        <td>48</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Conseils de mesure -->
+                            <div class="measurement-tips mt-4">
+                                <div class="alert alert-info">
+                                    <h5><i class="bi bi-info-circle"></i> Comment prendre vos mesures ?</h5>
+                                    <ul class="list-unstyled">
+                                        <li><i class="bi bi-check2"></i> Tour de poitrine : Mesurez horizontalement à l'endroit le plus fort de la poitrine</li>
+                                        <li><i class="bi bi-check2"></i> Tour de taille : Mesurez à l'endroit le plus étroit de la taille</li>
+                                        <li><i class="bi bi-check2"></i> Tour de hanches : Mesurez à l'endroit le plus fort des hanches</li>
+                                        <li><i class="bi bi-check2"></i> Longueur : Mesurez du haut de l'épaule jusqu'au bas du vêtement</li>
+                                    </ul>
+                                    <p class="mb-0 mt-2">
+                                        <i class="bi bi-lightbulb"></i> Conseil : Si vous hésitez entre deux tailles, prenez la taille au-dessus pour plus de confort.
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Style CSS pour le guide des tailles -->
+                        <style>
+                            .size-guide {
+                                background: white;
+                                padding: 2rem;
+                                border-radius: 15px;
+                                box-shadow: 0 0 20px rgba(0,0,0,0.05);
+                            }
+
+                            .nav-pills .nav-link {
+                                color: #2b2d42;
+                                border-radius: 25px;
+                                padding: 0.7rem 1.5rem;
+                                margin: 0 0.5rem;
+                                transition: all 0.3s ease;
+                            }
+
+                            .nav-pills .nav-link.active {
+                                background-color: #2b2d42;
+                                color: white;
+                            }
+
+                            .nav-pills .nav-link:hover:not(.active) {
+                                background-color: #f8f9fa;
+                            }
+
+                            .table {
+                                background: white;
+                                border-radius: 10px;
+                                overflow: hidden;
+                            }
+
+                            .table thead th {
+                                background-color: #f8f9fa;
+                                border-bottom: 2px solid #dee2e6;
+                                color: #2b2d42;
+                            }
+
+                            .table tbody tr:hover {
+                                background-color: #f8f9fa;
+                            }
+
+                            .measurement-tips .alert {
+                                border-radius: 10px;
+                                border-left: 4px solid #17a2b8;
+                            }
+
+                            .measurement-tips .bi {
+                                margin-right: 0.5rem;
+                            }
+
+                            .measurement-tips ul li {
+                                margin-bottom: 0.5rem;
+                            }
+                        </style>
                     </div>
                 </div>
             </div>
@@ -289,4 +650,5 @@
     <script src="js/slick.min.js"></script>
     <script src="js/custom.js"></script>
 </body>
-</html>
+
+</html></html>
