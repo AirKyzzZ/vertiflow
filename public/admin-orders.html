@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" type="image/x-icon" href="images/logo-transparent.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gestion des Commandes - VertiFlow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/bootstrap-icons.css" rel="stylesheet">
+  <link href="css/tooplate-little-fashion.css" rel="stylesheet">
+  <style>
+    .order-card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      border-left: 4px solid #0d6efd;
+    }
+    .order-card.paid {
+      border-left-color: #198754;
+    }
+    .order-card.failed {
+      border-left-color: #dc3545;
+    }
+    .order-details {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 15px;
+    }
+    .status-badge {
+      font-size: 0.8em;
+      padding: 5px 10px;
+      border-radius: 20px;
+    }
+    .filter-section {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img src="images/logo-transparent.png" class="logo img-fluid" alt="VertiFlow">
+      </a>
+      <div class="d-flex">
+        <a href="index.html" class="btn btn-outline-primary">Retour au site</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="section-padding">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h1 class="text-center mb-5">Gestion des Commandes</h1>
+            
+            <div class="filter-section">
+              <div class="row">
+                <div class="col-md-4">
+                  <label for="statusFilter" class="form-label">Filtrer par statut</label>
+                  <select class="form-select" id="statusFilter">
+                    <option value="">Tous les statuts</option>
+                    <option value="succeeded">Paiement réussi</option>
+                    <option value="failed">Paiement échoué</option>
+                    <option value="En préparation">En préparation</option>
+                    <option value="En attente de préparation">En attente</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label for="dateFilter" class="form-label">Filtrer par date</label>
+                  <input type="date" class="form-control" id="dateFilter">
+                </div>
+                <div class="col-md-4">
+                  <label for="searchFilter" class="form-label">Rechercher</label>
+                  <input type="text" class="form-control" id="searchFilter" placeholder="Nom, email, produit...">
+                </div>
+              </div>
+            </div>
+
+            <div id="orders-container">
+              <!-- Les commandes seront chargées ici -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // Simuler le chargement des commandes depuis Stripe
+    // En production, vous devriez créer une API pour récupérer les commandes
+    const mockOrders = [
+      {
+        id: 'pi_1234567890',
+        amount: 89.99,
+        status: 'succeeded',
+        customerName: 'Jean Dupont',
+        customerEmail: 'jean@example.com',
+        customerPhone: '+33 6 12 34 56 78',
+        shippingAddress: '123 Rue de la Paix',
+        shippingCity: 'Paris',
+        shippingZip: '75001',
+        shippingCountry: 'France',
+        orderDate: '2025-01-15T10:30:00Z',
+        shippingStatus: 'En préparation',
+        items: [
+          {
+            name: 'T-shirt VertiFlow',
+            size: 'M',
+            color: 'Noir',
+            quantity: 2,
+            price: 29.99
+          },
+          {
+            name: 'Hoodie VertiFlow',
+            size: 'L',
+            color: 'Blanc',
+            quantity: 1,
+            price: 29.99
+          }
+        ]
+      }
+    ];
+
+    function displayOrders(orders) {
+      const container = $('#orders-container');
+      container.empty();
+
+      if (orders.length === 0) {
+        container.html('<div class="text-center"><p>Aucune commande trouvée</p></div>');
+        return;
+      }
+
+      orders.forEach(order => {
+        const orderCard = createOrderCard(order);
+        container.append(orderCard);
+      });
+    }
+
+    function createOrderCard(order) {
+      const statusClass = order.status === 'succeeded' ? 'paid' : 
+                         order.status === 'failed' ? 'failed' : '';
+      
+      const statusText = order.status === 'succeeded' ? 'Payé' : 
+                        order.status === 'failed' ? 'Échoué' : 'En attente';
+      
+      const statusBadgeClass = order.status === 'succeeded' ? 'bg-success' : 
+                              order.status === 'failed' ? 'bg-danger' : 'bg-warning';
+
+      const itemsHtml = order.items.map(item => `
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <span>${item.name} (${item.size}, ${item.color}) x${item.quantity}</span>
+          <span class="fw-bold">${(item.price * item.quantity).toFixed(2)}€</span>
+        </div>
+      `).join('');
+
+      return `
+        <div class="order-card ${statusClass}">
+          <div class="row">
+            <div class="col-md-8">
+              <h5>Commande #${order.id.slice(-8)}</h5>
+              <p class="mb-1"><strong>Client:</strong> ${order.customerName}</p>
+              <p class="mb-1"><strong>Email:</strong> ${order.customerEmail}</p>
+              <p class="mb-1"><strong>Téléphone:</strong> ${order.customerPhone}</p>
+              <p class="mb-1"><strong>Date:</strong> ${new Date(order.orderDate).toLocaleDateString('fr-FR')}</p>
+              <p class="mb-1"><strong>Total:</strong> ${order.amount.toFixed(2)}€</p>
+            </div>
+            <div class="col-md-4 text-end">
+              <span class="status-badge ${statusBadgeClass}">${statusText}</span>
+              <br><br>
+              <span class="badge bg-info">${order.shippingStatus}</span>
+            </div>
+          </div>
+          
+          <div class="order-details">
+            <h6>Adresse de livraison:</h6>
+            <p class="mb-2">${order.shippingAddress}<br>
+            ${order.shippingZip} ${order.shippingCity}<br>
+            ${order.shippingCountry}</p>
+            
+            <h6>Articles commandés:</h6>
+            ${itemsHtml}
+            
+            <div class="mt-3">
+              <button class="btn btn-sm btn-outline-primary me-2" onclick="markAsShipped('${order.id}')">
+                Marquer comme expédié
+              </button>
+              <button class="btn btn-sm btn-outline-secondary" onclick="viewOrderDetails('${order.id}')">
+                Voir les détails
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function markAsShipped(orderId) {
+      // En production, vous devriez appeler une API pour mettre à jour le statut
+      alert(`Commande ${orderId} marquée comme expédiée`);
+    }
+
+    function viewOrderDetails(orderId) {
+      // En production, vous devriez afficher une modal avec tous les détails
+      alert(`Détails de la commande ${orderId}`);
+    }
+
+    function filterOrders() {
+      const statusFilter = $('#statusFilter').val();
+      const dateFilter = $('#dateFilter').val();
+      const searchFilter = $('#searchFilter').val().toLowerCase();
+
+      let filteredOrders = mockOrders;
+
+      if (statusFilter) {
+        filteredOrders = filteredOrders.filter(order => order.status === statusFilter);
+      }
+
+      if (dateFilter) {
+        filteredOrders = filteredOrders.filter(order => 
+          order.orderDate.startsWith(dateFilter)
+        );
+      }
+
+      if (searchFilter) {
+        filteredOrders = filteredOrders.filter(order =>
+          order.customerName.toLowerCase().includes(searchFilter) ||
+          order.customerEmail.toLowerCase().includes(searchFilter) ||
+          order.items.some(item => item.name.toLowerCase().includes(searchFilter))
+        );
+      }
+
+      displayOrders(filteredOrders);
+    }
+
+    $(document).ready(function() {
+      // Afficher toutes les commandes au chargement
+      displayOrders(mockOrders);
+
+      // Appliquer les filtres en temps réel
+      $('#statusFilter, #dateFilter').on('change', filterOrders);
+      $('#searchFilter').on('input', filterOrders);
+    });
+  </script>
+</body>
+</html>

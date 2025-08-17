@@ -182,6 +182,10 @@
                   <input type="email" class="form-control" id="email" required>
                 </div>
                 <div class="mb-3">
+                  <label for="phone" class="form-label">Téléphone</label>
+                  <input type="tel" class="form-control" id="phone" placeholder="+33 6 12 34 56 78">
+                </div>
+                <div class="mb-3">
                   <label for="address" class="form-label">Adresse</label>
                   <input type="text" class="form-control" id="address" required>
                 </div>
@@ -369,6 +373,7 @@ cartItemsContainer.append(`
 const customerInfo = {
   name: $('#name').val(),
   email: $('#email').val(),
+  phone: $('#phone').val(),
   address: $('#address').val(),
   city: $('#city').val(),
   zip: $('#zip').val(),
@@ -401,7 +406,7 @@ const customerInfo = {
           const response = await fetch('/.netlify/functions/create-payment-intent', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ amount, customerInfo }),
+            body: JSON.stringify({ amount, customerInfo, cart }),
           });
 
           if (!response.ok) {
