@@ -12,8 +12,8 @@
         <link rel="icon" type="image/x-icon" href="images/logo-transparent.png">
         <!-- CSS FILES -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
-
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap" rel="stylesheet">
 
@@ -22,12 +22,17 @@
         <link rel="preload" href="css/tooplate-little-fashion.css" as="style">
         
         <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link href="css/bootstrap-icons.css" rel="stylesheet">
-
-        <link rel="stylesheet" href="css/slick.css"/>
-
         <link href="css/tooplate-little-fashion.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+        
+        <!-- Defer non-critical CSS -->
+        <link rel="preload" href="css/bootstrap-icons.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link href="css/bootstrap-icons.css" rel="stylesheet"></noscript>
+        
+        <link rel="preload" href="css/slick.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="css/slick.css"></noscript>
+
+        <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"></noscript>
     </head>
 <div class="cookie-consent position-fixed fixed-bottom bg-dark text-white p-3" style="display: none;">
     <div class="container">
@@ -165,7 +170,10 @@ document.addEventListener('DOMContentLoaded', function() {
             <section class="slick-slideshow">   
 
                 <div class="slick-custom">
-                    <img src="images/slideshow/fise.png" class="img-fluid" alt="FISE" loading="eager">
+                    <picture>
+                        <source type="image/webp" srcset="images/slideshow/fise-mobile.webp 412w, images/slideshow/fise.webp 635w" sizes="(max-width: 768px) 412px, 635px">
+                        <img src="images/slideshow/fise.png" class="img-fluid" alt="FISE" width="635" height="423" loading="eager" fetchpriority="high">
+                    </picture>
                 
                     <div class="slick-bottom" style="background-color: rgba(0, 0, 0, 0.5); color: #ffffff;">
                         <div class="container">
@@ -185,7 +193,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
 
                 <div class="slick-custom">
-                    <img src="images/slideshow/banner.png" class="img-fluid" alt="VertiFlow Banner" loading="eager">
+                    <picture>
+                        <source type="image/webp" srcset="images/slideshow/banner-mobile.webp 412w, images/slideshow/banner.webp 1270w" sizes="(max-width: 768px) 412px, 1270px">
+                        <img src="images/slideshow/banner.png" class="img-fluid" alt="VertiFlow Banner" width="1270" height="846" loading="eager">
+                    </picture>
 
                     <div class="slick-bottom" style="background-color: rgba(0, 0, 0, 0.5); color: #ffffff;">
                         <div class="container">
@@ -205,7 +216,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
 
                 <div class="slick-custom">
-                    <img src="images/slideshow/samlove.jpg" class="img-fluid" alt="Parkour Action" loading="eager">
+                    <picture>
+                        <source type="image/webp" srcset="images/slideshow/samlove-mobile.webp 412w, images/slideshow/samlove.webp 1024w" sizes="(max-width: 768px) 412px, 1024px">
+                        <img src="images/slideshow/samlove.jpg" class="img-fluid" alt="Parkour Action" width="1024" height="683" loading="eager">
+                    </picture>
 
                     <div class="slick-bottom" style="background-color: rgba(0, 0, 0, 0.5); color: #ffffff;">
                         <div class="container">
@@ -255,7 +269,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
                                     <div class="row">
                                         <div class="col-lg-7 col-12">
-                                            <img src="images/intro.png" class="img-fluid" alt="VertiFlow Introduction" loading="lazy">
+                                            <picture>
+                                                <source type="image/webp" srcset="images/intro-mobile.webp 388w, images/intro.webp 1200w" sizes="(max-width: 768px) 388px, 1200px">
+                                                <img src="images/intro.png" class="img-fluid" alt="VertiFlow Introduction" width="1200" height="799" loading="lazy">
+                                            </picture>
                                         </div>
 
                                         <div class="col-lg-5 col-12">
@@ -309,7 +326,10 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <div class="tab-pane fade" id="pills-skill" role="tabpanel" aria-labelledby="pills-skill-tab">
                                     <div class="row">
                                         <div class="col-lg-7 col-12">
-                                            <img src="images/merch.png" class="img-fluid" alt="VertiFlow Collection" loading="lazy">
+                                            <picture>
+                                                <source type="image/webp" srcset="images/merch-mobile.webp 400w, images/merch.webp 800w" sizes="(max-width: 768px) 400px, 800px">
+                                                <img src="images/merch.png" class="img-fluid" alt="VertiFlow Collection" width="800" height="800" loading="lazy">
+                                            </picture>
                                         </div>
 
                                         <div class="col-lg-5 col-12">
@@ -363,7 +383,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="row align-items-center">
 
                         <div class="col-lg-6 col-12">
-                            <img src="images/factory.png" class="img-fluid" alt="VertiFlow Factory" loading="lazy">
+                            <picture>
+                                <source type="image/webp" srcset="images/factory-mobile.webp 412w, images/factory.webp 1000w" sizes="(max-width: 768px) 412px, 1000px">
+                                <img src="images/factory.png" class="img-fluid" alt="VertiFlow Factory" width="1000" height="668" loading="lazy">
+                            </picture>
                         </div>
 
                         <div class="col-lg-6 col-12">
@@ -395,8 +418,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="col-lg-4 col-12 mb-3">
                             <div class="product-thumb">
                                 <a href="tshirt-climb.html">
-                                    <img src="images/product/front_tshirt.png" class="img-fluid product-image" alt="T-shirt CLIMB Front" loading="lazy" loading="lazy">
-                                    <img src="images/product/back_tshirt.png" class="img-fluid product-image-hover" alt="T-shirt CLIMB Back" loading="lazy" loading="lazy">                                </a>
+                                    <picture>
+                                        <source type="image/webp" srcset="images/product/front_tshirt-mobile.webp 388w, images/product/front_tshirt.webp 800w" sizes="(max-width: 768px) 388px, 800px">
+                                        <img src="images/product/front_tshirt.png" class="img-fluid product-image" alt="T-shirt CLIMB Front" width="800" height="800" loading="lazy">
+                                    </picture>
+                                    <picture>
+                                        <source type="image/webp" srcset="images/product/back_tshirt-mobile.webp 388w, images/product/back_tshirt.webp 800w" sizes="(max-width: 768px) 388px, 800px">
+                                        <img src="images/product/back_tshirt.png" class="img-fluid product-image-hover" alt="T-shirt CLIMB Back" width="800" height="800" loading="lazy">
+                                    </picture>
+                                </a>
 
                                 <div class="product-top d-flex">
                                     <span class="product-alert me-auto">Meilleure Vente</span>
@@ -421,8 +451,14 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="col-lg-4 col-12 mb-3">
                             <div class="product-thumb">
                                 <a href="hoodie-vf-definition.html">
-                                    <img src="images/product/front_hoodie.png" class="img-fluid product-image" alt="Hoodie VF Front" loading="lazy" loading="lazy">
-                                    <img src="images/product/back_hoodie.png" class="img-fluid product-image-hover" alt="Hoodie VF Back" loading="lazy" loading="lazy">
+                                    <picture>
+                                        <source type="image/webp" srcset="images/product/front_hoodie-mobile.webp 388w, images/product/front_hoodie.webp 800w" sizes="(max-width: 768px) 388px, 800px">
+                                        <img src="images/product/front_hoodie.png" class="img-fluid product-image" alt="Hoodie VF Front" width="800" height="800" loading="lazy">
+                                    </picture>
+                                    <picture>
+                                        <source type="image/webp" srcset="images/product/back_hoodie-mobile.webp 388w, images/product/back_hoodie.webp 800w" sizes="(max-width: 768px) 388px, 800px">
+                                        <img src="images/product/back_hoodie.png" class="img-fluid product-image-hover" alt="Hoodie VF Back" width="800" height="800" loading="lazy">
+                                    </picture>
                                 </a>
 
                                 <div class="product-top d-flex">
@@ -447,8 +483,14 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="col-lg-4 col-12">
                             <div class="product-thumb">
                                 <a href="shorts-performance-vf.html">
-                                    <img src="images/product/first_short.png" class="img-fluid product-image" alt="Shorts Performance Front" loading="lazy" loading="lazy">
-                                    <img src="images/product/second_short.png" class="img-fluid product-image-hover" alt="Shorts Performance Back" loading="lazy" loading="lazy">
+                                    <picture>
+                                        <source type="image/webp" srcset="images/product/first_short-mobile.webp 388w, images/product/first_short.webp 800w" sizes="(max-width: 768px) 388px, 800px">
+                                        <img src="images/product/first_short.png" class="img-fluid product-image" alt="Shorts Performance Front" width="800" height="800" loading="lazy">
+                                    </picture>
+                                    <picture>
+                                        <source type="image/webp" srcset="images/product/second_short-mobile.webp 388w, images/product/second_short.webp 800w" sizes="(max-width: 768px) 388px, 800px">
+                                        <img src="images/product/second_short.png" class="img-fluid product-image-hover" alt="Shorts Performance Back" width="800" height="800" loading="lazy">
+                                    </picture>
                                 </a>
 
                                 <div class="product-top d-flex">
