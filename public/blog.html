@@ -16,6 +16,10 @@
 
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap" rel="stylesheet">
 
+        <!-- Preload critical CSS -->
+        <link rel="preload" href="css/bootstrap.min.css" as="style">
+        <link rel="preload" href="css/tooplate-little-fashion.css" as="style">
+        
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/bootstrap-icons.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
@@ -104,7 +108,7 @@
                     <!-- Exemple d'article 1 -->
                     <div class="col-md-4 mb-4">
                       <div class="card">
-                        <img src="images/metz.jpeg" class="card-img-top" alt="Titre de l'article 1">
+                        <img src="images/metz.jpeg" class="card-img-top" alt="Titre de l'article 1" loading="lazy">
                         <div class="card-body">
                           <h5 class="card-title">L'étape nationale de parkour à Metz : Un succès retentissant</h5>
                           <p class="card-text">À Metz, 400 athlètes en freerun et speedrun repoussent leurs limites, annonçant l'essor du parkour vers le FISE.</p>
@@ -116,7 +120,7 @@
                     <!-- Nouvel article : La Teste-de-Buch 2025 -->
                     <div class="col-md-4 mb-4">
                         <div class="card">
-                        <img src="images/lateste.jpg" class="card-img-top" alt="3ème étape à La Teste-de-Buch">
+                        <img src="images/lateste.jpg" class="card-img-top" alt="3ème étape à La Teste-de-Buch" loading="lazy">
                         <div class="card-body">
                             <h5 class="card-title">3ᵉ étape des championnats de France à La Teste-de-Buch</h5>
                             <p class="card-text">L’atmosphère était à son comble pour cette dernière étape avant les grands rendez-vous de la saison : shows spectaculaires, soutien inconditionnel du public et athlètes surmotivés. </p>
@@ -128,7 +132,7 @@
                     <!-- Nouvel article : Partenariat PKBA - Vertiflow -->
                     <div class="col-md-4 mb-4">
                         <div class="card">
-                        <img src="images/pkba-partenariat.jpg" class="card-img-top" alt="Partenariat PKBA - Vertiflow">
+                        <img src="images/pkba-partenariat.jpg" class="card-img-top" alt="Partenariat PKBA - Vertiflow" loading="lazy">
                         <div class="card-body">
                             <h5 class="card-title">Partenariat PKBA - Vertiflow : L'union fait la force du parkour</h5>
                             <p class="card-text">Découvrez le nouveau partenariat entre PKBA (Parkour Bassin d'Arcachon) et Vertiflow, une collaboration qui unit passion du parkour et innovation vestimentaire.</p>
@@ -141,7 +145,7 @@
                     <!-- Exemple d'article 3 
                     <div class="col-md-4 mb-4">
                       <div class="card">
-                        <img src="images/article3.jpg" class="card-img-top" alt="Titre de l'article 3">
+                        <img src="images/article3.jpg" class="card-img-top" alt="Titre de l'article 3" loading="lazy">
                         <div class="card-body">
                           <h5 class="card-title">Titre de l'article 3</h5>
                           <p class="card-text">Un bref aperçu qui incite à lire l'article complet.</p>
