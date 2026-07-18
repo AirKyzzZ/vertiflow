@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "currency": "EUR",
+  "products": [
+    { "slug": "tshirt-climb", "name": "T-shirt CLIMB", "price": "29.99", "sources": [
+      { "printful_sync_product_id": 376170525, "color": "Noir", "sizes": ["S", "M", "L", "XL", "2XL"] },
+      { "printful_sync_product_id": 377330919, "color": "Blanc", "sizes": ["S", "M", "L", "XL", "2XL"] }
+    ] },
+    { "slug": "hoodie-vf-definition", "name": "Hoodie VF Definition", "price": "64.99", "sources": [
+      { "printful_sync_product_id": 376418591, "color": "Noir", "sizes": ["S", "M", "L", "XL", "2XL"] },
+      { "printful_sync_product_id": 377337480, "color": "Blanc", "sizes": ["S", "M", "L", "XL", "2XL"] }
+    ] },
+    { "slug": "casquette-vf", "name": "Casquette VF", "price": "29.99", "sources": [
+      { "printful_sync_product_id": 376418706, "color": "Noir", "sizes": ["One size"] },
+      { "printful_sync_product_id": 377338630, "color": "Blanc", "sizes": ["One size"] }
+    ] },
+    { "slug": "shorts-performance-vf", "name": "Shorts Performance VF", "price": "47.99", "sources": [
+      { "printful_sync_product_id": 376418808, "color": "Noir", "sizes": ["2XS", "XS", "S", "M", "L", "XL", "2XL"] },
+      { "printful_sync_product_id": 377338525, "color": "Blanc", "sizes": ["2XS", "XS", "S", "M", "L", "XL", "2XL"] }
+    ] },
+    { "slug": "coque-iphone-vf", "name": "Coque iPhone VF", "price": "29.99", "sources": [
+      { "printful_sync_product_id": 377417508, "color": "Noir", "sizes": ["iPhone 11", "iPhone 11 Pro", "iPhone 11 Pro Max", "iPhone 12 Mini", "iPhone 12", "iPhone 12 Pro", "iPhone 12 Pro Max", "iPhone 13 Mini", "iPhone 13", "iPhone 13 Pro", "iPhone 13 Pro Max", "iPhone 14", "iPhone 14 Plus", "iPhone 14 Pro", "iPhone 14 Pro Max", "iPhone 15", "iPhone 15 Plus", "iPhone 15 Pro", "iPhone 15 Pro Max", "iPhone 16", "iPhone 16 Plus", "iPhone 16 Pro", "iPhone 16 Pro Max"] },
+      { "printful_sync_product_id": 376418868, "color": "Blanc", "sizes": ["iPhone 11", "iPhone 11 Pro", "iPhone 11 Pro Max", "iPhone 12 Mini", "iPhone 12", "iPhone 12 Pro", "iPhone 12 Pro Max", "iPhone 13 Mini", "iPhone 13", "iPhone 13 Pro", "iPhone 13 Pro Max", "iPhone 14", "iPhone 14 Plus", "iPhone 14 Pro", "iPhone 14 Pro Max", "iPhone 15", "iPhone 15 Plus", "iPhone 15 Pro", "iPhone 15 Pro Max", "iPhone 16", "iPhone 16 Plus", "iPhone 16 Pro", "iPhone 16 Pro Max"] }
+    ] },
+    { "slug": "debardeur-vf", "name": "Débardeur VF", "price": "19.99", "sources": [
+      { "printful_sync_product_id": 385121662, "color": "Noir", "sizes": ["XS", "S", "M", "L", "XL", "2XL"] },
+      { "printful_sync_product_id": 385122205, "color": "Blanc", "sizes": ["XS", "S", "M", "L", "XL", "2XL"] }
+    ] },
+    { "slug": "cache-cou-vf", "name": "Cache-cou VF", "price": "24.99", "sources": [
+      { "printful_sync_product_id": 376418913, "color": "Noir", "sizes": ["M"], "size_aliases": { "One size": "M" } }
+    ] },
+    { "slug": "bob-vf", "name": "Bob VF", "price": "24.99", "sources": [
+      { "printful_sync_product_id": 385122974, "color": "Blanc", "sizes": ["M"], "size_aliases": { "One size": "M" } }
+    ] },
+    { "slug": "short-confort-vf", "name": "Short Confort VF", "price": "29.99", "sources": [
+      { "printful_sync_product_id": 385123410, "color": "Blanc", "sizes": ["2XS", "XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL"] }
+    ] }
+  ]
+}

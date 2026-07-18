@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <meta charset="utf-8">
   <link rel="icon" type="image/x-icon" href="images/logo-transparent.png">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -178,8 +177,12 @@
               </div>
               <form id="checkout-form">
                 <div class="mb-3">
-                  <label for="name" class="form-label">Nom Complet</label>
-                  <input type="text" class="form-control" id="name" required>
+                  <label for="first-name" class="form-label">Prénom</label>
+                  <input type="text" class="form-control" id="first-name" autocomplete="given-name" required>
+                </div>
+                <div class="mb-3">
+                  <label for="last-name" class="form-label">Nom</label>
+                  <input type="text" class="form-control" id="last-name" autocomplete="family-name" required>
                 </div>
                 <div class="mb-3">
                   <label for="email" class="form-label">Adresse Mail</label>
@@ -191,15 +194,19 @@
                 </div>
                 <div class="mb-3">
                   <label for="address" class="form-label">Adresse</label>
-                  <input type="text" class="form-control" id="address" required>
+                  <input type="text" class="form-control" id="address" autocomplete="address-line1" required>
+                </div>
+                <div class="mb-3">
+                  <label for="address-line2" class="form-label">Complément d'adresse</label>
+                  <input type="text" class="form-control" id="address-line2" autocomplete="address-line2">
                 </div>
                 <div class="mb-3">
                   <label for="city" class="form-label">Ville</label>
-                  <input type="text" class="form-control" id="city" required>
+                  <input type="text" class="form-control" id="city" autocomplete="address-level2" required>
                 </div>
                 <div class="mb-3">
                   <label for="zip" class="form-label">Code Postal</label>
-                  <input type="text" class="form-control" id="zip" required>
+                  <input type="text" class="form-control" id="zip" autocomplete="postal-code" required>
                 </div>
                 <div class="mb-3">
                   <label for="country" class="form-label">Pays</label>
@@ -208,7 +215,7 @@
                     <option value="FR">France</option>
                     <option value="US">United States</option>
                     <option value="CA">Canada</option>
-                    <option value="UK">United Kingdom</option>
+                    <option value="GB">United Kingdom</option>
                     <option value="DE">Germany</option>
                     <option value="IT">Italy</option>
                     <option value="ES">Spain</option>
@@ -230,17 +237,22 @@
                     <option value="PL">Poland</option>
                   </select>                  
                 </div>
+                <div class="mb-3" id="state-field" hidden>
+                  <label for="state" class="form-label">Région / État</label>
+                  <input type="text" class="form-control" id="state" autocomplete="address-level1">
+                </div>
                 <div class="mb-3">
                   <label for="promo-code" class="form-label">Code Promo</label>
                   <input type="text" class="form-control" id="promo-code" placeholder="Entrez votre code promo">
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Valider vos informations</button>
               </form>
+              <p id="checkout-error" class="text-danger mt-3" role="alert" hidden></p>
 
               <!-- Conteneur pour le Payment Element et le bouton de paiement -->
               <div id="payment-container" style="display:none; margin-top:20px;">
                 <div id="payment-element"></div>
-                <button id="submit-payment" class="btn btn-primary w-100" style="margin-top:10px;"></button>
+                <button id="submit-payment" class="btn btn-primary w-100" style="margin-top:10px;" disabled>Chargement du paiement…</button>
               </div>
 
             </div>
@@ -307,227 +319,71 @@
 
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.bundle.min.js"></script>
-  <script src="https://js.stripe.com/v3/"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script src="https://js.stripe.com/clover/stripe.js"></script>
 
   <script>
-    // Initialisation de Stripe avec votre clé publique
-    const stripe = Stripe('pk_live_51Qw8utImMzY0wzqJq3XWQMeZQtYhTycdzcBjBjOqlCJuHDs9zNSwf1jamRIcLOWM8Xgwjxt4b2JUJ08fuqJ1utJN00jRe8WGxJ');
-
-    // Initialisation d'EmailJS (remplacez "z4uG1w3b8JueLdvkV" par votre identifiant EmailJS)
-    emailjs.init("z4uG1w3b8JueLdvkV");
-
     $(document).ready(function() {
-      // Chargement du panier
+      const cartItemsContainer = document.getElementById('cart-items');
+      const checkoutForm = document.getElementById('checkout-form');
+      const infoSubmitButton = checkoutForm.querySelector('button[type="submit"]');
+      const paymentContainer = document.getElementById('payment-container');
+      const submitButton = document.getElementById('submit-payment');
+      const errorElement = document.getElementById('checkout-error');
+      const stateField = document.getElementById('state-field');
+      const stateInput = document.getElementById('state');
       let cart = JSON.parse(localStorage.getItem('cart')) || [];
-      const cartItemsContainer = $('#cart-items');
-      let total = 0;
-
-      // Affichage des articles du panier
-// Affichage des articles du panier
-cart.forEach(item => {
-  const itemTotal = item.price * item.quantity;
-  total += itemTotal; 
-cartItemsContainer.append(`
-    <div class="cart-item">
-      <div class="row align-items-center">
-        <div class="col-12 col-md-3 text-center">
-          <img src="${item.image}" alt="${item.name}" class="img-fluid">
-        </div>
-        <div class="col-12 col-md-6">
-          <h5>${item.name}</h5>
-          <p>Taille: ${item.size}, Couleur: ${item.color}, Quantité: ${item.quantity}</p>
-        </div>
-        <div class="col-12 col-md-3 text-end">
-          <p>${itemTotal.toFixed(2)}€</p>
-          <button class="btn btn-danger btn-sm remove-btn" 
-                  data-id="${item.id}" 
-                  data-size="${item.size}"
-                  data-color="${item.color}">Supprimer</button>
-        </div>
-      </div>
-    </div>
-`);
-});
-
-
-
-      // Affichage du total du panier
-      if (cart.length > 0) {
-  const shipping = 6.99;    // Frais de livraison
-  const finalTotal = total + shipping;
-
-  cartItemsContainer.append(`
-    <div class="cart-total mt-3">
-      <h4 class="text-end">Total: ${finalTotal.toFixed(2)}€</h4>
-      <p class="text-end" style="font-size:0.8em; margin:0;">
-        Livraison rapide : ${shipping.toFixed(2)}€
-      </p>
-    </div>
-  `);
-}
-
-
-      // Gestion du formulaire de checkout
-      $('#checkout-form').submit(async function(e) {
-        e.preventDefault();
-
-        // Récupérer les informations utilisateur saisies dans le formulaire
-        // Dans la gestion du formulaire (submit event)
-const customerInfo = {
-  name: $('#name').val(),
-  email: $('#email').val(),
-  phone: $('#phone').val(),
-  address: $('#address').val(),
-  city: $('#city').val(),
-  zip: $('#zip').val(),
-  country: $('#country option:selected').text() // Récupère le nom du pays
-};
-
-    // Recharger le panier et recalculer le total
-    cart = JSON.parse(localStorage.getItem('cart')) || [];
-        total = 0;
-        cart.forEach(item => {
-          total += item.price * item.quantity;
-        });
-        const shipping = cart.length > 0 ? 6.99 : 0;
-        let finalTotal = total + shipping;
-
-
-    const promoCode = $('#promo-code').val().trim();
-        if (promoCode.toUpperCase() === 'codepromodezinzin') {
-          finalTotal = finalTotal * 0.85; // Appliquer une réduction de 15%
-          console.log('Code promo valide : réduction appliquée');
-          $('.cart-total h4').text(`Total: ${finalTotal.toFixed(2)}€`);
+      let checkoutState = 'ready';
+      let mountAttempted = false;
+      function showCheckoutError(message) { errorElement.textContent = message || 'Le paiement est indisponible. Veuillez réessayer.'; errorElement.hidden = false; }
+      function clearCheckoutError() { errorElement.textContent = ''; errorElement.hidden = true; }
+      function updateStateRequirement() { const required = ['US', 'CA', 'AU'].includes($('#country').val()); stateField.hidden = !required; stateInput.required = required; if (!required) stateInput.value = ''; }
+      function isLegacyCart(cartItems) {
+        return !Array.isArray(cartItems) || cartItems.some((item) => (!item || typeof item.id !== 'string' || /^\d+$/.test(item.id) || Object.hasOwn(item, 'price') || typeof item.displayPrice !== 'number' || typeof item.size !== 'string' || typeof item.color !== 'string' || !Number.isInteger(item.quantity) || item.quantity < 1));
+      }
+      function appendText(parent, tagName, value, className) { const element = document.createElement(tagName); if (className) element.className = className; element.textContent = value; parent.appendChild(element); return element; }
+      function renderCart() {
+        cartItemsContainer.replaceChildren();
+        let total = 0;
+        for (const item of cart) {
+          const itemTotal = item.displayPrice * item.quantity;
+          total += itemTotal;
+          const itemElement = document.createElement('div'); itemElement.className = 'cart-item';
+          const row = document.createElement('div'); row.className = 'row align-items-center';
+          const imageColumn = document.createElement('div'); imageColumn.className = 'col-12 col-md-3 text-center';
+          const image = document.createElement('img'); image.className = 'img-fluid'; image.setAttribute('src', item.image); image.setAttribute('alt', item.name); imageColumn.appendChild(image);
+          const detailsColumn = document.createElement('div'); detailsColumn.className = 'col-12 col-md-6'; appendText(detailsColumn, 'h5', item.name); appendText(detailsColumn, 'p', 'Taille: ' + item.size + ', Couleur: ' + item.color + ', Quantité: ' + item.quantity);
+          const actionColumn = document.createElement('div'); actionColumn.className = 'col-12 col-md-3 text-end'; appendText(actionColumn, 'p', itemTotal.toFixed(2) + '€');
+          const removeButton = document.createElement('button'); removeButton.className = 'btn btn-danger btn-sm remove-btn'; removeButton.type = 'button'; removeButton.textContent = 'Supprimer'; removeButton.setAttribute('data-id', item.id); removeButton.setAttribute('data-size', item.size); removeButton.setAttribute('data-color', item.color); actionColumn.appendChild(removeButton);
+          row.append(imageColumn, detailsColumn, actionColumn); itemElement.appendChild(row); cartItemsContainer.appendChild(itemElement);
         }
-
-    // Montant en centimes pour Stripe
-    const amount = Math.round(finalTotal * 100);
-
-
+        if (cart.length) { const cartTotal = document.createElement('div'); cartTotal.className = 'cart-total mt-3'; appendText(cartTotal, 'h4', 'Sous-total: ' + total.toFixed(2) + '€', 'text-end'); appendText(cartTotal, 'p', 'Les frais de livraison et le total final sont calculés de façon sécurisée au paiement.', 'text-end'); cartItemsContainer.appendChild(cartTotal); }
+      }
+      if (isLegacyCart(cart)) { localStorage.removeItem('cart'); cart = []; showCheckoutError('Votre ancien panier ne peut plus être utilisé. Veuillez ajouter à nouveau vos articles.'); }
+      $('#country').on('change', updateStateRequirement); updateStateRequirement(); renderCart();
+      cartItemsContainer.addEventListener('click', (event) => { const button = event.target.closest('.remove-btn'); if (!button) return; cart = cart.filter((item) => !(item.id === button.dataset.id && item.size === button.dataset.size && item.color === button.dataset.color)); localStorage.setItem('cart', JSON.stringify(cart)); renderCart(); });
+      checkoutForm.addEventListener('submit', async (event) => {
+        event.preventDefault(); if (checkoutState !== 'ready') return; clearCheckoutError(); if (!cart.length) return showCheckoutError('Votre panier est vide.'); checkoutState = 'initializing'; infoSubmitButton.disabled = true;
+        const customer = { firstName: $('#first-name').val().trim(), lastName: $('#last-name').val().trim(), email: $('#email').val().trim(), phone: $('#phone').val().trim(), address: { line1: $('#address').val().trim(), line2: $('#address-line2').val().trim(), city: $('#city').val().trim(), postal_code: $('#zip').val().trim(), country: $('#country').val(), state: $('#state').val().trim() } };
         try {
-          // Appeler la fonction Netlify pour créer le PaymentIntent
-          const response = await fetch('/.netlify/functions/create-payment-intent', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ amount, customerInfo, cart }),
-          });
-
-          if (!response.ok) {
-            const error = await response.json();
-            throw new Error(error.error || 'Erreur serveur');
-          }
-
-          const { clientSecret } = await response.json();
-
-          // Masquer le formulaire de checkout
-          $('#checkout-form').hide();
-
-          // Afficher le conteneur de paiement
-          $('#payment-container').show();
-
-          // Afficher le Payment Element avec le montant sur le bouton
-          showPaymentElement(clientSecret, finalTotal, customerInfo, cart);
+          const response = await fetch('/.netlify/functions/create-checkout-session', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: cart.map(({ id, color, size, quantity }) => ({ slug: id, color, size, quantity })), customer, promoCode: $('#promo-code').val().trim() }) });
+          const payload = await response.json();
+          if (!response.ok || !payload.clientSecret || !payload.publishableKey || !payload.sessionId) throw new Error(payload.error || 'Paiement indisponible');
+          localStorage.setItem('pendingCheckoutSessionId', payload.sessionId);
+          const stripe = Stripe(payload.publishableKey); const clientSecret = payload.clientSecret; const checkout = stripe.initCheckout({ clientSecret }); const paymentElement = checkout.createPaymentElement();
+          paymentContainer.style.display = 'block'; mountAttempted = true; paymentElement.mount('#payment-element');
+          checkout.on('change', (session) => { submitButton.disabled = !session.canConfirm; submitButton.textContent = 'Payer ' + session.total.total.amount; });
+          const loadResult = await checkout.loadActions(); if (loadResult.type !== 'success') throw new Error('Paiement indisponible');
+          const session = await loadResult.actions.getSession();
+          submitButton.disabled = !session.canConfirm;
+          submitButton.textContent = 'Payer ' + session.total.total.amount;
+          checkoutForm.hidden = true; checkoutState = 'mounted';
+          submitButton.onclick = async () => { clearCheckoutError(); const result = await loadResult.actions.confirm(); if (result.type === 'error') showCheckoutError(result.error.message); };
         } catch (error) {
-          console.error('Erreur:', error);
-          alert(`Erreur: ${error.message}`);
+          if (mountAttempted) { checkoutState = 'recovery'; showCheckoutError('Le module de paiement n’a pas pu être chargé. Rechargez la page avant de réessayer.'); return; }
+          checkoutState = 'ready'; infoSubmitButton.disabled = false; showCheckoutError(error.message);
         }
       });
-
-      // Suppression d'article du panier
-      // Modifiez la gestion de la suppression pour tenir compte de la couleur
-$(document).on('click', '.remove-btn', function() {
-    const itemId = $(this).data('id');
-    const itemSize = $(this).data('size');
-    const itemColor = $(this).data('color');
-    
-    const newCart = cart.filter(item => 
-        !(item.id === itemId && 
-          item.size === itemSize && 
-          item.color === itemColor)
-    );
-    
-    localStorage.setItem('cart', JSON.stringify(newCart));
-    location.reload();
-});
-
-
-      // Fonction pour afficher le Payment Element
-      function showPaymentElement(clientSecret, finalTotal, customerInfo, cart) {
-        console.log("showPaymentElement appelé avec clientSecret:", clientSecret);
-
-        const elements = stripe.elements({ clientSecret, appearance: {} });
-        const options = {
-          layout: {
-            type: 'accordion',
-            defaultCollapsed: false,
-            radios: false,
-            spacedAccordionItems: true,
-          }
-        };
-        const paymentElement = elements.create('payment', options);
-        paymentElement.mount('#payment-element');
-
-        const submitBtn = document.getElementById('submit-payment');
-        submitBtn.style.display = 'block';
-        submitBtn.textContent = `Payer ${finalTotal.toFixed(2)} €`;
-
-          submitBtn.onclick = async () => {
-  try {
-    const { error, paymentIntent } = await stripe.confirmPayment({
-      elements,
-      confirmParams: { return_url: 'https://vertiflow.fr/success.html' },
-      redirect: 'if_required'
     });
-
-    if (error) throw error;
-
-    if (paymentIntent?.status === 'succeeded') {
-      await sendConfirmationEmail(customerInfo, finalTotal, cart);
-      window.location.href = 'https://vertiflow.fr/success.html';
-    }
-  } catch (error) {
-    console.error("Erreur de paiement :", error);
-    alert(`Paiement échoué : ${error.message}`);
-  }
-};
-
-      // Fonction d'envoi d'e-mail via EmailJS
-      // Remplacez tous les identifiants par vos vraies valeurs EmailJS
-        emailjs.init("z4uG1w3b8JueLdvkV"); // Remplacer VOTRE_USER_ID
-
-        async function sendConfirmationEmail(customerInfo, finalTotal, cart) {
-  try {
-    const templateParams = {
-      name: customerInfo.name,
-      email: customerInfo.email,
-      address: `${customerInfo.address}, ${customerInfo.zip} ${customerInfo.city}, ${customerInfo.country}`,
-      total: finalTotal.toFixed(2),
-      cartItems: cart.map(item => `
-        <tr>
-            <td>${item.name} (Taille ${item.size}, ${item.color})</td>
-            <td>${item.quantity}</td>
-            <td>${(item.price * item.quantity).toFixed(2)}€</td>
-        </tr>
-    `).join("")
-    };
-
-    console.log("📨 Tentative d'envoi d'email...");
-    
-    const response = await emailjs.send(
-      "service_zulomgw", // Remplacer par votre Service ID
-      "template_22lvzgl", // Remplacer par votre Template ID
-      templateParams
-    );
-    
-    console.log("✅ Email envoyé avec succès :", response);
-    return true;
-  } catch (error) {
-    console.error("❌ Erreur d'envoi d'email :", error);
-    throw error;
-  }
-}
-}});
   </script>
 </body>
 </html>

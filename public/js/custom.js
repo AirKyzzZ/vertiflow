@@ -117,7 +117,7 @@ $(document).ready(function() {
         const product = {
             id: productId,
             name: `${productNameBase} ${selectedColor}`,
-            price: productPrice,
+            displayPrice: productPrice,
             size: selectedSize,
             color: selectedColor,
             quantity: parseInt($('#inputGroupSelect01').val()),

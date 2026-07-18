@@ -2,6 +2,12 @@
   functions = "functions"
   publish = "public"
 
+[build.environment]
+  NODE_VERSION = "22"
+
+[functions]
+  included_files = ["data/products.json"]
+
 # Cache static assets for 1 year
 [[headers]]
   for = "/images/*"

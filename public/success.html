@@ -133,12 +133,10 @@
                 <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0"/>
                 <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z"/>
             </svg>
-            Paiement réussi
+            <span id="success-title">Validation du paiement</span>
             <span class="emoji">🎉</span>
         </h1>
-        <p>
-            Merci pour votre confiance ! Votre commande est confirmée.
-        </p>
+        <p id="success-message">Vérification de votre retour de paiement…</p>
         <a href="https://vertiflow.fr/" class="home-link">
             Retour à l'accueil
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
@@ -146,5 +144,37 @@
             </svg>
         </a>
     </div>
+    <script>
+        const sessionId = new URLSearchParams(window.location.search).get('session_id');
+        const pendingSessionId = localStorage.getItem('pendingCheckoutSessionId');
+        const title = document.getElementById('success-title');
+        const message = document.getElementById('success-message');
+        async function confirmCheckout() {
+            if (!sessionId || !pendingSessionId || sessionId !== pendingSessionId) {
+                title.textContent = 'Paiement en attente de confirmation';
+                message.textContent = 'Nous n’avons pas pu confirmer ce retour de paiement. Votre panier a été conservé.';
+                return;
+            }
+            try {
+                const response = await fetch('/.netlify/functions/get-checkout-session', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ sessionId: pendingSessionId }),
+                });
+                const { status, paymentStatus } = await response.json();
+                if (!response.ok || status !== 'complete' || paymentStatus !== 'paid') {
+                    throw new Error('Paiement non confirmé');
+                }
+                localStorage.removeItem('cart');
+                localStorage.removeItem('pendingCheckoutSessionId');
+                title.textContent = 'Paiement réussi';
+                message.textContent = 'Merci pour votre confiance ! Votre commande est confirmée.';
+            } catch {
+                title.textContent = 'Paiement en attente de confirmation';
+                message.textContent = 'Le paiement n’est pas encore confirmé. Votre panier a été conservé.';
+            }
+        }
+        confirmCheckout();
+    </script>
 </body>
 </html>

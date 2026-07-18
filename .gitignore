@@ -67,3 +67,8 @@ node_modules/
 
 # dataconnect generated files
 .dataconnect
+
+# Local agent workspaces and execution state
+.netlify/
+.worktrees/
+.superpowers/
