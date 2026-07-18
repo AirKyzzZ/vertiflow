@@ -51,7 +51,7 @@ function eventFixture(overrides = {}) {
   };
 }
 
-test('handler creates custom Checkout from canonical line items and native shipping', async () => {
+test('handler creates Elements Checkout from canonical line items and native shipping', async () => {
   const calls = [];
   const stripe = { checkout: { sessions: { create: async (params) => {
     calls.push(params);
@@ -62,7 +62,7 @@ test('handler creates custom Checkout from canonical line items and native shipp
 
   assert.equal(response.statusCode, 200);
   const params = calls[0];
-  assert.equal(params.ui_mode, 'custom');
+  assert.equal(params.ui_mode, 'elements');
   assert.deepEqual(params.line_items, [{ price: 'price_test_hoodie_black_m', quantity: 1 }]);
   const provenanceLines = [{
     priceId: 'price_test_hoodie_black_m', stripeProductId: 'prod_test_hoodie',

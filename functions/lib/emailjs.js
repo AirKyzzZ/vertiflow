@@ -1,5 +1,8 @@
 const EMAILJS_SEND_URL = 'https://api.emailjs.com/api/v1.0/email/send';
 const OWNER_EMAIL = 'vertiflow.pro@gmail.com';
+const CUSTOMER_EMAIL_SUBJECT = 'Confirmation de votre commande VertiFlow';
+const OWNER_PREPARED_SUBJECT = 'Commande VertiFlow à confirmer';
+const OWNER_FAILURE_SUBJECT = 'Commande VertiFlow en échec';
 const REQUEST_TIMEOUT_MS = 15_000;
 const MINIMUM_SEND_INTERVAL_MS = 1_100;
 
@@ -158,6 +161,43 @@ function customerMessage({ firstName, lastName }) {
   ].join('\n');
 }
 
+function ownerMessage({
+  subject,
+  firstName,
+  lastName,
+  customerEmail,
+  stripeSessionId,
+  paymentIntentId,
+  printfulOrderId,
+  printfulExternalId,
+  printfulDashboardUrl,
+  amount,
+  shippingDetails,
+  orderLines,
+  failureDetails,
+}) {
+  return [
+    subject,
+    '',
+    `Client: ${firstName} ${lastName}`,
+    `Email client: ${customerEmail}`,
+    `Stripe Session: ${stripeSessionId}`,
+    `PaymentIntent: ${paymentIntentId}`,
+    `Printful order: ${printfulOrderId}`,
+    `Printful external ID: ${printfulExternalId}`,
+    `Printful dashboard: ${printfulDashboardUrl}`,
+    `Montant: ${amount}`,
+    '',
+    'Livraison:',
+    shippingDetails,
+    '',
+    'Lignes:',
+    orderLines,
+    '',
+    `Échec de préparation: ${failureDetails}`,
+  ].join('\n');
+}
+
 function formatLines(lines) {
   if (lines.length === 0) return 'Aucune ligne canonique disponible';
   return lines.map((line) => (
@@ -306,6 +346,7 @@ class EmailJsClient {
       first_name: normalized.firstName,
       last_name: normalized.lastName,
       reply_to: OWNER_EMAIL,
+      subject: CUSTOMER_EMAIL_SUBJECT,
       message: customerMessage(normalized),
     });
   }
@@ -320,6 +361,14 @@ class EmailJsClient {
     const legacyTotal = (normalized.amountTotal / 100).toFixed(2);
     const shippingDetails = formatRecipient(normalized.recipient);
     const orderLines = formatLines(normalized.lines);
+    const printfulOrderId = normalized.printfulOrderId == null ? 'Non créé' : String(normalized.printfulOrderId);
+    const printfulDashboardUrl = normalized.printfulOrderId == null
+      ? 'Non disponible'
+      : `https://www.printful.com/dashboard/default/orders/${normalized.printfulOrderId}`;
+    const failureDetails = normalized.failure
+      ? `${normalized.failure.code}: ${normalized.failure.details}`
+      : 'Aucune';
+    const subject = normalized.failure ? OWNER_FAILURE_SUBJECT : OWNER_PREPARED_SUBJECT;
     const mismatchParams = normalized.failure?.code === 'draft_mismatch'
       ? {
         expected_printful_lines: formatMismatchLines(normalized.failure.expectedItems),
@@ -329,19 +378,26 @@ class EmailJsClient {
     await this.send(this.ownerTemplateId, {
       to_email: OWNER_EMAIL,
       reply_to: OWNER_EMAIL,
+      subject,
+      message: ownerMessage({
+        subject,
+        ...normalized,
+        printfulOrderId,
+        printfulDashboardUrl,
+        amount,
+        shippingDetails,
+        orderLines,
+        failureDetails,
+      }),
       stripe_session_id: normalized.stripeSessionId,
       payment_intent_id: normalized.paymentIntentId,
-      printful_order_id: normalized.printfulOrderId == null ? 'Non créé' : String(normalized.printfulOrderId),
+      printful_order_id: printfulOrderId,
       printful_external_id: normalized.printfulExternalId,
-      printful_dashboard_url: normalized.printfulOrderId == null
-        ? 'Non disponible'
-        : `https://www.printful.com/dashboard/default/orders/${normalized.printfulOrderId}`,
+      printful_dashboard_url: printfulDashboardUrl,
       amount_total: amount,
       shipping_details: shippingDetails,
       order_lines: orderLines,
-      failure_details: normalized.failure
-        ? `${normalized.failure.code}: ${normalized.failure.details}`
-        : 'Aucune',
+      failure_details: failureDetails,
       name: `${normalized.firstName} ${normalized.lastName}`,
       email: normalized.customerEmail,
       address: shippingDetails,

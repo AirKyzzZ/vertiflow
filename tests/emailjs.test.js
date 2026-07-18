@@ -76,6 +76,7 @@ test('customer email is authenticated and uses the exact approved server-built F
     first_name: 'Léa',
     last_name: 'Martin',
     reply_to: 'vertiflow.pro@gmail.com',
+    subject: 'Confirmation de votre commande VertiFlow',
     message: [
       'Bonjour Léa Martin,',
       '',
@@ -107,6 +108,31 @@ test('owner email keeps structured facts and legacy aliases for a prepared order
   assert.deepEqual(body.template_params, {
     to_email: 'vertiflow.pro@gmail.com',
     reply_to: 'vertiflow.pro@gmail.com',
+    subject: 'Commande VertiFlow à confirmer',
+    message: [
+      'Commande VertiFlow à confirmer',
+      '',
+      'Client: Léa Martin',
+      'Email client: lea@example.com',
+      'Stripe Session: cs_test_123',
+      'PaymentIntent: pi_test_123',
+      'Printful order: 987',
+      'Printful external ID: vf_01234567890123456789012345678',
+      'Printful dashboard: https://www.printful.com/dashboard/default/orders/987',
+      'Montant: 36,98 EUR',
+      '',
+      'Livraison:',
+      'Léa Martin',
+      '1 rue du Test',
+      '33000 Bordeaux',
+      'FR',
+      'lea@example.com',
+      '',
+      'Lignes:',
+      '1 × T-shirt CLIMB — Noir — M — sync_variant_id 4736126964',
+      '',
+      'Échec de préparation: Aucune',
+    ].join('\n'),
     stripe_session_id: 'cs_test_123',
     payment_intent_id: 'pi_test_123',
     printful_order_id: '987',
@@ -143,6 +169,27 @@ test('owner legacy aliases remain usable for a permanent failure without recipie
   }));
 
   const params = JSON.parse(request.body).template_params;
+  assert.equal(params.subject, 'Commande VertiFlow en échec');
+  assert.equal(params.message, [
+    'Commande VertiFlow en échec',
+    '',
+    'Client: Client VertiFlow',
+    'Email client: vertiflow.pro@gmail.com',
+    'Stripe Session: cs_test_123',
+    'PaymentIntent: pi_test_123',
+    'Printful order: Non créé',
+    'Printful external ID: vf_01234567890123456789012345678',
+    'Printful dashboard: Non disponible',
+    'Montant: 36,98 EUR',
+    '',
+    'Livraison:',
+    'Indisponible (voir erreur de préparation)',
+    '',
+    'Lignes:',
+    'Aucune ligne canonique disponible',
+    '',
+    'Échec de préparation: catalogue_mismatch: Paid lines require manual review.',
+  ].join('\n'));
   assert.equal(params.name, 'Client VertiFlow');
   assert.equal(params.email, 'vertiflow.pro@gmail.com');
   assert.equal(params.address, 'Indisponible (voir erreur de préparation)');

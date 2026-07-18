@@ -59,7 +59,7 @@ function createCheckoutHandler({ stripe, catalogue: runtimeCatalogue, environmen
       const customer = validateCustomer(payload.customer);
       const promoCode = typeof payload.promoCode === 'string' ? payload.promoCode.trim() : '';
       const params = {
-        ui_mode: 'custom',
+        ui_mode: 'elements',
         mode: 'payment',
         line_items: resolvedItems.map(({ priceId, quantity }) => ({ price: priceId, quantity })),
         customer_email: customer.email,

@@ -116,12 +116,17 @@ customer and shipping address, every storefront color/size/quantity, exact sync 
 charged total, and the draft dashboard link in the owner email. Confirmation and production
 start only when Maxime deliberately confirms it in Printful.
 
-Configure two authenticated EmailJS templates. The customer template needs `to_email`,
-`first_name`, `last_name`, `reply_to`, and `message`. The owner template needs `to_email`,
-`reply_to`, `stripe_session_id`, `payment_intent_id`, `printful_order_id`,
-`printful_external_id`, `printful_dashboard_url`, `amount_total`, `shipping_details`,
-`order_lines`, and `failure_details` (plus mismatch lines when present). Both emails are sent
-server-side from the verified webhook, not by the browser.
+Configure one authenticated generic VertiFlow EmailJS template and use its ID for both
+`EMAILJS_CUSTOMER_TEMPLATE_ID` and `EMAILJS_OWNER_TEMPLATE_ID`. The template consumes
+`to_email`, `reply_to`, `subject`, and `message`; the webhook builds the complete customer or
+owner message before sending it. Both emails are sent server-side from the verified webhook,
+not by the browser. Keep unrelated EmailJS templates, including Klyx templates, untouched.
+
+The configured EmailJS service must be the Gmail service connected as
+`vertiflow.pro@gmail.com`. In EmailJS Account > Security, enable non-browser API access and
+keep the private-key requirement enabled because the webhook is the sender. A 403 mentioning
+non-browser access means the account setting is disabled; `Gmail_API: Invalid grant` means the
+VertiFlow Gmail OAuth connection must be reconnected before replaying the Stripe event.
 
 Email delivery is at-least-once, not exactly-once: a crash after EmailJS accepts a message but
 before Stripe metadata is recorded can produce a duplicate email. This cannot duplicate the
