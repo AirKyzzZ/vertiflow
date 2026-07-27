@@ -406,9 +406,11 @@ are binding on the implementation plan:
 4. **`/commencer` ships with elite imagery.** If the twenty-minute September capture does
    not happen, the page falls back to archive photography of good athletes doing clean
    lines — which actively argues against the message the page exists to deliver.
-5. **Cutover slips.** Non-fatal by design. The rentrée window is about three weeks. If the
-   branch is not ready on 5 September, `main` keeps serving the old site and the drop moves
-   to the 15th.
+5. **The single launch pulls the payments path forward.** One unified launch means the
+   riskiest workstream sets the date. The failure mode is compressing a live payments review
+   to hit a self-imposed deadline. The date moves; the review does not shorten. `main` keeps
+   serving the current site for as long as that takes, and `/commencer` on the old site
+   means the December test is never waiting on it.
 
 ## Out of scope
 
