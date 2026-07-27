@@ -1,0 +1,359 @@
+# VertiFlow brand refresh — September 2026
+
+Date: 2026-07-27
+Status: approved design
+
+## Objective
+
+Un-freeze VertiFlow deliberately as a community brand, not an income venture. Refresh
+its identity, rebuild its website on Next.js, launch one collection into the September
+*rentrée*, and leave behind a content engine that runs on one hour a week.
+
+The purpose is federation: getting people into parkour, and giving the people already in
+it something to belong to. Revenue is explicitly not a success metric.
+
+## What this is not
+
+- Not a revenue play. VertiFlow does roughly €15–20/month and that is not the thing being
+  fixed.
+- Not competing with `klyx-estate`, which remains the independent-income bet. VertiFlow
+  and klyx-estate run in parallel and this design accounts for that.
+- Not a rebrand in the naming sense. `VertiFlow`, `vertiflow.fr` and the circular VF mark
+  survive. "Refresh" means building an identity system where none currently exists.
+
+## Positioning
+
+**The door into parkour, with the credibility to keep you once you're serious.**
+
+Two halves that resolve into one rule: *production value signals performance, subject
+matter holds the door open*. Serious craft — disciplined typography, real photography —
+applied to beginners, daylight sessions, and people missing jumps.
+
+The founder story is the proof of both halves and cannot be copied by competitors: eight
+years FFG at national level, founder of a club with 80+ licenciés, covered by France 3
+Nouvelle-Aquitaine. The performance credential is real, and the club takes people who have
+never jumped anything.
+
+Market context: two to three real French parkour brands exist nationally. The category is
+uncontested enough that a founder with 10k followers, an athlete record and a club has
+room. Local first, national in 2027.
+
+## Success test
+
+Fixed on 2026-07-27 so it cannot move.
+
+| | |
+|---|---|
+| **The test** | 15 first-time attendees at a PKBA session by 31 December 2026 who say they came via VertiFlow or its Instagram |
+| **Measurement** | One field on the découverte form — *"Comment tu nous as connus ?"* — persisted to PKBA's existing Airtable. No engineering required. |
+| Leading indicator | `/commencer` form submissions |
+| Diagnostic | Instagram bio-link clicks |
+| **Not a metric** | Revenue, follower count, post volume |
+
+The real failure mode is zero, not fourteen. Any non-zero attributed number proves the
+mechanism works and makes 2027 a scaling problem rather than a validation one.
+
+## Constraints
+
+- **Time:** ~4h/week during August. From September, 1h/week sustained baseline plus
+  discretionary bursts around events. The alternance goes full-time, EPSI resumes and GDC
+  Geneva lands in early September.
+- **Parallel work:** `klyx-estate` runs at the same time throughout. The plan must survive
+  being one of two things, not require clear weeks.
+- **PKBA is capped.** `vision-2026` instructs minimum viable presence and guarding against
+  time creep. Growth driven by this work must not land as club admin on Maxime's desk.
+- **Money:** effectively zero budget. Free fonts, free tooling, no inventory, no ad spend.
+- **Fulfilment:** pure print-on-demand via Printful. No inventory is ever held and no order
+  is ever packed by hand.
+
+## Identity system
+
+Deep enough for one collection. Not a brand book.
+
+**Colour — six tokens.** Near-black base (already the garment base), warm off-white paper,
+a neutral ramp, and one accent: sodium-amber, taken from Maxime's own existing campaign
+direction (*"warm train-window glow", "Bangkok amber light"*). Streetlight amber is the
+hour people actually train and it is warm where every competitor is cold. The iridescent
+carabiner spectral is reserved for garment graphics only, where it cannot damage UI
+contrast.
+
+**Type.** Archivo Expanded for display — wide, technical, confident without shouting.
+Inter retained for body. Both free and variable. Inter alone, the current state, says
+nothing.
+
+**Art direction — five rules.**
+
+1. Real named spots: La Teste, Gujan, Bordeaux. Never generic urban.
+2. Beginners and ordinary bodies in frame, not only clean elite lines.
+3. Shot at the hours people train: golden hour, dusk, sodium night.
+4. **Show the miss, not only the make.** This is the door rule and it does most of the work.
+5. AI imagery for product and campaign renders only. Never for anything implying a real
+   person at a real session. The entire test is that strangers physically turn up; a
+   fabricated athlete at a fabricated spot would poison it.
+
+**Tone.** French, tutoiement, short sentences. Never assume the reader can already do
+anything.
+
+**The system of record is split in two, deliberately.** `brand.tokens.json` holds the
+machine-readable values — colours, type scale, font stacks — and the Tailwind config
+imports it, so no token is ever typed twice. `BRAND.md` at the repo root holds everything
+prose: the positioning line, tone rules, the five art-direction rules, the six questions
+`/commencer` answers, and a pointer to the tokens file. The content agent reads `BRAND.md`.
+Markdown cannot configure Tailwind and JSON cannot express tone; each file does the job it
+can actually do.
+
+## Website rebuild
+
+**Stack.** Next.js App Router, TypeScript strict, Tailwind, shadcn/ui. Matches PKBA, so
+one mental model covers both sites.
+
+**Hosting stays on Netlify.** No DNS move, and `pkba.vertiflow.fr` — which carries PKBA's
+entire registration and licence funnel — is never at risk during the rentrée window.
+Requires `@netlify/plugin-nextjs`; the publish directory moves off `public/`, which makes
+most of the hand-tuned cache headers in `netlify.toml` redundant.
+
+**Migration happens on a branch.** `main` keeps serving the live site until cutover.
+Netlify branch deploys provide a preview URL for review at any point.
+
+**No database.** Stripe is the order record, Printful is the fulfilment record, and
+deleting the sign-in/sign-up pages removes the only thing that wanted accounts. The
+catalogue is a typed object generated by the Printful sync script.
+
+**Route collapse.**
+
+| Now | After |
+|---|---|
+| 9 hand-written product pages + `product-detail.html` + `details-produit.html` | `/boutique` + `/boutique/[slug]` |
+| `blog.html` + 3 article pages | `/journal` + `/journal/[slug]`, MDX |
+| `sign-in.html`, `sign-up.html`, `no-color.html` | deleted |
+| 6 legal pages | one shared layout, content ported as-is |
+| `about.html` | `/a-propos` |
+| — | `/commencer` — new |
+
+~25 files become ~14 routes, two of them dynamic. **Adding a collection becomes adding
+catalogue data, not authoring pages.** That is the point of the migration.
+
+**Netlify functions become Route Handlers.** `create-payment-intent.js` and
+`stripe-webhook.js` port across. The migration is also when the existing security hole
+closes: the current checkout trusts the browser-supplied amount, so a customer can change
+the price before the PaymentIntent is created. A server-owned catalogue fixes this by
+construction.
+
+**Every existing URL gets a 301.** All ~25 pages including legal, via Netlify `_redirects`.
+Losing accumulated search equity would directly damage the journal channel.
+
+## Commerce and publish pipeline
+
+The existing spec at `docs/superpowers/specs/2026-07-17-vertiflow-commerce-pipeline-design.md`
+is **unchanged and remains authoritative**. It was written stack-agnostic: the nine
+commercial products, fifteen allowlisted Printful sync products, 107 purchasable
+combinations, the deliberate mapping rules and the synchronization failure modes all
+survive the migration intact. The two existing worktrees are not wasted work.
+
+The creative loop this produces:
+
+    new artwork → upload to Printful → run sync → catalogue updates
+                → product page exists, in its collection, with mockups
+
+No HTML authoring. This is the difference between a collection costing a weekend and a
+collection costing an evening, and it is the leverage that makes the brand sustainable at
+one hour a week.
+
+`collection` becomes a field on the catalogue item. `/boutique` groups by it, which is what
+lets a drop read as an event rather than four more rows in a grid.
+
+## The funnel
+
+    Instagram post → profile → link in bio → /commencer
+                   → "je viens à une séance" → Airtable
+                   → PKBA owner has a list → person attends → ticked
+
+**`/commencer` is the most important page on the site.** It answers six questions in this
+order: what is this, can I do it, where, when, what does it cost, will I be the worst one
+there. No hero video, no origin story — that page has one job.
+
+**The first step is free, not a licence.** Nobody pays for a licence to try a sport they
+have never done. If PKBA does not currently run séances découverte, adding one is the
+highest-leverage change available and costs the club nothing.
+
+**Two paths.** Primary: come to the Bassin. Secondary, one line below — *"Pas dans le
+coin ?"* — a curated list of French parkour clubs. One static page serving the ~9,900
+followers who will never reach La Teste. A brand calling itself the door into parkour is
+more credible when it helps people start anywhere, and this quietly builds the 2027
+national play for free.
+
+## The collection and the rentrée burst
+
+**Three pieces.** Tee, hoodie, one accessory. Enough to read as a drop, small enough to
+finish alongside a site migration. The existing nine stay live as *l'essentiel* but stop
+being the front page.
+
+**The shoot is the blocking dependency of the entire plan.** Art-direction rule 5 forbids
+AI imagery implying a real session, and the site's job is convincing strangers to attend
+real sessions. Therefore the site cannot launch on renders. One physical shoot day in
+mid-August, with club members, deliberately including people who visibly started recently.
+
+That single day produces three deliverables at once: the rentrée campaign, every photograph
+on the new site, and the October content buffer. No tooling can substitute for it. **It goes
+in the calendar before anything else in this plan.**
+
+**The burst** — roughly ten posts across three weeks, all shot on that one day, all
+scheduled in advance:
+
+- late August: two teasers, the door message
+- first weekend of September: forum des associations, real first-timers
+- the collection drop
+- mid-September: the first découverte sessions, misses included
+
+**Immediate, this week, zero cost:** the finished carousel sitting untracked in
+`creative/instagram/2026-07-summer-comeback/` gets posted. Under rule 5 it is a product
+render, not a claimed session, so it is clean. It warms a cold account six weeks before
+rentrée.
+
+## The story
+
+Full version at `/a-propos`, condensed to one scroll section on the homepage. Not on
+`/commencer`.
+
+**Evidence, not prose.** A dated timeline where every beat carries a real artefact —
+photos, the France 3 clip, the association registration.
+
+| | |
+|---|---|
+| 8 ans | FFG, niveau national |
+| nov 2024 | VertiFlow |
+| juil 2025 | PKBA fondée — association loi 1901 |
+| — | reportage France 3 Nouvelle-Aquitaine |
+| aujourd'hui | 80+ licenciés |
+
+**The injury and the comeback are included on the site**, not only in the September
+content. It is the beat a nervous beginner identifies with most, and fear of injury is the
+single most common reason people never try parkour.
+
+**Governance constraint.** VertiFlow is a micro-entreprise; PKBA is an association loi 1901
+with three 2027 CERFA subsidy dossiers open at COBAS, Gujan-Mestras and La Teste, and
+Maxime is its treasurer. Public copy must hold the framing: **same founder, same community,
+two separate entities.** The story may say he built both. It must not read as though they
+are one, because subsidised association funds must not appear to benefit a private
+commercial business.
+
+## Le journal
+
+The second acquisition channel, and for the December test it likely converts better than
+Instagram — search intent beats scroll, and an article written once still works in March.
+
+**Cornerstone articles, door-facing:**
+
+- *Commencer le parkour sur le Bassin d'Arcachon* — the money page, points at `/commencer`
+- *Parkour débutant : par où commencer* — the fear questions, answered honestly
+- *Les spots du Bassin* — real local knowledge, uncopyable
+- *Le parkour à Bordeaux* — the wider catchment
+
+**Commercial articles.** French parkour merch keywords are low volume and almost entirely
+uncontested, so a handful of articles can own the category outright. Little traffic in
+2026; real groundwork for 2027.
+
+- *Quelles chaussures pour le parkour ?* — **written first.** Highest-volume keyword in
+  French parkour gear, and VertiFlow sells no shoes. An honest guide to a product with no
+  commercial stake is the most credible page the site can publish, it ranks, and it lands
+  the reader where the door and the shop both are.
+- *Quels vêtements pour faire du parkour ?*
+- *Ton premier kit parkour*
+- *Comment choisir un t-shirt de parkour*
+
+Then event recaps as they happen, continuing the existing `la-teste-de-buch-2025` and
+`metz-2025` pattern.
+
+**These eight articles are a queue, not an October batch.** Eight articles do not fit in a
+month that also contains the weekly content loop, at 1h/week. Order: *Quelles chaussures*
+and *Commencer le parkour sur le Bassin* in October — the highest-intent commercial keyword
+and the highest-intent local one. The remaining six run one per fortnight through Q4 and
+Q1. The journal compounds; it does not need to arrive all at once, and pretending otherwise
+is how the whole plan slips.
+
+**Agent boundary.** The agent handles structure, outlines, meta descriptions, internal
+linking, and turning voice notes into clean prose. It does not supply local spot knowledge
+and will fabricate it if asked — that is precisely the part that makes these articles rank
+and worth reading. Draft from notes, never from nothing.
+
+## Content engine (October)
+
+**Principle: automate the expensive part, not the cheap part.**
+
+The expensive part is drafting — captions, hooks, hashtags, monthly calendar, holding voice
+steady in November. The cheap part is clicking schedule.
+
+**The Instagram Graph API is deliberately not used.** It saves roughly ten minutes a month
+and buys a permanent maintenance surface: Business account, Facebook page, developer app,
+app review, and long-lived tokens expiring every ~60 days. Token expiry is a silent failure,
+and at 1h/week a silent failure means discovering in December that nothing posted since
+October — during the month the count matters. The Graph API path in `automation/SETUP.md`
+stays shelved until the account justifies the maintenance.
+
+**Instead: agent drafts → human approves → Meta Business Suite schedules.** Native, free,
+~75 days ahead, no tokens to babysit.
+
+**Weekly loop, ~1h:**
+
+1. Scheduled agent reads `content/queue/`, drafts the week's captions against `BRAND.md`,
+   flags anything breaking an art-direction rule
+2. Maxime reviews the batch — accept, edit, veto
+3. Bulk-schedule in Business Suite
+4. Monthly, the agent proposes the next month from what performed
+
+## Schedule
+
+| When | What |
+|---|---|
+| now → early Aug | klyx-estate has the daytime. VertiFlow: post the carousel, **book the shoot day**, write `BRAND.md` |
+| mid-Aug | **the shoot** — blocking dependency |
+| Aug | migration on branch · artwork for 3 pieces · Printful products created |
+| late Aug | rentrée burst drafted and scheduled · site preview reviewed |
+| ~5 Sept | cutover to `main` · collection drop · forum des associations |
+| Sept | rentrée content runs, découverte sessions counted |
+| Oct | content engine, journal articles |
+| 31 Dec | count |
+
+## Designing for parallel work
+
+klyx-estate runs alongside this throughout. Three structural requirements follow, and they
+are binding on the implementation plan:
+
+1. **Every chunk ships in one sitting.** No task requires a long uninterrupted block. Three
+   hours on a Tuesday produces something merged, never something half-migrated.
+2. **The branch preview stays deployable at all times.** State is visible in a browser, not
+   reconstructed from memory.
+3. **Strict ordering.** "If I only get one session this week" always has an obvious answer.
+   The shoot is calendar-booked and immovable; everything else is a queue pulled in order.
+
+## Risks
+
+1. **The shoot does not happen.** Everything downstream blocks and no tooling substitutes.
+   Highest risk, pure calendar.
+2. **Nobody at PKBA owns the découverte list.** It defaults to Maxime, creating exactly the
+   weekly club obligation `vision-2026` capped. Settle ownership before September.
+3. **August's hours.** August belongs to klyx-estate by the 2026-07-14 decision; this plan
+   wants ~4h/week. If it takes more, it takes it from there. That should be a decision, not
+   a discovery in September.
+4. **Cutover slips.** Non-fatal by design. The rentrée window is about three weeks. If the
+   branch is not ready on 5 September, `main` keeps serving the old site and the drop moves
+   to the 15th.
+5. **Gold-plating the refonte.** Biggest item, most enjoyable. `/commencer` converting
+   matters more than any homepage animation.
+
+## Out of scope
+
+Brand book · general-purpose CMS · TikTok, YouTube, Shorts · manufactured or inventoried
+product · Instagram Graph API · database · user accounts · national expansion · rebuilding
+the existing legal pages beyond porting them.
+
+## Open questions
+
+1. Does PKBA currently run free séances découverte? If not, one must be added — the funnel
+   depends on a zero-commitment first step.
+2. Who at PKBA owns the découverte list from September? Named person required before
+   cutover.
+3. What is the exact date of the forum des associations in La Teste and Gujan-Mestras? The
+   burst schedule anchors to it.
+4. Which three pieces make up the collection, and what is the collection's name?
+5. Which French parkour club list is authoritative for the *"pas dans le coin"* page?
