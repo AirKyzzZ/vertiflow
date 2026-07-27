@@ -179,13 +179,37 @@ The storefront **cannot take a real payment today**, by design:
   non-test Stripe key, so live keys are refused outright
 - `data/products.json` carries test-mode Stripe identifiers
 
-Going live is configuration and regeneration, not construction: run `sync-stripe-prices.js`
-against live mode, regenerate the catalogue with live identifiers, verify the tests still
-pass, then remove the test-access gate. It must be done and verified with a real end-to-end
-purchase before the drop.
+**This is not a configuration change.** `docs/commerce-catalogue.md` is explicit:
 
-Revenue remains explicitly not a success metric. But a collection nobody can buy cannot
-function as a membership badge, which is the role the apparel plays in this design.
+> "There is no supported live-sync toggle in current code; do not add one as an environment
+> workaround." … "A future live path must be implemented and reviewed deliberately; it is
+> not enabled by changing environment values."
+
+The fence is three independent layers:
+
+- `scripts/sync-stripe-prices.js` — `assertSafeStripeKey` rejects any key not prefixed
+  `sk_test_` or `rk_test_`
+- `functions/create-checkout-session.js` — `validateEnvironment` throws on live keys, and
+  checkout additionally requires a valid `x-vertiflow-test-access` header
+- `functions/stripe-webhook.js` — live-mode Sessions are acknowledged with no Printful or
+  email side effects
+
+Implementing the live path is a distinct, security-sensitive project spanning
+reconciliation, checkout and webhook, carrying its own review, and governed by the
+runbook's rollback procedure and replay/failure matrix. It is **not** a task inside this
+refresh and must not be rushed to hit a drop date.
+
+**Decision recorded:** there is one launch. The new site, the new collection and a working
+live shop ship together. The launch date therefore follows readiness rather than the
+calendar, and the live payments path is in scope for this refresh as its own reviewed
+workstream — sequenced and reviewed on its own terms, never compressed to hit a date.
+
+**Consequence, and its mitigation.** Coupling the launch to a payments security project
+means the rentrée window will probably be missed, and the rentrée is the highest-intent
+window of the year for the December test. The mitigation is cheap and does not split the
+launch: **`/commencer` ships on the current static site in late August** — one Bootstrap
+page carrying the door message and the découverte form. Counting starts during the rentrée
+regardless of when the new site lands, and the page is deleted at cutover.
 
 The creative loop this produces:
 
@@ -348,11 +372,12 @@ stays shelved until the account justifies the maintenance.
 | When | What |
 |---|---|
 | now → early Aug | klyx-estate has the daytime. VertiFlow: post the carousel, land-or-drop `codex/commerce-main-release`, rebase onto `origin/main`, write `BRAND.md` and `brand.tokens.json` |
-| Aug | migration on branch · artwork for 3 pieces · Printful products created · **go live on Stripe, verified with a real purchase** |
-| late Aug | rentrée burst drafted and scheduled · site preview reviewed |
-| ~5 Sept | cutover to `main` · collection drop · forum des associations |
-| Sept | rentrée content runs, découverte sessions counted, 20-min beginner capture for `/commencer` |
-| Oct | content engine, journal articles |
+| Aug | migration on branch · live payments path as its own reviewed workstream · artwork for 3 pieces |
+| late Aug | **`/commencer` ships on the current static site** · rentrée burst drafted and scheduled |
+| early Sept | rentrée campaign runs on the old site · forum des associations · découverte counting starts |
+| Sept | 20-min beginner capture · Printful products created · reviewed catalogue invariant updated |
+| when ready | **single launch** — new site + collection + live shop, cutover to `main` |
+| Oct–Nov | content engine, journal articles |
 | 31 Dec | count |
 
 ## Designing for parallel work
