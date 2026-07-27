@@ -270,7 +270,7 @@ git commit -m "feat: add brand system of record"
 
 ---
 
-### Task 4: Ship the door page
+### Task 4: Create the VertiFlow discovery base and ship the door page
 
 `/commencer` on the current static site. This is what makes the December test countable during the rentrée, independently of when the new site launches.
 
@@ -278,12 +278,33 @@ git commit -m "feat: add brand system of record"
 - Create: `tests/door.test.js`
 - Create: `public/commencer.html`
 - Modify: `public/index.html`
+- Modify: `public/politique-de-confidentialite.html`
 
 **Interfaces:**
 - Consumes: the tone and six questions from `BRAND.md` (Task 3)
-- Produces: a live page at `/commencer.html` whose form posts to Formspree with an attribution field named `source`. Plan 2 replaces this page with a Next.js route and must preserve the `source` field name so the count is continuous.
+- Produces: a live page at `/commencer.html` embedding a VertiFlow-owned Airtable form whose fields are `Prénom`, `Email`, `Âge`, `Source`. Plan 2 replaces the embed with a branded Next.js form posting to a Route Handler holding the Airtable token server-side; these four field names are fixed so the count stays continuous across that change.
 
-- [ ] **Step 1: Write the failing test**
+- [ ] **Step 1: Create the VertiFlow discovery base in Airtable**
+
+**This base belongs to VertiFlow, not PKBA.** Do not create it in a PKBA workspace, do not link it to any PKBA table, and do not copy PKBA member data into it. VertiFlow is a micro-entreprise; PKBA is an association loi 1901 with three open CERFA subsidy dossiers. Keeping their personal-data stores separate is the same boundary the spec's governance constraint describes.
+
+Create a base named `VertiFlow — Découverte`, one table `Leads`, exactly these fields:
+
+| Field | Type | On the form? |
+|---|---|---|
+| `Prénom` | Single line text | yes, required |
+| `Email` | Email | yes, required |
+| `Âge` | Single line text | yes, required |
+| `Source` | Single select — `instagram`, `site`, `bouche-à-oreille`, `forum`, `autre` | yes, required |
+| `Reçu le` | Created time | no — automatic |
+| `Venu` | Checkbox | **no** — ticked after the session |
+| `Séance` | Date | **no** — which session they attended |
+
+`Source` is the attribution mechanism. `Venu` is the December count: the number is the row count where `Venu` is checked **and** `Source` is `instagram` or `site`.
+
+Create a Form view on `Leads` exposing only the four form fields. Title it `Viens essayer`, set the submit button to `Je viens à une séance`, publish it, and copy the share link. Later steps call this the **discovery form URL**; its embed form is `https://airtable.com/embed/<id>`.
+
+- [ ] **Step 2: Write the failing test**
 
 Create `tests/door.test.js`:
 
@@ -299,33 +320,41 @@ function readProjectFile(relativePath) {
   return fs.readFileSync(path.join(ROOT, relativePath), 'utf8');
 }
 
-test('door page answers the six questions and routes to the discovery session', () => {
+test('door page answers the six questions in order', () => {
   const door = readProjectFile('public/commencer.html');
-  assert.match(door, /action="https:\/\/formspree\.io\/f\/xgvawvya"/);
-  assert.match(door, /method="POST"/i);
-  for (const heading of [
+  const headings = [
     "C'est quoi le parkour",
     'Est-ce que je peux le faire',
     'Où',
     'Quand',
     'Combien',
     'pire',
-  ]) {
-    assert.match(door, new RegExp(heading.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'));
+  ];
+  let cursor = 0;
+  for (const heading of headings) {
+    const index = door.indexOf(heading, cursor);
+    assert.notEqual(index, -1, `missing or out of order: ${heading}`);
+    cursor = index;
   }
 });
 
-test('door page carries the attribution field that makes the December count possible', () => {
+test('door page embeds the VertiFlow discovery form', () => {
   const door = readProjectFile('public/commencer.html');
-  assert.match(door, /name="source"/);
-  assert.match(door, /Comment tu nous as connus/i);
-  assert.match(door, /name="_subject"[^>]*value="[^"]*découverte[^"]*"/i);
+  assert.match(door, /<iframe[^>]+src="https:\/\/airtable\.com\/embed\/[A-Za-z0-9]+"/);
+  assert.match(door, /title="Formulaire séance découverte"/);
 });
 
-test('door page leaks no credentials and claims no paid commitment', () => {
+test('door page holds no credentials and no PKBA data surface', () => {
   const door = readProjectFile('public/commencer.html');
   assert.doesNotMatch(door, /(?:sk|rk|pk)_(?:live|test)_[A-Za-z0-9]+|whsec_[A-Za-z0-9]+/);
-  assert.doesNotMatch(door, /formspree\.io\/f\/(?!xgvawvya)/);
+  assert.doesNotMatch(door, /pat[A-Za-z0-9]{10,}|key[A-Za-z0-9]{14}/);
+  assert.doesNotMatch(door, /airtable\.com\/(?:app|tbl)[A-Za-z0-9]+/);
+});
+
+test('privacy policy covers the discovery lead data', () => {
+  const policy = readProjectFile('public/politique-de-confidentialite.html');
+  assert.match(policy, /séance découverte/i);
+  assert.match(policy, /Airtable/);
 });
 
 test('home page links to the door', () => {
@@ -333,7 +362,7 @@ test('home page links to the door', () => {
 });
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [ ] **Step 3: Run the test to verify it fails**
 
 ```bash
 node --test tests/door.test.js
@@ -341,7 +370,7 @@ node --test tests/door.test.js
 
 Expected: FAIL — `ENOENT: no such file or directory, open '.../public/commencer.html'`
 
-- [ ] **Step 3: Create `public/commencer.html`**
+- [ ] **Step 4: Create `public/commencer.html`**
 
 Copy the `<head>`, navigation and footer markup verbatim from `public/contact.html` so the page inherits the existing Bootstrap chrome, then replace the page body with the block below. Keep the existing stylesheet and script tags exactly as they appear in `contact.html`.
 
@@ -374,44 +403,23 @@ Copy the `<head>`, navigation and footer markup verbatim from `public/contact.ht
   <p>Probablement, pendant une heure. Tout le monde l'a été. Les gens qui sont bons
     aujourd'hui étaient nuls devant les mêmes barres il y a deux ans.</p>
 
-  <form class="mt-5" action="https://formspree.io/f/xgvawvya" method="POST" role="form">
-    <input type="hidden" name="_subject" value="Séance découverte VertiFlow">
-
-    <div class="form-floating mb-3">
-      <input type="text" name="name" id="name" class="form-control" placeholder="Prénom" required>
-      <label for="name">Ton prénom</label>
-    </div>
-
-    <div class="form-floating mb-3">
-      <input type="email" name="email" id="email" class="form-control" placeholder="Email" required>
-      <label for="email">Ton email</label>
-    </div>
-
-    <div class="form-floating mb-3">
-      <input type="text" name="age" id="age" class="form-control" placeholder="Âge" required>
-      <label for="age">Ton âge</label>
-    </div>
-
-    <div class="form-floating mb-3">
-      <select name="source" id="source" class="form-select" required>
-        <option value="">Choisis une réponse</option>
-        <option value="instagram">Instagram VertiFlow</option>
-        <option value="site">Le site VertiFlow</option>
-        <option value="bouche-a-oreille">Un ami / bouche-à-oreille</option>
-        <option value="forum">Forum des associations</option>
-        <option value="autre">Autre</option>
-      </select>
-      <label for="source">Comment tu nous as connus ?</label>
-    </div>
-
-    <button type="submit" class="btn btn-dark btn-lg">Je viens à une séance</button>
-  </form>
+  <h2 class="h4 mt-5">Réserve ta séance</h2>
+  <iframe
+    class="airtable-embed w-100 mt-3"
+    src="THE_DISCOVERY_FORM_EMBED_URL_FROM_STEP_1"
+    title="Formulaire séance découverte"
+    frameborder="0"
+    onmousewheel=""
+    height="760"
+    style="background: transparent; border: 1px solid #ccc;"></iframe>
 </section>
 ```
 
-The `source` field is the entire measurement mechanism for the December test. Do not rename it, and do not make it optional.
+Replace `THE_DISCOVERY_FORM_EMBED_URL_FROM_STEP_1` with the embed URL captured in Step 1 — it has the shape `https://airtable.com/embed/<id>`. Use the **embed** URL, not the base or table URL: a URL containing `app…` or `tbl…` exposes internal identifiers and the test in Step 2 rejects it.
 
-- [ ] **Step 4: Add the navigation link in `public/index.html`**
+The `Source` field inside that form is the entire measurement mechanism for the December test. Do not remove it from the form view and do not make it optional.
+
+- [ ] **Step 5: Add the navigation link in `public/index.html`**
 
 Find the existing primary navigation `<ul>` and add as the first item, so the door precedes the shop:
 
@@ -419,15 +427,28 @@ Find the existing primary navigation `<ul>` and add as the first item, so the do
 <li class="nav-item"><a class="nav-link" href="commencer.html">Commencer</a></li>
 ```
 
-- [ ] **Step 5: Run the test to verify it passes**
+- [ ] **Step 6: Add the discovery data to the privacy policy**
+
+VertiFlow now collects names, emails and ages — including those of minors — for a commercial entity. `public/politique-de-confidentialite.html` must say so. Add this section, matching the surrounding markup:
+
+```html
+<h2>Séance découverte</h2>
+<p>Quand tu remplis le formulaire de séance découverte, on collecte ton prénom, ton email,
+  ton âge et la façon dont tu nous as connus. Ces données sont stockées chez Airtable, sur
+  une base qui appartient à VertiFlow et qui est séparée de celle du club PKBA. On les
+  utilise uniquement pour te recontacter au sujet d'une séance, et on ne les revend pas.
+  Écris à vertiflow.pro@gmail.com pour les consulter ou les supprimer.</p>
+```
+
+- [ ] **Step 7: Run the test to verify it passes**
 
 ```bash
 node --test tests/door.test.js
 ```
 
-Expected: PASS, 4 tests.
+Expected: PASS, 5 tests.
 
-- [ ] **Step 6: Run the full suite**
+- [ ] **Step 8: Run the full suite**
 
 ```bash
 npm test
@@ -435,10 +456,10 @@ npm test
 
 Expected: PASS. 13 test files now. `tests/environment.test.js` only inspects `public/checkout.html`, `public/js/custom.js` and `public/success.html`, so a new page does not affect it — if it does fail, stop and report rather than editing that file.
 
-- [ ] **Step 7: Commit**
+- [ ] **Step 9: Commit**
 
 ```bash
-git add public/commencer.html public/index.html tests/door.test.js
+git add public/commencer.html public/index.html public/politique-de-confidentialite.html tests/door.test.js
 git commit -m "feat: add commencer door page"
 ```
 
@@ -465,17 +486,25 @@ Open `http://localhost:4173/commencer.html`. Confirm the six headings render in 
 
 - [ ] **Step 2: Submit the form once with real values**
 
-Fill it in and submit. Formspree will send to the address configured on form `xgvawvya`.
+Fill in the embedded form and submit, selecting `instagram` as the source. Confirm the embed renders and scrolls correctly inside the iframe at phone width — a form the user cannot reach is the same as no form.
 
-- [ ] **Step 3: Confirm the submission arrived with attribution intact**
+- [ ] **Step 3: Confirm the row landed with attribution intact**
 
-Check the inbox for form `xgvawvya`. Expected: subject `Séance découverte VertiFlow`, and a `source` value matching what was selected. If `source` is absent, the December test has no mechanism — stop and fix before shipping.
+Open the `Leads` table in the `VertiFlow — Découverte` base. Expected: one new row with `Prénom`, `Email`, `Âge`, `Source = instagram`, and `Reçu le` populated automatically. `Venu` and `Séance` must be empty — they are filled after a session, never by the form.
 
-- [ ] **Step 4: STOP — confirm the PKBA owner**
+If `Source` is missing or free-text rather than a single select, the December count cannot be filtered — stop and fix the form view before shipping.
 
-The spec's top risk: someone at PKBA must own greeting arrivals and recording attendance. Confirm with Maxime who that is by name before this page goes live. If nobody owns it, the count defaults to him and the plan has created a weekly obligation `vision-2026` told him to cap.
+- [ ] **Step 4: Create the December count view**
 
-- [ ] **Step 5: Report readiness**
+In the `Leads` table, add a grid view named `Compte décembre` filtered to `Venu` is checked **and** `Source` is any of `instagram`, `site`. Its row count is the success test. Building it now means December is a glance rather than a data exercise.
+
+- [ ] **Step 5: STOP — confirm the PKBA owner and the handoff**
+
+The spec's top risk: someone must greet arrivals and tick `Venu`. Because the base is VertiFlow's and the session is PKBA's, there is a handoff — VertiFlow holds the lead, PKBA runs the session, and someone reports back who turned up. That reporting is a message, not a data-sharing arrangement, and no PKBA member data moves into this base.
+
+Confirm with Maxime who that person is, by name, before the page goes live. If nobody owns it, the count defaults to him and this plan has created the weekly obligation `vision-2026` told him to cap.
+
+- [ ] **Step 6: Report readiness**
 
 Report to Maxime: the page URL, that a test submission arrived with `source` intact, and the named PKBA owner. Merging to `main` and deploying is his call, not this plan's — and this plan never pushes.
 
@@ -485,10 +514,12 @@ Report to Maxime: the page URL, that a test submission arrived with `source` int
 
 **Spec coverage.** This plan implements: the reconciliation and branch-resolution prerequisites; the identity system of record (`BRAND.md`, `brand.tokens.json`); `/commencer` and its six questions; the attribution mechanism behind the December test; and the interim-door mitigation that decouples the count from the launch date. It deliberately excludes the Next.js migration (plan 2), the live payments path (plan 3), the collection and Printful products (plan 4), and the content engine and journal (plan 5).
 
-**Deviation from the spec, deliberate:** the spec routes the découverte form to PKBA's Airtable. This plan uses the Formspree endpoint already wired into `public/contact.html` instead, because Airtable lives in the PKBA repository and reaching it would add a credential and a cross-repo dependency to a page whose whole purpose is to ship cheaply before the rentrée. The `source` field name is fixed so the count stays continuous when plan 2 replaces the page, and moving to Airtable later loses nothing.
+**Deviation from the spec, deliberate:** the spec routes the découverte form to *PKBA's* Airtable. This plan creates a **separate VertiFlow-owned base** instead. Two reasons, both binding: the spec's own governance constraint requires the micro-entreprise and the association loi 1901 to stay distinct, and commingling a commercial entity's lead capture with an association's licence records is exactly what a CERFA subsidy review would question. The cost is a handoff — PKBA runs the session, someone reports back who attended — which Task 5 Step 5 makes an explicit named responsibility rather than an assumption.
 
-**Placeholders:** none. Every step carries the literal file content, command and expected output.
+**Why an embedded form rather than a posted one:** a static HTML page cannot hold an Airtable token safely. Airtable's own form view needs no token, no serverless function, and no change to `functions/` — which this plan is forbidden from touching. Plan 2 replaces the embed with a branded form posting to a Route Handler that holds the token server-side; the four field names are fixed so the count is continuous across that change.
 
-**Type consistency:** `brand.tokens.json` exposes `color` and `font` as top-level keys, and plan 2's Tailwind config must import exactly those. The form field `source` is referenced identically in `tests/door.test.js`, `public/commencer.html` and the plan-2 interface note.
+**Placeholders:** one intentional substitution — the discovery form embed URL is produced by Task 4 Step 1 and consumed in Step 4. It is an output of an earlier step, not an unresolved decision, and Step 2's test rejects the wrong URL shape.
+
+**Type consistency:** `brand.tokens.json` exposes `color` and `font` as top-level keys, and plan 2's Tailwind config must import exactly those. The Airtable fields `Prénom`, `Email`, `Âge`, `Source`, `Venu`, `Séance` are named identically in Task 4 Step 1, Task 5 Steps 3–4, and the plan-2 interface note. `Venu` + `Source` define the December count and no other filter should be used.
 
 **Open risk carried forward:** Task 5 Step 4 is a human gate, not a code change. If the PKBA owner is not named, this plan ships a page that generates obligations nobody has agreed to absorb.
