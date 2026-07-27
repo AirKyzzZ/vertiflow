@@ -328,7 +328,8 @@ are binding on the implementation plan:
 2. **The branch preview stays deployable at all times.** State is visible in a browser, not
    reconstructed from memory.
 3. **Strict ordering.** "If I only get one session this week" always has an obvious answer.
-   The shoot is calendar-booked and immovable; everything else is a queue pulled in order.
+   The only date-locked items are the rentrée window and the 31 December count; everything
+   else is a queue pulled in order.
 
 ## Risks
 
