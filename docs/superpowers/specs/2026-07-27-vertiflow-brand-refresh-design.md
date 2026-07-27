@@ -188,14 +188,19 @@ national play for free.
 finish alongside a site migration. The existing nine stay live as *l'essentiel* but stop
 being the front page.
 
-**The shoot is the blocking dependency of the entire plan.** Art-direction rule 5 forbids
-AI imagery implying a real session, and the site's job is convincing strangers to attend
-real sessions. Therefore the site cannot launch on renders. One physical shoot day in
-mid-August, with club members, deliberately including people who visibly started recently.
+**Photography is largely already covered and does not block the build.** The 76 Printful
+mockups in `public/images/product/` carry the product pages, and Printful generates more on
+demand. Rule 5 explicitly permits AI renders for product and campaign work, so the drop
+itself can launch on renders — the pipeline is already proven by the Bangkok carousel. The
+existing two-year Instagram archive covers general site photography.
 
-That single day produces three deliverables at once: the rentrée campaign, every photograph
-on the new site, and the October content buffer. No tooling can substitute for it. **It goes
-in the calendar before anything else in this plan.**
+**One narrow exception: `/commencer`.** That page must make a nervous stranger believe
+people like them are there, which rules 2 and 4 encode. A brand archive is built from the
+best takes of the best athletes; nobody posts a beginner's third attempt. That imagery has
+to be captured deliberately because it is the one category nobody shoots.
+
+Scope: a phone at one regular PKBA session in September, roughly twenty minutes, people who
+started that month. This sits outside August entirely and does not gate the migration.
 
 **The burst** — roughly ten posts across three weeks, all shot on that one day, all
 scheduled in advance:
@@ -305,12 +310,11 @@ stays shelved until the account justifies the maintenance.
 
 | When | What |
 |---|---|
-| now → early Aug | klyx-estate has the daytime. VertiFlow: post the carousel, **book the shoot day**, write `BRAND.md` |
-| mid-Aug | **the shoot** — blocking dependency |
+| now → early Aug | klyx-estate has the daytime. VertiFlow: post the carousel, write `BRAND.md` and `brand.tokens.json` |
 | Aug | migration on branch · artwork for 3 pieces · Printful products created |
 | late Aug | rentrée burst drafted and scheduled · site preview reviewed |
 | ~5 Sept | cutover to `main` · collection drop · forum des associations |
-| Sept | rentrée content runs, découverte sessions counted |
+| Sept | rentrée content runs, découverte sessions counted, 20-min beginner capture for `/commencer` |
 | Oct | content engine, journal articles |
 | 31 Dec | count |
 
@@ -328,18 +332,20 @@ are binding on the implementation plan:
 
 ## Risks
 
-1. **The shoot does not happen.** Everything downstream blocks and no tooling substitutes.
-   Highest risk, pure calendar.
-2. **Nobody at PKBA owns the découverte list.** It defaults to Maxime, creating exactly the
-   weekly club obligation `vision-2026` capped. Settle ownership before September.
-3. **August's hours.** August belongs to klyx-estate by the 2026-07-14 decision; this plan
+1. **Nobody at PKBA owns the découverte list.** The success test cannot be measured without
+   a named person greeting arrivals and ticking the box. Unowned, it defaults to Maxime and
+   creates exactly the weekly club obligation `vision-2026` capped. Settle before September.
+2. **August's hours.** August belongs to klyx-estate by the 2026-07-14 decision; this plan
    wants ~4h/week. If it takes more, it takes it from there. That should be a decision, not
    a discovery in September.
-4. **Cutover slips.** Non-fatal by design. The rentrée window is about three weeks. If the
+3. **Gold-plating the refonte.** Biggest item and the most enjoyable one. `/commencer`
+   converting matters more than any homepage animation.
+4. **`/commencer` ships with elite imagery.** If the twenty-minute September capture does
+   not happen, the page falls back to archive photography of good athletes doing clean
+   lines — which actively argues against the message the page exists to deliver.
+5. **Cutover slips.** Non-fatal by design. The rentrée window is about three weeks. If the
    branch is not ready on 5 September, `main` keeps serving the old site and the drop moves
    to the 15th.
-5. **Gold-plating the refonte.** Biggest item, most enjoyable. `/commencer` converting
-   matters more than any homepage animation.
 
 ## Out of scope
 
