@@ -163,9 +163,18 @@ not merely written. Present on `origin/main`:
 and all 12 tests carry across unchanged. Only the thin Netlify function wrappers become
 Route Handlers. The tests are the safety net for the port and must keep passing throughout.
 
-**Unmerged work exists.** Seven commits on `codex/commerce-main-release` (shared EmailJS
-template, Stripe Elements UI mode, additional tests) sit ahead of `origin/main`. Land or
-drop them before the migration starts, so the port has one source of truth.
+**Resolved 2026-08-03: there is no unmerged commerce work.** The seven commits on
+`codex/commerce-main-release` (shared EmailJS template, Stripe Elements UI mode, additional
+tests) were already squash-merged to `origin/main` as `9c04013`. `git diff origin/main
+codex/commerce-main-release -- functions/ tests/ data/ scripts/` is empty. The branch is
+redundant and can be deleted. **Plan 2 ports from `origin/main`.**
+
+One thing that fix contains is worth knowing: `ui_mode` moved from `'custom'` to
+`'elements'` because Stripe removed the former under API version `2026-06-24.dahlia`
+(*"The ui_mode value custom is no longer supported. Use elements instead."*). The tests
+inject a mocked Stripe, so this class of provider-contract change cannot be caught locally
+— it surfaces only against the real API. Plan 5's live path needs a real-API smoke test for
+exactly this reason.
 
 ## Going live
 
@@ -428,3 +437,6 @@ the existing legal pages beyond porting them.
    burst schedule anchors to it.
 4. Which three pieces make up the collection, and what is the collection's name?
 5. Which French parkour club list is authoritative for the *"pas dans le coin"* page?
+6. ~~`codex/commerce-main-release`: land or drop?~~ **RESOLVED 2026-08-03 — drop.** Already
+   upstream as `9c04013`; the branch and its worktree are redundant. Plan 2 ports from
+   `origin/main`.
