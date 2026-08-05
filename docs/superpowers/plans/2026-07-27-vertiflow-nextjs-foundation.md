@@ -9,7 +9,7 @@
 **Tech Stack:** Next.js App Router (13.5+, install latest), TypeScript strict, Tailwind CSS, `@netlify/plugin-nextjs`, Node ≥20, `node --test`.
 
 **Spec:** `docs/superpowers/specs/2026-07-27-vertiflow-brand-refresh-design.md`
-**Depends on:** plan 1 (`2026-07-27-vertiflow-foundation-and-door.md`) — requires the rebase onto `origin/main`, a green baseline, and `brand.tokens.json`.
+**Prerequisites, all already satisfied on 2026-08-03:** the branch is rebased onto `origin/main`, `npm test` is green at 174 tests, and `BRAND.md` + `brand.tokens.json` are committed. This is plan 1 of the refresh; the earlier "foundation and door" plan was deleted when the door was demoted from a workstream to a single route.
 
 ## Global Constraints
 
