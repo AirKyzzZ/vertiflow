@@ -261,8 +261,7 @@ irreversible step — a garment physically printed and shipped — keeps a human
 front of it. Any draft that failed a webhook validation (product, variant, quantity,
 recipient, provenance digest) is never auto-confirmed and always waits for a human.
 
-*Open:* this is the safer design proposed in response to a request for zero-touch
-confirmation. Confirm before implementing.
+**Decided 2026-08-08: the 24h veto window is the design.** Not zero-touch.
 
 **2. Content and posting.** See *Content engine* below — agent drafts, human approves, Meta
 Business Suite schedules.
