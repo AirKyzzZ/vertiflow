@@ -1,6 +1,10 @@
 # VertiFlow — brand system
 
-Tokens live in `brand.tokens.json`. This file holds everything prose.
+Tokens live in the `@theme` block of `src/app/globals.css` — Tailwind v4 is CSS-first, so
+that block is both the design tokens and the build source. This file holds everything prose.
+
+Note: the near-black is named `ink`, not `base`. `--color-base` would collide with
+Tailwind's built-in `text-base` font-size utility.
 
 ## Positioning
 
