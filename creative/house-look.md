@@ -53,6 +53,25 @@ AI gloss · plastic or waxy skin · HDR halos · oversaturation · cyberpunk neo
 teal-orange grading · lens flares · vignetting · fake readable signage · warped lettering ·
 duplicated limbs · malformed hands · watermarks · borders · floating typography · captions.
 
+## How to prompt this (learned 2026-08-13, `z_image` on the Higgsfield free plan)
+
+Model gating: `recraft_v4_1` and `soul_location` require a paid plan. `z_image` is the
+free-tier model, costs ~0.15 credits, and outputs 2048×1536.
+
+1. **Roughly 60 words.** A 180-word prompt kept every atmosphere instruction and dropped
+   every single-mention constraint. Atmosphere survives repetition; constraints do not
+   survive length.
+2. **Do not inline this whole file.** Take the light, palette and camera lines; leave the
+   rest. The look carries on a few concrete words.
+3. **Drop the negative list.** Everything on it was already absent from output that never
+   mentioned it. Negatives cost prompt budget and buy nothing here. Keep only
+   "empty, no people".
+4. **When a constraint fails twice, change the noun, not the adjective.** "A low wall, no
+   higher than a knee" lost to the model's prior that walls are tall, across two attempts.
+   "Three wide shallow concrete steps, each only ankle height" landed first time.
+5. **Batch variants, don't iterate serially.** Three framings in one `generate_image_batch`
+   costs ~0.45 credits and one round trip.
+
 ## Garment fidelity
 
 When a VertiFlow garment appears, its artwork is preserved exactly from the product

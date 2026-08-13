@@ -1,40 +1,42 @@
 # Slot: home-door
 
-**Output:** 2400×1600 (3:2) · **Quiet region:** right half, for body copy
-**References:** none — deliberately no people
+**Output:** 2048×1536 · **Quiet region:** upper third (dead black), for body copy
+**Model:** `z_image` on Higgsfield · ~0.15 credits per render
+**Status:** ✅ locked — `test-02b.png`
 **Inherits:** `../../house-look.md`
 
-## Prompt
+## Working prompt
 
-Ultra-photorealistic night photograph of a low concrete wall, roughly knee height, running
-across an empty municipal square in a French coastal town after rain.
+> Photorealistic night photograph. Three wide shallow concrete steps, each only ankle
+> height, in an empty wet town square after rain. Camera low and close to the stone, 35mm.
+> A sodium street lamp out of frame to the left, warm amber pooling on the wet steps, black
+> sky. Empty, no people. High-ISO grain.
 
-The wall is unremarkable and approachable — the kind of thing anyone could step onto. Worn
-top edge, chipped corners, moss in the joints. Wide flat paving in front of it holding
-shallow standing water.
-
-Deliberately not extreme: no big drops, no gaps, no rooftops, no height. The subject is an
-ordinary obstacle that looks possible.
-
-Light: a single sodium-vapour street lamp out of frame to the left, warm amber grazing
-along the top edge of the wall and pooling in the wet paving. Deep unlit black beyond. One
-distant cool cyan window reflection in the standing water.
-
-Full-frame camera, 35mm lens, f/2.8, tripod, long exposure. Realistic high-ISO grain,
-sharp texture in the concrete, true reflections with imperfect ripples.
-
-Composition: the wall runs from lower-left into the middle distance. The right half of the
-frame is quiet, dark and open for overlaid text. Low camera height, close to the wall, so
-the viewer feels at ground level rather than looking down.
-
-Absolutely no people, no figures, no silhouettes, no shoes, no bags. Empty and still.
-
-## Negative
-
-AI gloss, HDR halos, oversaturation, cyberpunk neon, purple or teal-orange grading, lens
-flares, vignetting, fake readable signage, graffiti with legible text, watermarks, borders,
-people, silhouettes, dramatic heights, rooftops, parkour athletes.
+62 words. No negative list.
 
 ## Iteration notes
 
-_Record what worked and what didn't._
+**test-01** — 180-word prompt with the full house block inlined. Every *look* instruction
+landed: sodium light, wet ground, cyan counter-colour, grain, weathering, no people. Every
+*subject* constraint was ignored: knee height, low camera, quiet right half. Lesson: this
+model honours atmosphere and drops single-mention constraints in long prompts.
+
+**test-02a** — 65 words, constraint front-loaded as "a low concrete kerb, no higher than a
+knee". Low camera landed. Height did not — still chest-high.
+
+**test-02b** — ✅ "Three wide shallow concrete steps, each only ankle height." Landed
+immediately.
+
+**The lesson, and it generalises: name a different object rather than qualifying the same
+one.** `z_image` has a strong prior that a wall is tall, and "low", "knee-high" and "no
+higher than a knee" all lost to it across two attempts. Steps carry no such prior. When a
+constraint fails twice, stop adjusting adjectives and change the noun.
+
+**test-02c** — knee-high ledge, lamp from the right. Downloaded, unused for this slot;
+possible candidate for `boutique-band`.
+
+## Cost record
+
+4 renders total, ~0.6 credits. Model gating on the free plan: `recraft_v4_1` and
+`soul_location` both return `job_minimum_basic_plan_required`. `z_image` is the free-tier
+model and outputs 2048×1536.
