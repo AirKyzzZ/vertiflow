@@ -21,8 +21,8 @@ const columns = [
     title: 'Légal',
     links: [
       { href: '/mentions-legales', label: 'Mentions légales' },
-      { href: '/conditions-generales-de-vente', label: 'CGV' },
-      { href: '/politique-de-confidentialite', label: 'Confidentialité' },
+      { href: '/cgv', label: 'CGV' },
+      { href: '/confidentialite', label: 'Confidentialité' },
     ],
   },
 ]
