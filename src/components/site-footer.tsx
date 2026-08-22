@@ -5,7 +5,7 @@ const columns = [
     title: 'Boutique',
     links: [
       { href: '/boutique', label: "L'essentiel" },
-      { href: '/guide-des-tailles', label: 'Guide des tailles' },
+      { href: '/guide-des-tailles.html', label: 'Guide des tailles' },
       { href: '/livraison-et-paiement', label: 'Livraison et paiement' },
     ],
   },

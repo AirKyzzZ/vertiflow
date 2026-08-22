@@ -19,7 +19,7 @@ export function ProductGallery({ images, name }: ProductGalleryProps) {
             fill
             priority={position === 0}
             sizes="(min-width: 1024px) 45vw, 85vw"
-            className="object-contain p-8"
+            className="object-contain"
           />
         </div>
       ))}

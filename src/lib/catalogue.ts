@@ -44,10 +44,6 @@ export function sizes(product: Product, colour: string): string[] {
   ]
 }
 
-export function coverImage(product: Product): string {
-  return activeVariants(product)[0].image_url
-}
-
 export function formatPrice(price: string): string {
   return `${price.replace('.', ',')} €`
 }

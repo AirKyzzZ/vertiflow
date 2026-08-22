@@ -55,3 +55,20 @@ test('each colourway holds at most four images', () => {
     }
   }
 });
+
+test('no component reads image_url or coverImage', () => {
+  const root = path.join(__dirname, '..', 'src');
+  const offenders = [];
+  const walk = (dir) => {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) { walk(full); continue; }
+      if (!/\.(ts|tsx)$/.test(entry.name)) continue;
+      const source = fs.readFileSync(full, 'utf8');
+      if (/\bcoverImage\b/.test(source)) offenders.push(`${full}: coverImage`);
+      if (/\.image_url\b/.test(source)) offenders.push(`${full}: image_url`);
+    }
+  };
+  walk(root);
+  assert.deepEqual(offenders, [], `product imagery must come from product-media.ts:\n${offenders.join('\n')}`);
+});

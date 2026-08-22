@@ -6,23 +6,22 @@ import { swatchClass } from '@/lib/swatch'
 
 type ProductCardProps = {
   product: Product
-  ratio?: string
   index?: number
 }
 
-export function ProductCard({ product, ratio, index }: ProductCardProps) {
+export function ProductCard({ product, index }: ProductCardProps) {
   const palette = colours(product)
   const [front, alt] = mediaFor(product.slug, palette[0])
 
   return (
     <Link href={`/boutique/${product.slug}`} className="group block">
-      <div className={`grain relative aspect-[4/5] overflow-hidden bg-neutral-100 ${ratio ?? ''}`}>
+      <div className="grain relative aspect-square overflow-hidden bg-neutral-100">
         <Image
           src={front}
           alt={product.name}
           fill
           sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
-          className="object-contain p-6 transition-opacity duration-500 group-hover:opacity-0"
+          className="object-contain transition-opacity duration-500 group-hover:opacity-0"
         />
         {alt && (
           <Image
@@ -31,7 +30,7 @@ export function ProductCard({ product, ratio, index }: ProductCardProps) {
             fill
             aria-hidden
             sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
-            className="scale-[1.02] object-contain p-6 opacity-0 transition-all duration-500 group-hover:scale-100 group-hover:opacity-100"
+            className="scale-[1.02] object-contain opacity-0 transition-all duration-500 group-hover:scale-100 group-hover:opacity-100"
           />
         )}
       </div>

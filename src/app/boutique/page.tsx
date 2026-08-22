@@ -8,21 +8,21 @@ export const metadata: Metadata = {
   description: 'Neuf pièces VertiFlow, imprimées à la demande. Rien de saisonnier.',
 }
 
-type CardLayout = { span: string; ratio: string; lift: string }
+type CardLayout = { span: string; lift: string }
 
 const LAYOUT: CardLayout[] = [
-  { span: 'lg:col-span-7', ratio: 'lg:aspect-[4/5]', lift: '' },
-  { span: 'lg:col-span-5', ratio: 'lg:aspect-square', lift: 'lg:mt-28' },
-  { span: 'lg:col-span-4', ratio: 'lg:aspect-[4/5]', lift: '' },
-  { span: 'lg:col-span-4', ratio: 'lg:aspect-[4/5]', lift: 'lg:mt-16' },
-  { span: 'lg:col-span-4', ratio: 'lg:aspect-[4/5]', lift: '' },
-  { span: 'lg:col-span-5', ratio: 'lg:aspect-square', lift: '' },
-  { span: 'lg:col-span-7', ratio: 'lg:aspect-[4/5]', lift: 'lg:mt-20' },
-  { span: 'lg:col-span-6', ratio: 'lg:aspect-[4/5]', lift: '' },
-  { span: 'lg:col-span-6', ratio: 'lg:aspect-[4/5]', lift: 'lg:mt-24' },
+  { span: 'lg:col-span-7', lift: '' },
+  { span: 'lg:col-span-5', lift: 'lg:mt-28' },
+  { span: 'lg:col-span-4', lift: '' },
+  { span: 'lg:col-span-4', lift: 'lg:mt-16' },
+  { span: 'lg:col-span-4', lift: '' },
+  { span: 'lg:col-span-5', lift: '' },
+  { span: 'lg:col-span-7', lift: 'lg:mt-20' },
+  { span: 'lg:col-span-6', lift: '' },
+  { span: 'lg:col-span-6', lift: 'lg:mt-24' },
 ]
 
-const DEFAULT_LAYOUT: CardLayout = { span: 'lg:col-span-6', ratio: 'lg:aspect-[4/5]', lift: '' }
+const DEFAULT_LAYOUT: CardLayout = { span: 'lg:col-span-6', lift: '' }
 
 export function Boutique() {
   const products = getProducts()
@@ -64,7 +64,7 @@ export function Boutique() {
             const layout = LAYOUT[index] ?? DEFAULT_LAYOUT
             return (
               <div key={product.slug} className={`${layout.span} ${layout.lift}`}>
-                <ProductCard product={product} index={index} ratio={layout.ratio} />
+                <ProductCard product={product} index={index} />
               </div>
             )
           })}

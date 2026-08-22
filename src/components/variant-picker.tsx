@@ -1,5 +1,6 @@
 'use client'
 
+import { groupByGeneration } from '@/lib/iphone-generation'
 import { swatchClass } from '@/lib/swatch'
 
 type VariantPickerProps = {
@@ -9,22 +10,6 @@ type VariantPickerProps = {
   size: string
   onColour: (value: string) => void
   onSize: (value: string) => void
-}
-
-function iPhoneGeneration(model: string): string {
-  const match = /^iPhone (\d+)/.exec(model)
-  return match ? `iPhone ${match[1]}` : model
-}
-
-function groupByGeneration(models: string[]): Array<[string, string[]]> {
-  const groups = new Map<string, string[]>()
-  for (const model of models) {
-    const generation = iPhoneGeneration(model)
-    const existing = groups.get(generation)
-    if (existing) existing.push(model)
-    else groups.set(generation, [model])
-  }
-  return [...groups.entries()]
 }
 
 export function VariantPicker({ palette, sizes, colour, size, onColour, onSize }: VariantPickerProps) {

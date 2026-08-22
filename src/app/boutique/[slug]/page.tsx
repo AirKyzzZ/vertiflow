@@ -19,6 +19,8 @@ export async function generateMetadata({ params }: ProductPageParams): Promise<M
   if (!product) return {}
 
   const copy = productCopy[slug]
+  if (!copy) notFound()
+
   const image = heroFor(slug)
 
   return {
@@ -42,6 +44,8 @@ export async function ProductPage({ params }: ProductPageParams) {
   const palette = colours(product)
   const sizeOptions = sizes(product, palette[0])
   const copy = productCopy[slug]
+  if (!copy) notFound()
+
   const crossSell = products.filter((entry) => entry.slug !== slug).slice(0, 3)
 
   return (
