@@ -3,18 +3,20 @@ import Link from 'next/link'
 import { colours, formatPrice, type Product } from '@/lib/catalogue'
 import { mediaFor } from '@/lib/product-media'
 import { swatchClass } from '@/lib/swatch'
+import { productPaths, type Locale } from '@/lib/i18n'
 
 type ProductCardProps = {
   product: Product
   index?: number
+  locale?: Locale
 }
 
-export function ProductCard({ product, index }: ProductCardProps) {
+export function ProductCard({ product, index, locale = 'fr' }: ProductCardProps) {
   const palette = colours(product)
   const [front, alt] = mediaFor(product.slug, palette[0])
 
   return (
-    <Link href={`/boutique/${product.slug}`} className="group block">
+    <Link href={productPaths(product.slug)[locale]} className="group block">
       <div className="grain relative aspect-square overflow-hidden bg-neutral-100">
         <Image
           src={front}

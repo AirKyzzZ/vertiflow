@@ -3,12 +3,11 @@ import { notFound } from 'next/navigation'
 import { ProductPageBody } from '@/app/boutique/[slug]/product-page-body'
 import { getProduct, getProducts } from '@/lib/catalogue'
 import { heroFor } from '@/lib/product-media'
-import { productCopy } from '@/lib/product-copy'
-import { buildAlternates, getDictionary, productPaths } from '@/lib/i18n'
+import { buildAlternates, getDictionary, productCopyEn, productPaths } from '@/lib/i18n'
 
 type ProductPageParams = { params: Promise<{ slug: string }> }
 
-const dict = getDictionary('fr')
+const dict = getDictionary('en')
 
 export function generateStaticParams() {
   return getProducts().map((product) => ({ slug: product.slug }))
@@ -19,7 +18,7 @@ export async function generateMetadata({ params }: ProductPageParams): Promise<M
   const product = getProduct(slug)
   if (!product) return {}
 
-  const copy = productCopy[slug]
+  const copy = productCopyEn[slug]
   if (!copy) notFound()
 
   const image = heroFor(slug)
@@ -32,18 +31,18 @@ export async function generateMetadata({ params }: ProductPageParams): Promise<M
       description: copy.lead,
       images: image ? [{ url: image, width: 800, height: 800 }] : undefined,
     },
-    alternates: buildAlternates('fr', productPaths(slug)),
+    alternates: buildAlternates('en', productPaths(slug)),
   }
 }
 
-export async function ProductPage({ params }: ProductPageParams) {
+export async function ProductPageEn({ params }: ProductPageParams) {
   const { slug } = await params
   const product = getProduct(slug)
   if (!product) notFound()
 
   const products = getProducts()
   const index = products.findIndex((entry) => entry.slug === slug)
-  const copy = productCopy[slug]
+  const copy = productCopyEn[slug]
   if (!copy) notFound()
 
   const crossSell = products.filter((entry) => entry.slug !== slug).slice(0, 3)
@@ -51,7 +50,7 @@ export async function ProductPage({ params }: ProductPageParams) {
   return (
     <ProductPageBody
       dict={dict}
-      locale="fr"
+      locale="en"
       product={product}
       copy={copy}
       index={index}
@@ -61,4 +60,4 @@ export async function ProductPage({ params }: ProductPageParams) {
   )
 }
 
-export default ProductPage
+export default ProductPageEn
