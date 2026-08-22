@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
-import { CheckoutForm } from '@/components/checkout-form'
+import { CheckoutForm, type CheckoutStep } from '@/components/checkout-form'
 import { useCart } from '@/components/cart-provider'
 import { heroFor } from '@/lib/product-media'
 
@@ -28,6 +28,7 @@ function formatEuros(value: number): string {
 export function CommandeClient({ products }: CommandeClientProps) {
   const { lines, ready } = useCart()
   const [promoCode, setPromoCode] = useState('')
+  const [step, setStep] = useState<CheckoutStep>('idle')
 
   const priced = lines.map((line) => {
     const product = findProduct(products, line.slug)
@@ -73,7 +74,7 @@ export function CommandeClient({ products }: CommandeClientProps) {
       </header>
 
       <div className="mt-14 grid gap-12 lg:grid-cols-[1.3fr_1fr] lg:gap-16">
-        <CheckoutForm promoCode={promoCode} />
+        <CheckoutForm promoCode={promoCode} step={step} onStepChange={setStep} />
 
         <aside className="border border-ink/10 bg-neutral-100/60 p-6 lg:sticky lg:top-24 lg:self-start">
           <span className="eyebrow text-neutral-500">Résumé</span>
@@ -103,16 +104,23 @@ export function CommandeClient({ products }: CommandeClientProps) {
             </p>
           </div>
 
-          <details className="mt-6 border-t border-ink/10 pt-4">
-            <summary className="eyebrow cursor-pointer text-neutral-500">J&apos;ai un code</summary>
-            <input
-              value={promoCode}
-              onChange={(event) => setPromoCode(event.target.value)}
-              placeholder="Code promo"
-              autoComplete="off"
-              className="mt-3 w-full border border-ink/20 bg-paper px-4 py-3 text-sm outline-none focus:border-ink"
-            />
-          </details>
+          {step === 'idle' ? (
+            <details className="mt-6 border-t border-ink/10 pt-4">
+              <summary className="eyebrow cursor-pointer text-neutral-500">J&apos;ai un code</summary>
+              <input
+                value={promoCode}
+                onChange={(event) => setPromoCode(event.target.value)}
+                placeholder="Code promo"
+                autoComplete="off"
+                className="mt-3 w-full border border-ink/20 bg-paper px-4 py-3 text-sm outline-none focus:border-ink"
+              />
+            </details>
+          ) : (
+            <div className="mt-6 border-t border-ink/10 pt-4">
+              <span className="eyebrow text-neutral-500">Code promo</span>
+              <p className="mt-3 text-sm text-neutral-700">{promoCode || 'Aucun code appliqué'}</p>
+            </div>
+          )}
         </aside>
       </div>
     </main>

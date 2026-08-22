@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import {
   CART_STORAGE_KEY,
   addLine,
@@ -37,15 +37,18 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(lines))
   }, [lines, ready])
 
-  const value: CartContextValue = {
-    lines,
-    ready,
-    count: countLines(lines),
-    add: (line) => setLines((current) => addLine(current, line)),
-    setQuantity: (index, quantity) => setLines((current) => setLineQuantity(current, index, quantity)),
-    remove: (index) => setLines((current) => removeLine(current, index)),
-    clear: () => setLines([]),
-  }
+  const add = useCallback((line: CartLine) => setLines((current) => addLine(current, line)), [])
+  const setQuantity = useCallback(
+    (index: number, quantity: number) => setLines((current) => setLineQuantity(current, index, quantity)),
+    [],
+  )
+  const remove = useCallback((index: number) => setLines((current) => removeLine(current, index)), [])
+  const clear = useCallback(() => setLines([]), [])
+
+  const value = useMemo<CartContextValue>(
+    () => ({ lines, ready, count: countLines(lines), add, setQuantity, remove, clear }),
+    [lines, ready],
+  )
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>
 }

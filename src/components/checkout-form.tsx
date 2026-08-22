@@ -6,7 +6,7 @@ import { loadStripe } from '@stripe/stripe-js'
 import type { StripeCheckoutLoadActionsSuccess } from '@stripe/stripe-js'
 import { useCart } from '@/components/cart-provider'
 
-type CheckoutStep = 'idle' | 'creating' | 'ready' | 'confirming'
+export type CheckoutStep = 'idle' | 'creating' | 'ready' | 'confirming'
 
 type ShippingForm = {
   firstName: string
@@ -93,10 +93,9 @@ type FieldProps = {
   type?: 'text' | 'email' | 'tel'
   required?: boolean
   autoComplete?: string
-  inputMode?: 'numeric'
 }
 
-function Field({ label, name, value, onChange, type = 'text', required, autoComplete, inputMode }: FieldProps) {
+function Field({ label, name, value, onChange, type = 'text', required, autoComplete }: FieldProps) {
   return (
     <label className="block">
       <span className={labelClass}>{label}</span>
@@ -105,7 +104,6 @@ function Field({ label, name, value, onChange, type = 'text', required, autoComp
         type={type}
         required={required}
         autoComplete={autoComplete}
-        inputMode={inputMode}
         value={value}
         onChange={(event) => onChange(event.target.value)}
         className={fieldClass}
@@ -116,11 +114,12 @@ function Field({ label, name, value, onChange, type = 'text', required, autoComp
 
 type CheckoutFormProps = {
   promoCode: string
+  step: CheckoutStep
+  onStepChange: (step: CheckoutStep) => void
 }
 
-export function CheckoutForm({ promoCode }: CheckoutFormProps) {
+export function CheckoutForm({ promoCode, step, onStepChange }: CheckoutFormProps) {
   const { lines } = useCart()
-  const [step, setStep] = useState<CheckoutStep>('idle')
   const [form, setForm] = useState<ShippingForm>(EMPTY_FORM)
   const [error, setError] = useState<string | null>(null)
   const [canConfirm, setCanConfirm] = useState(false)
@@ -140,14 +139,14 @@ export function CheckoutForm({ promoCode }: CheckoutFormProps) {
     actionsRef.current = null
     setCanConfirm(false)
     setError(null)
-    setStep('idle')
+    onStepChange('idle')
   }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     if (step !== 'idle') return
     setError(null)
-    setStep('creating')
+    onStepChange('creating')
 
     const customer = {
       firstName: form.firstName,
@@ -186,21 +185,21 @@ export function CheckoutForm({ promoCode }: CheckoutFormProps) {
       if (loadResult.type === 'error') throw new Error('actions-unavailable')
       actionsRef.current = loadResult.actions
 
-      setStep('ready')
+      onStepChange('ready')
     } catch {
       setError("Le paiement n'est pas disponible pour le moment. Réessaie dans un instant.")
-      setStep('idle')
+      onStepChange('idle')
     }
   }
 
   async function confirmPayment() {
     if (!actionsRef.current) return
     setError(null)
-    setStep('confirming')
+    onStepChange('confirming')
     const result = await actionsRef.current.confirm()
     if (result.type === 'error') {
       setError(result.error.message || 'Le paiement a échoué. Réessaie avec une autre carte.')
-      setStep('ready')
+      onStepChange('ready')
     }
   }
 
@@ -223,7 +222,7 @@ export function CheckoutForm({ promoCode }: CheckoutFormProps) {
             <Field label="Adresse" name="line1" required autoComplete="address-line1" value={form.line1} onChange={updateField('line1')} />
             <Field label="Complément d'adresse (optionnel)" name="line2" autoComplete="address-line2" value={form.line2} onChange={updateField('line2')} />
             <div className="grid grid-cols-2 gap-4">
-              <Field label="Code postal" name="postalCode" required autoComplete="postal-code" inputMode="numeric" value={form.postalCode} onChange={updateField('postalCode')} />
+              <Field label="Code postal" name="postalCode" required autoComplete="postal-code" value={form.postalCode} onChange={updateField('postalCode')} />
               <Field label="Ville" name="city" required autoComplete="address-level2" value={form.city} onChange={updateField('city')} />
             </div>
             <label className="block">
