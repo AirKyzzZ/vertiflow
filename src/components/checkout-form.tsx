@@ -208,7 +208,7 @@ export function CheckoutForm({ promoCode, step, onStepChange }: CheckoutFormProp
       <section>
         <div className="flex items-baseline gap-4">
           <span className="eyebrow text-accent">01</span>
-          <h2 className="display text-2xl">Livraison</h2>
+          <h2 className="display min-w-0 wrap-anywhere text-2xl">Livraison</h2>
         </div>
 
         {step === 'idle' ? (
@@ -271,7 +271,7 @@ export function CheckoutForm({ promoCode, step, onStepChange }: CheckoutFormProp
       <section className="mt-12">
         <div className="flex items-baseline gap-4">
           <span className="eyebrow text-accent">02</span>
-          <h2 className="display text-2xl">Paiement</h2>
+          <h2 className="display min-w-0 wrap-anywhere text-2xl">Paiement</h2>
         </div>
 
         {step === 'idle' ? (

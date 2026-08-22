@@ -101,7 +101,7 @@ export function PanierClient({ products }: PanierClientProps) {
       <header className="border-b border-ink/10 pb-10">
         <div className="flex items-baseline gap-4">
           <span className="eyebrow text-accent">01</span>
-          <h1 className="display text-[clamp(2.5rem,7vw,4.5rem)]">Panier</h1>
+          <h1 className="display min-w-0 wrap-anywhere text-[clamp(2.5rem,7vw,4.5rem)]">Panier</h1>
         </div>
         <p className="rule-marker relative mt-8 max-w-md pl-11 leading-relaxed text-neutral-700">
           Imprimé et expédié à la demande. Compte 5 à 10 jours ouvrés.
@@ -152,7 +152,10 @@ export function PanierClient({ products }: PanierClientProps) {
           <span className="eyebrow text-neutral-500">Sous-total</span>
           <p className="display mt-2 text-3xl">{formatEuros(total)}</p>
           <p className="mt-3 text-xs leading-relaxed text-neutral-500">
-            Livraison calculée à l&apos;étape suivante.
+            Livraison à partir de 6,99 € (France).{' '}
+            <Link href="/livraison-et-paiement" className="text-accent underline">
+              Voir les délais et tarifs
+            </Link>
           </p>
           <Link
             href="/commande"

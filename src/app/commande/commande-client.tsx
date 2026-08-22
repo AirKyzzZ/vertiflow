@@ -66,7 +66,7 @@ export function CommandeClient({ products }: CommandeClientProps) {
       <header className="border-b border-ink/10 pb-10">
         <div className="flex items-baseline gap-4">
           <span className="eyebrow text-accent">03</span>
-          <h1 className="display text-[clamp(2.5rem,7vw,4.5rem)]">Commande</h1>
+          <h1 className="display min-w-0 wrap-anywhere text-[clamp(2.5rem,7vw,4.5rem)]">Commande</h1>
         </div>
         <p className="rule-marker relative mt-8 max-w-md pl-11 leading-relaxed text-neutral-700">
           Paiement sécurisé par Stripe. Renseigne tes coordonnées pour finaliser.

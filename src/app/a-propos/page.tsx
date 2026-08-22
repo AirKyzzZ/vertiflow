@@ -32,7 +32,7 @@ export function APropos() {
         <header className="relative border-b border-ink/10 pb-10">
           <div className="flex items-baseline gap-4">
             <span className="eyebrow text-accent">04</span>
-            <h1 className="display text-[clamp(2.5rem,7vw,5rem)]">À propos</h1>
+            <h1 className="display min-w-0 wrap-anywhere text-[clamp(2.5rem,7vw,5rem)]">À propos</h1>
           </div>
           <p className="rule-marker relative mt-8 max-w-md pl-11 leading-relaxed text-neutral-700">
             Tu es sans doute déjà tombé sur une vidéo de parkour où tout semblait acquis

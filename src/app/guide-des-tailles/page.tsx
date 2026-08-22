@@ -35,7 +35,7 @@ export function GuideDesTaillesPage() {
         <header className="relative border-b border-ink/10 pb-10">
           <div className="flex items-baseline gap-4">
             <span className="eyebrow text-accent">Boutique</span>
-            <h1 className="display text-[clamp(2.5rem,7vw,5rem)]">Guide des tailles</h1>
+            <h1 className="display min-w-0 wrap-anywhere text-[clamp(2.5rem,7vw,5rem)]">Guide des tailles</h1>
           </div>
           <p className="rule-marker relative mt-8 max-w-xl pl-11 leading-relaxed text-neutral-700">
             Neuf pièces, imprimées à la demande sur les gabarits réels du fabricant. Voici
@@ -102,7 +102,7 @@ export function GuideDesTaillesPage() {
             {sizedProducts.map((product) => (
               <article key={product.slug} className="py-10 first:pt-0">
                 <div className="flex flex-wrap items-baseline justify-between gap-4">
-                  <h3 className="display text-xl sm:text-2xl">{product.name}</h3>
+                  <h3 className="display min-w-0 wrap-anywhere text-xl sm:text-2xl">{product.name}</h3>
                   <Link
                     href={`/boutique/${product.slug}`}
                     className="eyebrow border-b-2 border-accent pb-1 text-ink"

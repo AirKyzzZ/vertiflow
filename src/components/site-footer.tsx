@@ -15,6 +15,7 @@ const columns = [
       { href: '/commencer', label: 'Commencer le parkour' },
       { href: '/a-propos', label: 'Notre histoire' },
       { href: '/journal', label: 'Journal' },
+      { href: '/contact', label: 'Contact' },
     ],
   },
   {
