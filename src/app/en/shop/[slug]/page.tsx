@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { ProductPageBody } from '@/app/boutique/[slug]/product-page-body'
-import { getProduct, getProducts } from '@/lib/catalogue'
-import { heroFor } from '@/lib/product-media'
+import { activeVariants, colours, getProduct, getProducts } from '@/lib/catalogue'
+import { heroFor, mediaFor } from '@/lib/product-media'
 import { buildAlternates, getDictionary, productCopyEn, productPaths } from '@/lib/i18n'
+import { SITE_URL, buildBreadcrumbJsonLd, buildProductJsonLd } from '@/lib/structured-data'
 
 type ProductPageParams = { params: Promise<{ slug: string }> }
 
@@ -47,16 +48,42 @@ export async function ProductPageEn({ params }: ProductPageParams) {
 
   const crossSell = products.filter((entry) => entry.slug !== slug).slice(0, 3)
 
+  const productJsonLd = buildProductJsonLd({
+    name: product.name,
+    description: copy.lead,
+    sku: product.slug,
+    price: product.price,
+    url: productPaths(slug).en,
+    images: mediaFor(product.slug, colours(product)[0]),
+    inStock: activeVariants(product).length > 0,
+  })
+
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    { name: 'Home', item: `${SITE_URL}/en` },
+    { name: dict.shop.heading, item: `${SITE_URL}/en/shop` },
+    { name: product.name },
+  ])
+
   return (
-    <ProductPageBody
-      dict={dict}
-      locale="en"
-      product={product}
-      copy={copy}
-      index={index}
-      total={products.length}
-      crossSell={crossSell}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <ProductPageBody
+        dict={dict}
+        locale="en"
+        product={product}
+        copy={copy}
+        index={index}
+        total={products.length}
+        crossSell={crossSell}
+      />
+    </>
   )
 }
 

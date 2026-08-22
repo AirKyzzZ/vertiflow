@@ -11,6 +11,7 @@ export const metadata: Metadata = {
       "Ce que c'est, si tu peux le faire, où, quand, combien — et si tu seras le pire du groupe.",
     images: [{ url: '/images/site/home-door.webp', width: 2048, height: 1536 }],
   },
+  alternates: { canonical: '/commencer' },
 }
 
 const PKBA_URL = 'https://pkba.vertiflow.fr'

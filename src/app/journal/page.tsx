@@ -6,6 +6,7 @@ import { getJournalPosts } from '@/app/journal/journal-data'
 export const metadata: Metadata = {
   title: 'Journal',
   description: "Les étapes de compétition, et l'histoire du club à côté.",
+  alternates: { canonical: '/journal' },
 }
 
 export function Journal() {

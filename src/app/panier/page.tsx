@@ -1,5 +1,12 @@
+import type { Metadata } from 'next'
 import { getProducts } from '@/lib/catalogue'
 import { PanierClient, type ProductSummary } from './panier-client'
+
+export const metadata: Metadata = {
+  title: 'Panier',
+  description: 'Ton panier VertiFlow : les pièces choisies, avant de passer commande.',
+  robots: { index: false, follow: false },
+}
 
 export function Panier() {
   const summaries: ProductSummary[] = getProducts().map((product) => ({

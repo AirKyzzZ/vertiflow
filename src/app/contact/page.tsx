@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: 'Contact',
   description:
     "L'email direct pour écrire à VertiFlow, et les autres endroits où trouver la marque.",
+  alternates: { canonical: '/contact' },
 }
 
 export function Contact() {

@@ -1,4 +1,11 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
+
+export const metadata: Metadata = {
+  title: 'Paiement annulé',
+  description: "Le paiement a été annulé, rien n'a été débité. Ton panier reste disponible.",
+  robots: { index: false, follow: false },
+}
 
 export function Annulee() {
   return (

@@ -12,6 +12,7 @@ export const metadata: Metadata = {
       "Huit ans de compétition, une blessure, deux structures nées du même fondateur.",
     images: [{ url: '/images/site/divider-seawall.webp', width: 2048, height: 1536 }],
   },
+  alternates: { canonical: '/a-propos' },
 }
 
 const PKBA_URL = 'https://pkba.vertiflow.fr'

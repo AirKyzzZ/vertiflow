@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: 'FAQ',
   description:
     'Les questions les plus fréquentes sur la commande, la livraison et les produits VertiFlow.',
+  alternates: { canonical: '/faq' },
 }
 
 export function FaqPage() {

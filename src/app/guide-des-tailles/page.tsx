@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: 'Guide des tailles',
   description:
     'Comment te mesurer et choisir ta taille sur les 9 pièces VertiFlow, avec les mensurations réelles de chaque gabarit.',
+  alternates: { canonical: '/guide-des-tailles' },
 }
 
 const measuringPoints = [
