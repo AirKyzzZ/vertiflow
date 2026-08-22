@@ -206,25 +206,50 @@ refunded, with the Printful draft confirmed by hand.
 
 Netlify, site `35cbc8b8-a05e-4515-bdaf-e4f1732cdcde`, via Netlify CLI.
 
-The production 500 is env validation failing, so before anything ships the full variable set from
-`.env.example` must exist in Netlify: Stripe keys and shipping rate, Printful token and store ID,
-five EmailJS values, `SITE_URL`, and the promo pair. Locally only `PRINTFUL_TOKEN` is set.
+The production 500 is a context-scoping bug, not missing credentials. Every required variable
+exists in the Netlify project, but five are scoped only to `deploy-preview` and `branch-deploy`
+and are absent from `production`:
+
+- `STRIPE_PUBLISHABLE_KEY`
+- `STRIPE_SHIPPING_RATE_ID`
+- `STRIPE_WEBHOOK_SECRET`
+- `EMAILJS_PRIVATE_KEY`
+- `EMAILJS_CUSTOMER_TEMPLATE_ID`
+
+`validateEnvironment` checks `STRIPE_PUBLISHABLE_KEY` first, so production throws
+`Stripe key modes must match` before reaching Stripe. Checkout has therefore always worked on
+preview and branch deploys and never on `vertiflow.fr`, which is why the breakage went unnoticed.
+
+Fix by scoping those five to production. Three stale names — `EMAILJS_TEMPLATE_ID`,
+`EMAILJS_USER_ID`, `STRIPE_SECRET_TEST_KEY` — are read by nothing in the current source and are
+deleted once the rest is verified.
 
 Deploy to a preview URL first, rehearse there, then promote.
 
 ## Sequencing
 
-Ordered so revenue lands before polish. If the week runs short, the store is live and only content
-pages are missing.
+The Instagram post is Monday 25 August, two days out. Full scope does not fit and is not
+attempted before the post. Ordered so revenue lands first.
+
+**Monday set — must be live:**
 
 1. Foundation — MDX, `<Prose>`, redirect map, delete dead pages
 2. Commerce routes — `/boutique`, `/boutique/[slug]`, `/panier`, `/commande`, `/commande/succes`
-3. Env repair and preview deploy — fix the 500, rehearse end-to-end in test mode
-4. Go live — mode-keyed prices, 107 live prices, lift the six guards, real card, refund
-5. Content — `/commencer`, legal, FAQ, tailles, contact, à propos
-6. Journal — index, post layout, 3 event recaps
+3. Legal — `/cgv`, `/mentions-legales`, `/confidentialite`, `/livraison-et-paiement`, ported verbatim
+4. Env repair and preview deploy — scope the five variables to production, rehearse in test mode
+5. Go live — mode-keyed prices, 107 live prices, lift the six guards, real card, refund
 
-Steps 1–4 are the launch. Steps 5–6 are the full-scope commitment and follow immediately.
+**After the post, completing the agreed full scope:**
+
+6. Content — `/commencer`, FAQ, guide des tailles, contact, à propos
+7. Journal — index, post layout, 3 event recaps
+
+Step 3 is in the Monday set because selling to French consumers without CGV, mentions légales and
+a privacy policy is not lawful. It is a compliance gate, not polish.
+
+Anything unported keeps serving from `public/` at its old `.html` URL in the old design, so no
+route 404s on Monday. Redirects for those pages are added in step 6/7, when their replacements
+exist — adding them earlier would break working pages.
 
 ## Risks
 
