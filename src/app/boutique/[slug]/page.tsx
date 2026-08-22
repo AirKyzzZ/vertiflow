@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { ProductPageBody } from '@/app/boutique/[slug]/product-page-body'
 import { activeVariants, colours, getProduct, getProducts } from '@/lib/catalogue'
-import { heroFor, mediaFor } from '@/lib/product-media'
+import { mediaFor } from '@/lib/product-media'
 import { productCopy } from '@/lib/product-copy'
 import { buildAlternates, getDictionary, productPaths } from '@/lib/i18n'
 import { SITE_URL, buildBreadcrumbJsonLd, buildProductJsonLd } from '@/lib/structured-data'
@@ -23,15 +23,12 @@ export async function generateMetadata({ params }: ProductPageParams): Promise<M
   const copy = productCopy[slug]
   if (!copy) notFound()
 
-  const image = heroFor(slug)
-
   return {
     title: product.name,
     description: copy.lead,
     openGraph: {
       title: product.name,
       description: copy.lead,
-      images: image ? [{ url: image, width: 800, height: 800 }] : undefined,
     },
     alternates: buildAlternates('fr', productPaths(slug)),
   }
