@@ -88,13 +88,13 @@ export const productCopy: Record<string, ProductCopy> = {
     ],
   },
   'short-confort-vf': {
-    lead: 'Le short du quotidien, hors entraînement.',
-    body: 'Coton doux, coupe décontractée, la pièce que tu mets en rentrant.',
+    lead: "Le short élastique, à l'entraînement et après.",
+    body: 'Polyester recyclé, élasthanne, extensible quatre sens, poches mesh. Il tient la séance, et ce qui vient après.',
     specs: [
-      { label: 'Matière', value: 'Coton molletonné, doux' },
-      { label: 'Coupe', value: 'Décontractée, taille élastique' },
+      { label: 'Matière', value: 'Polyester recyclé, élasthanne, extensible quatre sens' },
+      { label: 'Coupe', value: 'Décontractée, taille élastique à cordon, poches mesh' },
       { label: 'Impression', value: 'Numérique, à la demande' },
-      { label: 'Entretien', value: "30°, à l'envers" },
+      { label: 'Entretien', value: '30°, séchage rapide' },
     ],
   },
 }

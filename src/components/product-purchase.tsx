@@ -78,7 +78,7 @@ export function ProductPurchase({
         </dl>
 
         <a
-          href="/guide-des-tailles.html"
+          href="/guide-des-tailles"
           className="eyebrow mt-6 inline-block border-b-2 border-accent pb-1 text-ink"
         >
           Guide des tailles →
