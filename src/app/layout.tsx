@@ -19,6 +19,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://vertiflow.fr'),
   title: {
     default: 'VertiFlow — la porte d’entrée vers le parkour',
     template: '%s · VertiFlow',
