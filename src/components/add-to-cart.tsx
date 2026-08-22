@@ -3,14 +3,16 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useCart } from '@/components/cart-provider'
+import type { Dictionary } from '@/lib/i18n'
 
 type AddToCartProps = {
   slug: string
   colour: string
   size: string
+  dict: Dictionary['product']
 }
 
-export function AddToCart({ slug, colour, size }: AddToCartProps) {
+export function AddToCart({ slug, colour, size, dict }: AddToCartProps) {
   const { add } = useCart()
   const [added, setAdded] = useState(false)
 
@@ -24,16 +26,16 @@ export function AddToCart({ slug, colour, size }: AddToCartProps) {
         }}
         className="eyebrow w-full bg-accent px-8 py-4 text-ink transition-transform hover:-translate-y-0.5"
       >
-        Ajouter au panier
+        {dict.addToCart}
       </button>
 
       <span role="status" aria-live="polite" className="sr-only">
-        {added ? 'Ajouté au panier.' : ''}
+        {added ? dict.addedToCart : ''}
       </span>
 
       {added && (
         <Link href="/panier" className="eyebrow mt-4 block text-center text-accent underline">
-          Voir le panier →
+          {dict.viewCart}
         </Link>
       )}
     </div>

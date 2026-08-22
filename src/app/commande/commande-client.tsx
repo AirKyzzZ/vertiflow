@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { CheckoutForm, type CheckoutStep } from '@/components/checkout-form'
 import { useCart } from '@/components/cart-provider'
 import { heroFor } from '@/lib/product-media'
+import { formatPrice, type Locale } from '@/lib/i18n'
 
 export type ProductSummary = {
   slug: string
@@ -15,17 +16,14 @@ export type ProductSummary = {
 
 type CommandeClientProps = {
   products: ProductSummary[]
+  locale?: Locale
 }
 
 function findProduct(products: ProductSummary[], slug: string): ProductSummary | undefined {
   return products.find((product) => product.slug === slug)
 }
 
-function formatEuros(value: number): string {
-  return `${value.toFixed(2).replace('.', ',')} €`
-}
-
-export function CommandeClient({ products }: CommandeClientProps) {
+export function CommandeClient({ products, locale = 'fr' }: CommandeClientProps) {
   const { lines, ready } = useCart()
   const [promoCode, setPromoCode] = useState('')
   const [step, setStep] = useState<CheckoutStep>('idle')
@@ -91,14 +89,14 @@ export function CommandeClient({ products }: CommandeClientProps) {
                     {line.color} · {line.size} · x{line.quantity}
                   </p>
                 </div>
-                <p className="eyebrow whitespace-nowrap pt-1 text-neutral-700">{formatEuros(lineTotal)}</p>
+                <p className="eyebrow whitespace-nowrap pt-1 text-neutral-700">{formatPrice(lineTotal, locale)}</p>
               </li>
             ))}
           </ul>
 
           <div className="mt-6 border-t border-ink/10 pt-4">
             <span className="eyebrow text-neutral-500">Sous-total</span>
-            <p className="display mt-2 text-3xl">{formatEuros(total)}</p>
+            <p className="display mt-2 text-3xl">{formatPrice(total, locale)}</p>
             <p className="mt-3 text-xs leading-relaxed text-neutral-500">
               Frais de livraison calculés à l&apos;étape du paiement.
             </p>

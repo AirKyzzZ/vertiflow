@@ -1,9 +1,9 @@
 import Link from 'next/link'
 import { ProductCard } from '@/components/product-card'
 import { ProductPurchase } from '@/components/product-purchase'
-import { colours, formatPrice, sizes, type Product } from '@/lib/catalogue'
+import { colours, sizes, type Product } from '@/lib/catalogue'
 import type { ProductCopy } from '@/lib/product-copy'
-import { SHOP_PATHS, type Dictionary, type Locale } from '@/lib/i18n'
+import { SHOP_PATHS, formatPrice, type Dictionary, type Locale } from '@/lib/i18n'
 
 type ProductPageBodyProps = {
   dict: Dictionary
@@ -37,10 +37,11 @@ export function ProductPageBody({
           total={total}
           lead={copy.lead}
           body={copy.body}
-          formattedPrice={formatPrice(product.price)}
+          formattedPrice={formatPrice(product.price, locale)}
           palette={palette}
           sizes={sizeOptions}
           specs={copy.specs}
+          dict={dict.product}
         />
       </div>
 

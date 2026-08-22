@@ -2,6 +2,7 @@
 
 import { groupByGeneration } from '@/lib/iphone-generation'
 import { swatchClass } from '@/lib/swatch'
+import type { Dictionary } from '@/lib/i18n'
 
 type VariantPickerProps = {
   palette: string[]
@@ -10,9 +11,10 @@ type VariantPickerProps = {
   size: string
   onColour: (value: string) => void
   onSize: (value: string) => void
+  dict: Dictionary['product']
 }
 
-export function VariantPicker({ palette, sizes, colour, size, onColour, onSize }: VariantPickerProps) {
+export function VariantPicker({ palette, sizes, colour, size, onColour, onSize, dict }: VariantPickerProps) {
   const isPhoneModel = sizes.some((value) => value.startsWith('iPhone'))
 
   return (
@@ -20,7 +22,7 @@ export function VariantPicker({ palette, sizes, colour, size, onColour, onSize }
       {palette.length > 1 && (
         <div>
           <p className="eyebrow text-neutral-500">
-            Couleur — <span className="text-ink">{colour}</span>
+            {dict.colourLabel} — <span className="text-ink">{colour}</span>
           </p>
           <div className="mt-3 flex gap-3">
             {palette.map((value) => (
@@ -40,10 +42,10 @@ export function VariantPicker({ palette, sizes, colour, size, onColour, onSize }
       )}
 
       {sizes.length === 1 ? (
-        <p className="eyebrow text-neutral-500">Taille unique</p>
+        <p className="eyebrow text-neutral-500">{dict.oneSize}</p>
       ) : sizes.length <= 8 ? (
         <div>
-          <p className="eyebrow text-neutral-500">Taille</p>
+          <p className="eyebrow text-neutral-500">{dict.sizeLabel}</p>
           <div className="mt-3 flex divide-x divide-ink/15 border border-ink/15">
             {sizes.map((value) => (
               <button
@@ -63,7 +65,7 @@ export function VariantPicker({ palette, sizes, colour, size, onColour, onSize }
       ) : (
         <div>
           <label className="eyebrow block text-neutral-500" htmlFor="size-select">
-            {isPhoneModel ? 'Modèle' : 'Taille'}
+            {isPhoneModel ? dict.modelLabel : dict.sizeLabel}
           </label>
           <select
             id="size-select"

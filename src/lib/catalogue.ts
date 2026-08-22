@@ -43,7 +43,3 @@ export function sizes(product: Product, colour: string): string[] {
     ),
   ]
 }
-
-export function formatPrice(price: string): string {
-  return `${price.replace('.', ',')} €`
-}

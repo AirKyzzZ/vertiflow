@@ -7,6 +7,7 @@ export {
   SHOP_PATHS,
   alternatePath,
   buildAlternates,
+  formatPrice,
   isLocale,
   localeFromPathname,
   productPaths,

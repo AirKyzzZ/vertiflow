@@ -57,3 +57,13 @@ export function alternatePath(pathname: string): string | null {
 
   return null
 }
+
+export function formatPrice(price: number | string, locale: Locale): string {
+  const amount = typeof price === 'number' ? price : Number(price)
+  const formatted = new Intl.NumberFormat(HREFLANG[locale], {
+    style: 'currency',
+    currency: 'EUR',
+    useGrouping: locale !== DEFAULT_LOCALE,
+  }).format(amount)
+  return locale === DEFAULT_LOCALE ? formatted.replace(/[\u00a0\u202f]/g, ' ') : formatted
+}

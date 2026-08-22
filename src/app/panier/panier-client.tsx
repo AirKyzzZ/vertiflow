@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useCart } from '@/components/cart-provider'
 import { heroFor } from '@/lib/product-media'
+import { formatPrice, type Locale } from '@/lib/i18n'
 
 export type ProductSummary = {
   slug: string
@@ -13,6 +14,7 @@ export type ProductSummary = {
 
 type PanierClientProps = {
   products: ProductSummary[]
+  locale?: Locale
 }
 
 type QuantityStepperProps = {
@@ -23,10 +25,6 @@ type QuantityStepperProps = {
 
 function findProduct(products: ProductSummary[], slug: string): ProductSummary | undefined {
   return products.find((product) => product.slug === slug)
-}
-
-function formatEuros(value: number): string {
-  return `${value.toFixed(2).replace('.', ',')} €`
 }
 
 function QuantityStepper({ quantity, productName, onChange }: QuantityStepperProps) {
@@ -60,7 +58,7 @@ function QuantityStepper({ quantity, productName, onChange }: QuantityStepperPro
   )
 }
 
-export function PanierClient({ products }: PanierClientProps) {
+export function PanierClient({ products, locale = 'fr' }: PanierClientProps) {
   const { lines, ready, setQuantity, remove } = useCart()
 
   const priced = lines.map((line) => {
@@ -143,14 +141,14 @@ export function PanierClient({ products }: PanierClientProps) {
                 </div>
               </div>
 
-              <p className="eyebrow whitespace-nowrap pt-1 text-neutral-700">{formatEuros(lineTotal)}</p>
+              <p className="eyebrow whitespace-nowrap pt-1 text-neutral-700">{formatPrice(lineTotal, locale)}</p>
             </li>
           ))}
         </ul>
 
         <aside className="border border-ink/10 bg-neutral-100/60 p-6 lg:sticky lg:top-24 lg:self-start">
           <span className="eyebrow text-neutral-500">Sous-total</span>
-          <p className="display mt-2 text-3xl">{formatEuros(total)}</p>
+          <p className="display mt-2 text-3xl">{formatPrice(total, locale)}</p>
           <p className="mt-3 text-xs leading-relaxed text-neutral-500">
             Livraison à partir de 6,99 € (France).{' '}
             <Link href="/livraison-et-paiement" className="text-accent underline">

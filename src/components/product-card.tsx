@@ -1,9 +1,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { colours, formatPrice, type Product } from '@/lib/catalogue'
+import { colours, type Product } from '@/lib/catalogue'
 import { mediaFor } from '@/lib/product-media'
 import { swatchClass } from '@/lib/swatch'
-import { productPaths, type Locale } from '@/lib/i18n'
+import { formatPrice, productPaths, type Locale } from '@/lib/i18n'
 
 type ProductCardProps = {
   product: Product
@@ -50,7 +50,7 @@ export function ProductCard({ product, index, locale = 'fr' }: ProductCardProps)
           </div>
         </div>
         <span className="eyebrow whitespace-nowrap pt-1 text-neutral-500">
-          {formatPrice(product.price)}
+          {formatPrice(product.price, locale)}
         </span>
       </div>
       <span className="mt-4 block h-px w-0 bg-accent transition-all duration-500 group-hover:w-10" />

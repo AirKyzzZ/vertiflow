@@ -6,6 +6,7 @@ import { ProductGallery } from '@/components/product-gallery'
 import { VariantPicker } from '@/components/variant-picker'
 import { mediaFor } from '@/lib/product-media'
 import type { SpecRow } from '@/lib/product-copy'
+import type { Dictionary } from '@/lib/i18n'
 
 type ProductPurchaseProps = {
   slug: string
@@ -18,9 +19,8 @@ type ProductPurchaseProps = {
   palette: string[]
   sizes: string[]
   specs: SpecRow[]
+  dict: Dictionary['product']
 }
-
-const FULFILMENT_NOTE = 'Imprimé et expédié à la demande. Compte 5 à 10 jours ouvrés.'
 
 export function ProductPurchase({
   slug,
@@ -33,6 +33,7 @@ export function ProductPurchase({
   palette,
   sizes,
   specs,
+  dict,
 }: ProductPurchaseProps) {
   const [colour, setColour] = useState(palette[0])
   const [size, setSize] = useState(sizes[0])
@@ -51,7 +52,7 @@ export function ProductPurchase({
         <p className="mt-4 max-w-md leading-relaxed text-neutral-700">{body}</p>
 
         <p className="mt-8 text-2xl">{formattedPrice}</p>
-        <p className="eyebrow mt-2 text-neutral-500">{FULFILMENT_NOTE}</p>
+        <p className="eyebrow mt-2 text-neutral-500">{dict.fulfilmentNote}</p>
 
         <div className="mt-8">
           <VariantPicker
@@ -61,10 +62,11 @@ export function ProductPurchase({
             size={size}
             onColour={setColour}
             onSize={setSize}
+            dict={dict}
           />
         </div>
 
-        <AddToCart slug={slug} colour={colour} size={size} />
+        <AddToCart slug={slug} colour={colour} size={size} dict={dict} />
 
         <dl className="mt-12 divide-y divide-ink/10 border-y border-ink/10">
           {specs.map((row) => (
@@ -81,7 +83,7 @@ export function ProductPurchase({
           href="/guide-des-tailles"
           className="eyebrow mt-6 inline-block border-b-2 border-accent pb-1 text-ink"
         >
-          Guide des tailles →
+          {dict.sizeGuideLink}
         </a>
       </div>
     </>

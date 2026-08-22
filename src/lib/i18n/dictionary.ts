@@ -54,6 +54,15 @@ export type Dictionary = {
     crossSellEyebrow: string
     crossSellTitle: string
     crossSellLink: string
+    addToCart: string
+    addedToCart: string
+    viewCart: string
+    fulfilmentNote: string
+    colourLabel: string
+    sizeLabel: string
+    oneSize: string
+    modelLabel: string
+    sizeGuideLink: string
   }
 }
 
@@ -127,6 +136,15 @@ const fr: Dictionary = {
     crossSellEyebrow: 'Aussi dans la boutique',
     crossSellTitle: 'Pour compléter',
     crossSellLink: 'Toute la boutique →',
+    addToCart: 'Ajouter au panier',
+    addedToCart: 'Ajouté au panier.',
+    viewCart: 'Voir le panier →',
+    fulfilmentNote: 'Imprimé et expédié à la demande. Compte 5 à 10 jours ouvrés.',
+    colourLabel: 'Couleur',
+    sizeLabel: 'Taille',
+    oneSize: 'Taille unique',
+    modelLabel: 'Modèle',
+    sizeGuideLink: 'Guide des tailles →',
   },
 }
 
@@ -200,6 +218,15 @@ const en: Dictionary = {
     crossSellEyebrow: 'Also in the shop',
     crossSellTitle: 'To go with it',
     crossSellLink: 'The full shop →',
+    addToCart: 'Add to cart',
+    addedToCart: 'Added to cart.',
+    viewCart: 'View cart →',
+    fulfilmentNote: 'Printed and shipped to order. Allow 5 to 10 working days.',
+    colourLabel: 'Color',
+    sizeLabel: 'Size',
+    oneSize: 'One size',
+    modelLabel: 'Model',
+    sizeGuideLink: 'Size guide →',
   },
 }
 
