@@ -63,7 +63,7 @@ function createCheckoutHandler({ stripe, catalogue: runtimeCatalogue, environmen
         mode: 'payment',
         line_items: resolvedItems.map(({ priceId, quantity }) => ({ price: priceId, quantity })),
         customer_email: customer.email,
-        return_url: `${siteUrl}/success.html?session_id={CHECKOUT_SESSION_ID}`,
+        return_url: `${siteUrl}/commande/succes?session_id={CHECKOUT_SESSION_ID}`,
         shipping_options: [{ shipping_rate: environment.STRIPE_SHIPPING_RATE_ID }],
         payment_intent_data: {
           shipping: {

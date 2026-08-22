@@ -108,7 +108,7 @@ test('handler uses the Netlify deploy URL when SITE_URL is not configured', asyn
   assert.equal(response.statusCode, 200);
   assert.equal(
     calls[0].return_url,
-    'https://deploy-preview-42--vertiflow.netlify.app/success.html?session_id={CHECKOUT_SESSION_ID}',
+    'https://deploy-preview-42--vertiflow.netlify.app/commande/succes?session_id={CHECKOUT_SESSION_ID}',
   );
 });
 
@@ -136,8 +136,8 @@ test('handler prefers SITE_URL and falls back to Netlify URL last', async () => 
     stripe, catalogue: catalogueFixture(), environment: netlifyUrlOnly,
   })(eventFixture())).statusCode, 200);
   assert.deepEqual(returnUrls, [
-    'https://vertiflow.fr/success.html?session_id={CHECKOUT_SESSION_ID}',
-    'https://vertiflow.netlify.app/success.html?session_id={CHECKOUT_SESSION_ID}',
+    'https://vertiflow.fr/commande/succes?session_id={CHECKOUT_SESSION_ID}',
+    'https://vertiflow.netlify.app/commande/succes?session_id={CHECKOUT_SESSION_ID}',
   ]);
 });
 
