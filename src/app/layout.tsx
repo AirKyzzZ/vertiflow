@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Archivo, Inter } from 'next/font/google'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
+import { CartProvider } from '@/components/cart-provider'
 import './globals.css'
 
 const archivo = Archivo({
@@ -30,9 +31,11 @@ export function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr" className={`${archivo.variable} ${inter.variable}`}>
       <body className="bg-paper font-body text-ink antialiased">
-        <SiteHeader />
-        {children}
-        <SiteFooter />
+        <CartProvider>
+          <SiteHeader />
+          {children}
+          <SiteFooter />
+        </CartProvider>
       </body>
     </html>
   )
