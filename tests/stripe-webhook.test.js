@@ -242,18 +242,29 @@ test('signature failures are controlled and happen before any Stripe retrieval',
   assert.doesNotMatch(response.body, /signature details/);
 });
 
-test('unauthorized or live sessions are acknowledged without fulfillment side effects', async () => {
-  for (const sessionOverrides of [
-    { metadata: { ...createHarness().currentSession.metadata, vf_test_access: undefined } },
-    { livemode: true },
-  ]) {
-    const { handler, calls } = createHarness({ sessionOverrides });
-    const response = await handler(webhookEvent());
-    assert.equal(response.statusCode, 200);
-    assert.equal(calls.drafts.length, 0);
-    assert.equal(calls.customerEmails.length, 0);
-    assert.equal(calls.ownerEmails.length, 0);
-  }
+test('an unauthorized test session is acknowledged without fulfillment side effects', async () => {
+  const sessionOverrides = { metadata: { ...createHarness().currentSession.metadata, vf_test_access: undefined } };
+  const { handler, calls } = createHarness({ sessionOverrides });
+  const response = await handler(webhookEvent());
+  assert.equal(response.statusCode, 200);
+  assert.equal(calls.drafts.length, 0);
+  assert.equal(calls.customerEmails.length, 0);
+  assert.equal(calls.ownerEmails.length, 0);
+});
+
+test('a live session fails loudly instead of being silently swallowed', async () => {
+  const errors = [];
+  const { handler, calls } = createHarness({
+    sessionOverrides: { livemode: true },
+    logger: { error: (...arguments_) => errors.push(arguments_) },
+  });
+  const response = await handler(webhookEvent());
+  assert.equal(response.statusCode, 500);
+  assert.equal(calls.drafts.length, 0);
+  assert.equal(calls.customerEmails.length, 0);
+  assert.equal(calls.ownerEmails.length, 0);
+  assert.equal(errors.length, 1);
+  assert.equal(errors[0][0], 'Paid session reached fulfilment gate in live mode while mode guards are test-only');
 });
 
 test('authorized Session marker remains valid after checkout access-token rotation', async () => {
@@ -522,10 +533,11 @@ test('fresh provenance fails closed for Stripe fact, quantity, count, digest, an
         sessionMetadata,
         sessionOverrides,
       });
-      assert.equal((await handler(webhookEvent())).statusCode, 200);
+      const isSessionLivemodeMutation = name.includes('Session livemode');
+      assert.equal((await handler(webhookEvent())).statusCode, isSessionLivemodeMutation ? 500 : 200);
       assert.equal(calls.drafts.length, 0);
       assert.equal(calls.customerEmails.length, 0);
-      if (name.includes('Session livemode')) {
+      if (isSessionLivemodeMutation) {
         assert.equal(calls.ownerEmails.length, 0);
         return;
       }

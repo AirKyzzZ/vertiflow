@@ -483,10 +483,13 @@ function createWebhookHandler({
       if (context.session.payment_status !== 'paid') {
         return jsonResponse(200, { received: true });
       }
-      if (
-        context.session.livemode !== false
-        || context.session.metadata?.vf_test_access !== '1'
-      ) {
+      if (context.session.livemode !== false) {
+        logError('Paid session reached fulfilment gate in live mode while mode guards are test-only', {
+          sessionId: context.session.id,
+        });
+        return jsonResponse(500, { error: 'Live checkout is not yet enabled' });
+      }
+      if (context.session.metadata?.vf_test_access !== '1') {
         return jsonResponse(200, { received: true });
       }
       if (
