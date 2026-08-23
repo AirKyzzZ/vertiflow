@@ -1,6 +1,22 @@
 # VertiFlow — overnight run, 22→23 August 2026
 
-Everything is committed locally on `feature/brand-refresh-2026`. **Nothing was pushed. Stripe is still in test mode. Nothing was posted to Instagram.**
+## 🟢 vertiflow.fr IS LIVE with the new site
+
+Promoted to production and verified: 17/17 routes serving, legacy URLs redirecting 308, generated OG cards live, and the page title is finally `VertiFlow — la porte d'entrée vers le parkour` instead of the 2024 one.
+
+**The store cannot take payment yet.** Three things remain, and only the first needs a decision:
+
+**1. Grant your live Stripe key write permissions.** It is a restricted key (`rk_live_`) and every create is denied — I attempted a product, a shipping rate and a webhook; all three were rejected with `more_permissions_required` and nothing was created. Enable Products, Prices, Shipping Rates and Webhook Endpoints write:
+
+https://dashboard.stripe.com/b/acct_1Qw8utImMzY0wzqJ?destination=%2Fapikeys%2Fmk_1U0GrqImMzY0wzqJMsNW3cwI%2Fedit
+
+Then `scripts/create-live-stripe-catalogue.js` creates the 9 products, 107 prices, the shipping rate and the webhook in one idempotent run, and sets `STRIPE_SHIPPING_RATE_ID` and `STRIPE_WEBHOOK_SECRET` for production.
+
+**2. Extend two EmailJS variables to the production context.** `EMAILJS_PRIVATE_KEY` and `EMAILJS_CUSTOMER_TEMPLATE_ID` exist in `deploy-preview` but are marked secret, so their values cannot be read back — not by me, not by the CLI. In the Netlify UI, edit each variable and tick Production. Without them a paid order is never emailed.
+
+**3. Buy something with a real card and refund it.** The one step I will not do. Everything else is rehearsed.
+
+Until 1 and 2 are done, `/api/checkout` returns `Checkout configuration error` and the webhook returns 500 — both because `STRIPE_SHIPPING_RATE_ID` and `STRIPE_WEBHOOK_SECRET` are absent, exactly as expected.
 
 ---
 
