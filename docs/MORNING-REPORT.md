@@ -133,7 +133,13 @@ The whole-branch review's sharpest finding was about my process, not the code: *
 **Blocking, in order:**
 
 1. **Tell me the Stripe key mode.** `! netlify env:get STRIPE_SECRET_KEY --context production | head -c 8`
-2. **Scope five variables to production.** They exist in `deploy-preview` but not `production`, which is the entire reason `vertiflow.fr` checkout returns 500 today: `STRIPE_PUBLISHABLE_KEY`, `STRIPE_SHIPPING_RATE_ID`, `STRIPE_WEBHOOK_SECRET`, `EMAILJS_PRIVATE_KEY`, `EMAILJS_CUSTOMER_TEMPLATE_ID`.
+2. **Scope four variables to production.** They exist in `deploy-preview` but not `production`, which is why `vertiflow.fr` checkout returns 500 today: `STRIPE_SHIPPING_RATE_ID`, `STRIPE_WEBHOOK_SECRET`, `EMAILJS_PRIVATE_KEY`, `EMAILJS_CUSTOMER_TEMPLATE_ID`. (`STRIPE_PUBLISHABLE_KEY` was missing earlier in the night and is now present.)
+
+   **This does NOT affect PKBA, and requires rotating nothing.** Verified: `pkba` is a separate Netlify site (`5090be05-8582-48c9-8850-05f6acd3ae90`) from `vertiflow` (`35cbc8b8-a05e-4515-bdaf-e4f1732cdcde`). Netlify environment variables are per-site records. PKBA carries its own 18 production variables including its own `STRIPE_SECRET_KEY`, and uses Next.js naming (`NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`, `RESEND_API_KEY`, `AIRTABLE_*`) where VertiFlow uses bare names — proof they are independently configured, not team-shared. Writing to VertiFlow's site cannot touch PKBA's.
+
+   The one action that WOULD break PKBA is **rotating the key in the Stripe dashboard**, if both sites draw on the same Stripe account. Nothing in this checklist requires that. Scoping copies an existing value; it invalidates nothing.
+
+   Three stale names on the VertiFlow site are read by nothing in the current source and can be deleted once the rest is verified: `EMAILJS_TEMPLATE_ID`, `EMAILJS_USER_ID`, `STRIPE_SECRET_TEST_KEY`.
 3. **Mode-keyed prices.** `data/products.json` still holds flat test-mode `stripe_price_id` strings. Live Stripe rejects every line item until these become `{test, live}` and 107 live Prices exist.
 4. **Lift five mode guards together.** `create-checkout-session.js:25`, `get-checkout-session.js:10`, `stripe-webhook.js:643`, `stripe-webhook.js:486`, `scripts/sync-stripe-prices.js:17`. `tests/mode-guard-consistency.test.js` now FAILS if they are lifted out of step — I verified it fires by breaking one deliberately. That test is the safety net; do not delete it to make the build pass.
 5. **Remove the access gate.** `create-checkout-session.js:55` returns 403 without an `x-vertiflow-test-access` header that nothing in the codebase sends. Every public request is refused today.
