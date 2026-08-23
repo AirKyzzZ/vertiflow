@@ -1,4 +1,4 @@
-export const SWATCH_CLASS: Record<string, string> = {
+const SWATCH_CLASS: Record<string, string> = {
   Noir: 'bg-ink',
   Blanc: 'bg-paper ring-1 ring-ink/25',
 }

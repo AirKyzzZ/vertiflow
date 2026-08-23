@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { AddToCart } from '@/components/add-to-cart'
 import { ProductGallery } from '@/components/product-gallery'
 import { VariantPicker } from '@/components/variant-picker'
@@ -79,12 +80,12 @@ export function ProductPurchase({
           ))}
         </dl>
 
-        <a
+        <Link
           href="/guide-des-tailles"
           className="eyebrow mt-6 inline-block border-b-2 border-accent pb-1 text-ink"
         >
           {dict.sizeGuideLink}
-        </a>
+        </Link>
       </div>
     </>
   )

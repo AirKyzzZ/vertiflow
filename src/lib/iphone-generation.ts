@@ -1,4 +1,4 @@
-export function iPhoneGeneration(model: string): string {
+function iPhoneGeneration(model: string): string {
   const match = /^iPhone (\d+)/.exec(model)
   return match ? `iPhone ${match[1]}` : model
 }

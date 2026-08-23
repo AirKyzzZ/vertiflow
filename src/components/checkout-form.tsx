@@ -5,7 +5,12 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { formatPrice, type Locale } from '@/lib/i18n'
 import { loadStripe } from '@stripe/stripe-js'
-import type { StripeCheckoutLoadActionsSuccess, StripeCheckoutSession } from '@stripe/stripe-js'
+import type {
+  StripeCheckoutElementsSdk,
+  StripeCheckoutLoadActionsSuccess,
+  StripeCheckoutSession,
+  StripePaymentElement,
+} from '@stripe/stripe-js'
 import { useCart } from '@/components/cart-provider'
 
 export type CheckoutStep = 'idle' | 'creating' | 'ready' | 'confirming'
@@ -141,6 +146,7 @@ export function CheckoutForm({ promoCode, step, onStepChange, locale = 'fr' }: C
   const [canConfirm, setCanConfirm] = useState(false)
   const [totals, setTotals] = useState<CheckoutTotals | null>(null)
   const actionsRef = useRef<StripeCheckoutLoadActionsSuccess | null>(null)
+  const activeCheckoutRef = useRef<{ checkout: StripeCheckoutElementsSdk; paymentElement: StripePaymentElement } | null>(null)
 
   const needsState = STATE_REQUIRED_COUNTRIES.has(form.country)
 
@@ -153,6 +159,8 @@ export function CheckoutForm({ promoCode, step, onStepChange, locale = 'fr' }: C
   }
 
   function handleEdit() {
+    activeCheckoutRef.current?.paymentElement.destroy()
+    activeCheckoutRef.current = null
     actionsRef.current = null
     setCanConfirm(false)
     setError(null)
@@ -195,12 +203,14 @@ export function CheckoutForm({ promoCode, step, onStepChange, locale = 'fr' }: C
 
       const checkout = stripe.initCheckoutElementsSdk({ clientSecret: payload.clientSecret })
       checkout.on('change', (session) => {
+        if (activeCheckoutRef.current?.checkout !== checkout) return
         setCanConfirm(session.canConfirm)
         setTotals(sessionTotals(session))
       })
 
       const paymentElement = checkout.createPaymentElement()
       paymentElement.mount('#payment-element')
+      activeCheckoutRef.current = { checkout, paymentElement }
 
       const loadResult = await checkout.loadActions()
       if (loadResult.type === 'error') throw new Error('actions-unavailable')
