@@ -198,13 +198,44 @@ test('handler validates promo codes and rejects mixed Stripe key modes before ch
   assert.equal(calls.length, 1);
 });
 
-test('handler rejects live Stripe keys until a live catalogue is available', async () => {
+function liveCatalogueFixture() {
+  const fixture = catalogueFixture();
+  fixture.products[0].stripe_product_id = { test: 'prod_test_hoodie', live: 'prod_live_hoodie' };
+  fixture.products[0].variants[0].stripe_price_id = {
+    test: 'price_test_hoodie_black_m', live: 'price_live_hoodie_black_m',
+  };
+  return fixture;
+}
+
+test('handler accepts live Stripe keys with a live-priced catalogue and skips the test-access gate', async () => {
+  const calls = [];
+  const stripe = { checkout: { sessions: { create: async (params) => {
+    calls.push(params);
+    return { id: 'cs_live_123', client_secret: 'cs_live_secret' };
+  } } } };
+  const handler = createCheckoutHandler({
+    stripe,
+    catalogue: liveCatalogueFixture(),
+    environment: environmentFixture({ STRIPE_SECRET_KEY: 'sk_live_example', STRIPE_PUBLISHABLE_KEY: 'pk_live_example' }),
+  });
+
+  const response = await handler(eventFixture({ headers: {} }));
+
+  assert.equal(response.statusCode, 200);
+  assert.deepEqual(calls[0].line_items, [{ price: 'price_live_hoodie_black_m', quantity: 1 }]);
+  assert.equal(calls[0].metadata.vf_livemode, 'live');
+  assert.deepEqual(JSON.parse(response.body), {
+    clientSecret: 'cs_live_secret', sessionId: 'cs_live_123', publishableKey: 'pk_live_example',
+  });
+});
+
+test('handler still rejects mismatched live/test Stripe key modes', async () => {
   let calls = 0;
   const stripe = { checkout: { sessions: { create: async () => { calls += 1; } } } };
   const handler = createCheckoutHandler({
     stripe,
-    catalogue: catalogueFixture(),
-    environment: environmentFixture({ STRIPE_SECRET_KEY: 'sk_live_example', STRIPE_PUBLISHABLE_KEY: 'pk_live_example' }),
+    catalogue: liveCatalogueFixture(),
+    environment: environmentFixture({ STRIPE_SECRET_KEY: 'sk_live_example', STRIPE_PUBLISHABLE_KEY: 'pk_test_example' }),
   });
 
   const response = await handler(eventFixture());

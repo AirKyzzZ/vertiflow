@@ -37,6 +37,21 @@ function priceIdempotencyKey({
   });
 }
 
+function readTestId(raw) {
+  if (typeof raw === 'string') return raw || null;
+  if (raw && typeof raw === 'object' && !Array.isArray(raw)) {
+    return typeof raw.test === 'string' && raw.test ? raw.test : null;
+  }
+  return null;
+}
+
+function withTestId(raw, newTestId) {
+  const priorLive = raw && typeof raw === 'object' && !Array.isArray(raw) && typeof raw.live === 'string'
+    ? raw.live
+    : null;
+  return { test: newTestId, live: priorLive };
+}
+
 function priceInMinorUnits(retailPrice) {
   const amount = Number(retailPrice);
 
@@ -96,8 +111,9 @@ async function findProduct(stripe, product, knownProducts) {
     throw new Error(`Multiple managed Stripe Products found for commercial slug ${product.slug}`);
   }
 
-  if (product.stripe_product_id) {
-    return stripe.products.retrieve(product.stripe_product_id);
+  const existingTestProductId = readTestId(product.stripe_product_id);
+  if (existingTestProductId) {
+    return stripe.products.retrieve(existingTestProductId);
   }
 
   return managedProducts[0];
@@ -164,8 +180,9 @@ async function findPrices(stripe, variant, lookupKey, stripeProduct) {
     }
   }
 
-  if (variant.stripe_price_id) {
-    addPrice(await stripe.prices.retrieve(variant.stripe_price_id));
+  const existingTestPriceId = readTestId(variant.stripe_price_id);
+  if (existingTestPriceId) {
+    addPrice(await stripe.prices.retrieve(existingTestPriceId));
   }
 
   const lookupPrices = await stripe.prices.list({
@@ -268,7 +285,7 @@ async function reconcileCatalogue(stripe, catalogue) {
 
   for (const product of reconciledCatalogue.products) {
     const stripeProduct = await reconcileProduct(stripe, product, knownProducts);
-    product.stripe_product_id = stripeProduct.id;
+    product.stripe_product_id = withTestId(product.stripe_product_id, stripeProduct.id);
 
     for (const variant of product.variants) {
       if (!variant.active) {
@@ -281,7 +298,7 @@ async function reconcileCatalogue(stripe, catalogue) {
         stripeProduct,
         currency: reconciledCatalogue.currency,
       });
-      variant.stripe_price_id = stripePrice.id;
+      variant.stripe_price_id = withTestId(variant.stripe_price_id, stripePrice.id);
     }
   }
 
@@ -294,6 +311,7 @@ module.exports = {
   findPrices,
   priceInMinorUnits,
   priceIdempotencyKey,
+  readTestId,
   priceLookupKey,
   productIdempotencyKey,
   reconcileCatalogue,

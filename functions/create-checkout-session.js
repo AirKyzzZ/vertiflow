@@ -22,7 +22,6 @@ function validateEnvironment(environment) {
   if (!secretMode || !publishableMode || secretMode !== publishableMode) {
     throw new Error('Stripe key modes must match');
   }
-  if (secretMode !== 'test') throw new Error('Live Stripe keys require a live catalogue');
   if (typeof environment.STRIPE_SHIPPING_RATE_ID !== 'string' || !environment.STRIPE_SHIPPING_RATE_ID.trim()) {
     throw new Error('Stripe shipping rate is required');
   }
@@ -52,10 +51,13 @@ function createCheckoutHandler({ stripe, catalogue: runtimeCatalogue, environmen
 
     try {
       const { siteUrl, stripeMode: mode, testAccessSha256 } = validateEnvironment(environment);
-      if (!matchesTestAccess(headerValue(event.headers, 'x-vertiflow-test-access'), testAccessSha256)) {
+      if (
+        mode === 'test'
+        && !matchesTestAccess(headerValue(event.headers, 'x-vertiflow-test-access'), testAccessSha256)
+      ) {
         return response(403, { error: 'Test checkout access denied' });
       }
-      const resolvedItems = resolveCart(runtimeCatalogue, payload.items);
+      const resolvedItems = resolveCart(runtimeCatalogue, payload.items, mode);
       const customer = validateCustomer(payload.customer);
       const promoCode = typeof payload.promoCode === 'string' ? payload.promoCode.trim() : '';
       const params = {

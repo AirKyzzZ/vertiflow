@@ -1,7 +1,9 @@
 const crypto = require('node:crypto');
 
 const catalogue = require('../data/products.json');
-const { reviewedUnitAmount } = require('./lib/catalogue');
+const {
+  hasPriceFor, hasProductFor, priceIdFor, productIdFor, reviewedUnitAmount,
+} = require('./lib/catalogue');
 const {
   CHECKOUT_VERSION,
   isVertiflowCheckoutSession,
@@ -83,10 +85,8 @@ function buildCatalogueIndex(runtimeCatalogue) {
         || typeof product.name !== 'string'
         || !product.name.trim()
         || product.name.length > 200
-        || typeof product.stripe_product_id !== 'string'
-        || !/^prod_[A-Za-z0-9_]+$/.test(product.stripe_product_id)
-        || typeof variant.stripe_price_id !== 'string'
-        || !/^price_[A-Za-z0-9_]+$/.test(variant.stripe_price_id)
+        || !(hasProductFor(product, 'test') || hasProductFor(product, 'live'))
+        || !(hasPriceFor(variant, 'test') || hasPriceFor(variant, 'live'))
         || typeof variant.color !== 'string'
         || !variant.color.trim()
         || variant.color.length > 100
@@ -162,7 +162,7 @@ function livemodeMatches(object, expected) {
   return typeof object?.livemode === 'boolean' && object.livemode === expected;
 }
 
-function displayLine(facts, product, currentEntry) {
+function displayLine(facts, product, currentEntry, mode) {
   const boundedCurrentDisplay = Boolean(typeof currentEntry?.product.name === 'string'
     && currentEntry.product.name.trim()
     && currentEntry.product.name.length <= 200
@@ -171,14 +171,16 @@ function displayLine(facts, product, currentEntry) {
     && currentEntry.variant.color.length <= 100
     && typeof currentEntry.variant.size === 'string'
     && currentEntry.variant.size.trim()
-    && currentEntry.variant.size.length <= 100);
+    && currentEntry.variant.size.length <= 100
+    && hasProductFor(currentEntry.product, mode)
+    && hasPriceFor(currentEntry.variant, mode));
   const exactCurrentFacts = currentEntry
     && boundedCurrentDisplay
     && currentEntry.product.slug === facts.slug
-    && currentEntry.product.stripe_product_id === facts.stripeProductId
+    && productIdFor(currentEntry.product, mode) === facts.stripeProductId
     && currentEntry.currency === facts.currency
     && currentEntry.unitAmount === facts.unitAmount
-    && currentEntry.variant.stripe_price_id === facts.priceId
+    && priceIdFor(currentEntry.variant, mode) === facts.priceId
     && currentEntry.variant.printful_sync_product_id === facts.syncProductId
     && currentEntry.variant.printful_sync_variant_id === facts.syncVariantId
     && currentEntry.variant.printful_catalog_variant_id === facts.catalogVariantId;
@@ -211,6 +213,7 @@ function mapCanonicalLines(lineItems, variantIndex, session) {
     || !['test', 'live'].includes(metadata.vf_livemode)
   ) throw provenanceFailure();
   const expectedLivemode = metadata.vf_livemode === 'live';
+  const mode = expectedLivemode ? 'live' : 'test';
   if (!livemodeMatches(session, expectedLivemode)) throw provenanceFailure();
 
   const canonicalLines = lineItems.map((lineItem, index) => {
@@ -273,7 +276,7 @@ function mapCanonicalLines(lineItems, variantIndex, session) {
   return canonicalLines.map(({ facts, product }) => {
     const entry = variantIndex.get(facts.syncVariantId);
     return {
-      ...displayLine(facts, product, entry),
+      ...displayLine(facts, product, entry, mode),
     };
   });
 }
@@ -493,11 +496,11 @@ function createWebhookHandler({
         });
         return jsonResponse(200, { received: true });
       }
-      if (context.session.livemode !== false) {
-        logError('Paid session reached fulfilment gate in live mode while mode guards are test-only', {
+      if (context.session.livemode !== (context.session.metadata?.vf_livemode === 'live')) {
+        logError('Paid session livemode does not match its recorded checkout metadata', {
           sessionId: context.session.id,
         });
-        return jsonResponse(500, { error: 'Live checkout is not yet enabled' });
+        return jsonResponse(500, { error: 'Checkout livemode mismatch' });
       }
       if (context.session.metadata?.vf_test_access !== '1') {
         return jsonResponse(200, { received: true });
@@ -653,8 +656,8 @@ function validateWebhookEnvironment(environment) {
     'EMAILJS_CUSTOMER_TEMPLATE_ID',
     'EMAILJS_OWNER_TEMPLATE_ID',
   ]);
-  if (!/^(?:sk|rk)_test_[A-Za-z0-9]+$/.test(environment.STRIPE_SECRET_KEY)) {
-    throw new Error('A test Stripe secret is required');
+  if (!/^(?:sk|rk)_(?:test|live)_[A-Za-z0-9]+$/.test(environment.STRIPE_SECRET_KEY)) {
+    throw new Error('A Stripe secret is required');
   }
 }
 

@@ -5,7 +5,7 @@ require('dotenv').config();
 const fs = require('node:fs/promises');
 const path = require('node:path');
 const Stripe = require('stripe');
-const { reconcileCatalogue } = require('./lib/stripe-catalogue');
+const { readTestId, reconcileCatalogue } = require('./lib/stripe-catalogue');
 
 const CATALOGUE_PATH = path.resolve(__dirname, '../data/products.json');
 
@@ -28,7 +28,7 @@ async function writeJsonAtomically(filePath, value) {
 function countActiveReconciledVariants(catalogue) {
   return catalogue.products.reduce(
     (total, product) => total + product.variants.filter(
-      (variant) => variant.active && variant.stripe_price_id,
+      (variant) => variant.active && readTestId(variant.stripe_price_id),
     ).length,
     0,
   );

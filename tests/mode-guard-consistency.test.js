@@ -17,10 +17,10 @@ function hasStrippedSubstring(source, needle) {
   return stripWhitespace(source).includes(stripWhitespace(needle));
 }
 
-const GATES = [
+const PAYMENT_PATH_GATES = [
   {
     file: 'functions/create-checkout-session.js',
-    detect: (source) => hasStrippedSubstring(
+    detect: (source) => !hasStrippedSubstring(
       source,
       "if (secretMode !== 'test') throw new Error('Live Stripe keys require a live catalogue');",
     ),
@@ -29,7 +29,7 @@ const GATES = [
     file: 'functions/get-checkout-session.js',
     detect: (source) => hasStrippedSubstring(
       source,
-      "if (!/^(?:sk|rk)_test_[A-Za-z0-9_]+$/.test(environment?.STRIPE_SECRET_KEY || '')) {",
+      "if (!/^(?:sk|rk)_(?:test|live)_[A-Za-z0-9_]+$/.test(environment?.STRIPE_SECRET_KEY || '')) {",
     ),
   },
   {
@@ -37,45 +37,63 @@ const GATES = [
     label: 'functions/stripe-webhook.js (validateWebhookEnvironment)',
     detect: (source) => hasStrippedSubstring(
       source,
-      "if (!/^(?:sk|rk)_test_[A-Za-z0-9]+$/.test(environment.STRIPE_SECRET_KEY)) {",
+      "if (!/^(?:sk|rk)_(?:test|live)_[A-Za-z0-9]+$/.test(environment.STRIPE_SECRET_KEY)) {",
     ),
   },
   {
     file: 'functions/stripe-webhook.js',
     label: 'functions/stripe-webhook.js (paid-session fulfilment gate)',
-    detect: (source) => hasStrippedSubstring(source, 'if (context.session.livemode !== false) {'),
-  },
-  {
-    file: 'scripts/sync-stripe-prices.js',
     detect: (source) => hasStrippedSubstring(
       source,
-      "if (!secretKey.startsWith('sk_test_') && !secretKey.startsWith('rk_test_')) {",
+      "if (context.session.livemode !== (context.session.metadata?.vf_livemode === 'live')) {",
     ),
   },
 ];
 
-test('all five Stripe mode gates enforce test-only in lockstep', () => {
-  const results = GATES.map((gate) => ({
+test('the four live-checkout mode gates move together, in lockstep', () => {
+  const results = PAYMENT_PATH_GATES.map((gate) => ({
     label: gate.label ?? gate.file,
-    active: gate.detect(readProjectFile(gate.file)),
+    liveEnabled: gate.detect(readProjectFile(gate.file)),
   }));
 
   for (const result of results) {
     assert.equal(
-      typeof result.active,
+      typeof result.liveEnabled,
       'boolean',
       `${result.label}: detector did not produce a boolean result`,
     );
   }
 
-  const allAgree = results.every((result) => result.active === results[0].active);
+  const allAgree = results.every((result) => result.liveEnabled === results[0].liveEnabled);
   const table = results
-    .map((result) => `  ${result.active ? 'test-only' : 'LIFTED TO LIVE'}  ${result.label}`)
+    .map((result) => `  ${result.liveEnabled ? 'live-enabled' : 'test-only'}  ${result.label}`)
     .join('\n');
 
   assert.ok(
     allAgree,
-    'Stripe mode gates are out of step. They must be lifted together, never one at a time, '
-      + `or a paid order can be charged and never fulfilled:\n${table}`,
+    'Stripe mode gates are out of step. They must be lifted (or rolled back) together, never one at '
+      + `a time, or a paid order can be charged and never fulfilled:\n${table}`,
+  );
+});
+
+test('checkout session creation, retrieval, and the webhook are all currently live-enabled', () => {
+  const results = PAYMENT_PATH_GATES.map((gate) => gate.detect(readProjectFile(gate.file)));
+  assert.ok(
+    results.every(Boolean),
+    'Expected all four payment-path mode gates to accept live Stripe keys on this branch.',
+  );
+});
+
+test('the offline Stripe catalogue reconciliation script stays permanently test-only', () => {
+  const source = readProjectFile('scripts/sync-stripe-prices.js');
+  assert.ok(
+    hasStrippedSubstring(
+      source,
+      "if (!secretKey.startsWith('sk_test_') && !secretKey.startsWith('rk_test_')) {",
+    ),
+    'scripts/sync-stripe-prices.js must keep refusing live Stripe secret keys. It writes catalogue '
+      + 'IDs non-interactively from a local .env file and never serves a request, so it is not part '
+      + 'of the payment/fulfilment lockstep above: live Products and Prices are only ever created '
+      + 'deliberately through the CLI process in Part 2.',
   );
 });

@@ -1,10 +1,12 @@
 import 'server-only'
 import { catalogue } from './commerce.server'
 
+export type StripeModeKeyedId = string | { test: string | null; live: string | null }
+
 export type Variant = {
   color: string
   size: string
-  stripe_price_id: string
+  stripe_price_id: StripeModeKeyedId
   image_url: string
   active: boolean
 }

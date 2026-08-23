@@ -1,7 +1,9 @@
 const assert = require('node:assert/strict');
 const test = require('node:test');
 
-const { resolveCart, validateCustomer } = require('../functions/lib/catalogue');
+const {
+  resolveCart, validateCustomer, priceIdFor, productIdFor,
+} = require('../functions/lib/catalogue');
 
 function catalogueFixture() {
   return {
@@ -25,6 +27,15 @@ function catalogueFixture() {
   };
 }
 
+function liveCatalogueFixture() {
+  const fixture = catalogueFixture();
+  fixture.products[0].stripe_product_id = { test: 'prod_test_hoodie', live: 'prod_live_hoodie' };
+  fixture.products[0].variants[0].stripe_price_id = {
+    test: 'price_test_hoodie_black_m', live: 'price_live_hoodie_black_m',
+  };
+  return fixture;
+}
+
 function customerFixture(overrides = {}) {
   return {
     firstName: 'Léa',
@@ -46,7 +57,7 @@ function customerFixture(overrides = {}) {
 test('resolveCart ignores browser prices and returns immutable reviewed line facts', () => {
   const result = resolveCart(catalogueFixture(), [{
     slug: 'hoodie-vf-definition', color: 'Noir', size: 'M', quantity: 2, price: 0.01,
-  }]);
+  }], 'test');
 
   assert.deepEqual(result, [{
     priceId: 'price_test_hoodie_black_m',
@@ -78,24 +89,24 @@ test('resolveCart rejects unknown, inactive, duplicate, and incomplete catalogue
     { slug: 'hoodie-vf-definition', color: 'Blanc', size: 'M', quantity: 1 },
     { slug: 'hoodie-vf-definition', color: 'Noir', size: 'L', quantity: 1 },
   ]) {
-    assert.throws(() => resolveCart(catalogue, [item]), /Unknown catalogue option/);
+    assert.throws(() => resolveCart(catalogue, [item], 'test'), /Unknown catalogue option/);
   }
 
   catalogue.products[0].variants.push({
     ...catalogue.products[0].variants[0],
   });
   assert.throws(
-    () => resolveCart(catalogue, [{ slug: 'hoodie-vf-definition', color: 'Noir', size: 'M', quantity: 1 }]),
+    () => resolveCart(catalogue, [{ slug: 'hoodie-vf-definition', color: 'Noir', size: 'M', quantity: 1 }], 'test'),
     /Duplicate catalogue option/,
   );
 });
 
 test('resolveCart bounds cart lines and quantities', () => {
   const item = { slug: 'hoodie-vf-definition', color: 'Noir', size: 'M', quantity: 1 };
-  assert.throws(() => resolveCart(catalogueFixture(), []), /at least one item/);
-  assert.throws(() => resolveCart(catalogueFixture(), Array.from({ length: 101 }, () => item)), /at most 100/);
+  assert.throws(() => resolveCart(catalogueFixture(), [], 'test'), /at least one item/);
+  assert.throws(() => resolveCart(catalogueFixture(), Array.from({ length: 101 }, () => item), 'test'), /at most 100/);
   for (const quantity of [0, 1.5, 11, '1']) {
-    assert.throws(() => resolveCart(catalogueFixture(), [{ ...item, quantity }]), /quantity/);
+    assert.throws(() => resolveCart(catalogueFixture(), [{ ...item, quantity }], 'test'), /quantity/);
   }
 });
 
@@ -112,8 +123,79 @@ test('resolveCart requires every immutable catalogue fact and an exact reviewed 
   ]) {
     const catalogue = catalogueFixture();
     mutate(catalogue);
-    assert.throws(() => resolveCart(catalogue, [item]), /Invalid catalogue|Unknown catalogue option/);
+    assert.throws(() => resolveCart(catalogue, [item], 'test'), /Invalid catalogue|Unknown catalogue option/);
   }
+});
+
+test('resolveCart requires an explicit test or live mode', () => {
+  const item = { slug: 'hoodie-vf-definition', color: 'Noir', size: 'M', quantity: 1 };
+  for (const mode of [undefined, null, '', 'production', 'TEST']) {
+    assert.throws(() => resolveCart(catalogueFixture(), [item], mode), /Invalid checkout mode/);
+  }
+});
+
+test('resolveCart resolves live Stripe ids from a mode-keyed catalogue', () => {
+  const result = resolveCart(liveCatalogueFixture(), [{
+    slug: 'hoodie-vf-definition', color: 'Noir', size: 'M', quantity: 1,
+  }], 'live');
+
+  assert.equal(result[0].priceId, 'price_live_hoodie_black_m');
+  assert.equal(result[0].stripeProductId, 'prod_live_hoodie');
+});
+
+test('resolveCart still resolves the test price from the same mode-keyed catalogue', () => {
+  const result = resolveCart(liveCatalogueFixture(), [{
+    slug: 'hoodie-vf-definition', color: 'Noir', size: 'M', quantity: 1,
+  }], 'test');
+
+  assert.equal(result[0].priceId, 'price_test_hoodie_black_m');
+  assert.equal(result[0].stripeProductId, 'prod_test_hoodie');
+});
+
+test('resolveCart rejects a variant with no live price as an unknown catalogue option', () => {
+  const fixture = catalogueFixture();
+  fixture.products[0].variants[0].stripe_price_id = { test: 'price_test_hoodie_black_m', live: null };
+  assert.throws(
+    () => resolveCart(fixture, [{ slug: 'hoodie-vf-definition', color: 'Noir', size: 'M', quantity: 1 }], 'live'),
+    /Unknown catalogue option/,
+  );
+});
+
+test('resolveCart rejects a legacy flat-string price id requested in live mode', () => {
+  assert.throws(
+    () => resolveCart(catalogueFixture(), [{ slug: 'hoodie-vf-definition', color: 'Noir', size: 'M', quantity: 1 }], 'live'),
+    /Unknown catalogue option/,
+  );
+});
+
+test('priceIdFor resolves the requested mode and treats a legacy string as test-only', () => {
+  assert.equal(priceIdFor({ stripe_price_id: 'price_legacy' }, 'test'), 'price_legacy');
+  assert.throws(() => priceIdFor({ stripe_price_id: 'price_legacy' }, 'live'), /No live Stripe price configured/);
+  assert.equal(priceIdFor({ stripe_price_id: { test: 'price_t', live: 'price_l' } }, 'test'), 'price_t');
+  assert.equal(priceIdFor({ stripe_price_id: { test: 'price_t', live: 'price_l' } }, 'live'), 'price_l');
+});
+
+test('priceIdFor throws a clear error for a variant missing a price in the requested mode', () => {
+  assert.throws(
+    () => priceIdFor({ stripe_price_id: { test: 'price_t', live: null } }, 'live'),
+    /No live Stripe price configured/,
+  );
+  assert.throws(() => priceIdFor({}, 'live'), /No live Stripe price configured/);
+  assert.throws(() => priceIdFor({ stripe_price_id: 'price_t' }, 'nope'), /Invalid checkout mode/);
+});
+
+test('productIdFor resolves the requested mode and treats a legacy string as test-only', () => {
+  assert.equal(productIdFor({ stripe_product_id: 'prod_legacy' }, 'test'), 'prod_legacy');
+  assert.throws(() => productIdFor({ stripe_product_id: 'prod_legacy' }, 'live'), /No live Stripe product configured/);
+  assert.equal(productIdFor({ stripe_product_id: { test: 'prod_t', live: 'prod_l' } }, 'live'), 'prod_l');
+});
+
+test('productIdFor throws a clear error for a product missing an id in the requested mode', () => {
+  assert.throws(
+    () => productIdFor({ stripe_product_id: { test: 'prod_t', live: null } }, 'live'),
+    /No live Stripe product configured/,
+  );
+  assert.throws(() => productIdFor({}, 'live'), /No live Stripe product configured/);
 });
 
 test('validateCustomer trims allowed fields and validates ISO address requirements', () => {
