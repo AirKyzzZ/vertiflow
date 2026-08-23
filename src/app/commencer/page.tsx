@@ -75,10 +75,9 @@ export function Commencer() {
               spectacle.
             </p>
             <p className="leading-relaxed">
-              VertiFlow, c&apos;est la marque de vêtements. PKBA, c&apos;est le club où le
-              parkour se pratique pour de vrai, sur le Bassin d&apos;Arcachon — une association
-              loi 1901, fondée en juillet 2025, aujourd&apos;hui 80+ licenciés. France 3
-              Nouvelle-Aquitaine leur a consacré un reportage.
+              VertiFlow, c&apos;est la marque de vêtements que tu es en train de lire. Le
+              parkour, lui, se pratique pour de vrai sur le Bassin d&apos;Arcachon, avec le
+              club PKBA — une association loi 1901, distincte de la marque.
             </p>
             <p className="leading-relaxed">
               Les deux existent grâce à la même personne : un athlète qui pratique le parkour en
@@ -124,10 +123,6 @@ export function Commencer() {
             <p className="leading-relaxed">
               Le club s&apos;entraîne dehors, sur ce qui existe déjà : escaliers, murets,
               rambardes. Pas de studio, pas de salle aseptisée.
-            </p>
-            <p className="leading-relaxed">
-              Il dispose aussi d&apos;un hangar de 200 m² à Gujan-Mestras pour les séances
-              couvertes.
             </p>
           </div>
         </div>

@@ -106,7 +106,7 @@ const fr: Dictionary = {
       headingAfter: 'pas à',
       headingEmphasis: 'contourner',
       intro:
-        "Huit ans de compétition. Un club de 80 licenciés. Des vêtements faits pour bouger, et tout ce qu'il faut pour commencer.",
+        "Huit ans de compétition. Des vêtements qui tiennent le coup, et tout ce qu'il faut pour commencer.",
       ctaStart: "Venir s'entraîner",
       ctaShop: 'La boutique',
     },
@@ -117,7 +117,7 @@ const fr: Dictionary = {
       bodyPrimary:
         "Personne n'arrive en sachant. Le premier cours, tu vas rater des choses, et c'est exactement ce qu'on attend. On a des gens qui ont commencé le mois dernier.",
       bodySecondary:
-        "Les séances se passent sur le Bassin, avec le club PKBA. La première est gratuite, et il n'y a rien à payer pour venir voir.",
+        "Les séances se passent sur le Bassin, en extérieur. La première est gratuite, et il n'y a rien à payer pour venir voir.",
       link: 'Comment venir →',
     },
     essentials: {
@@ -129,16 +129,15 @@ const fr: Dictionary = {
       number: '03',
       title: "D'où ça vient",
       bodyPrimary:
-        "VertiFlow n'est pas une marque de streetwear qui a choisi le parkour comme décor. Elle est née d'un athlète FFG de niveau national qui a fondé un club, et le club existe toujours.",
+        "VertiFlow n'est pas une marque de streetwear qui a choisi le parkour comme décor. Elle est née d'un athlète FFG de niveau national qui savait exactement ce qui lâche pendant une séance.",
       bodySecondary:
         "Une blessure a tout mis en pause. Revenir a été plus dur que commencer, et c'est une des raisons pour lesquelles la porte reste ouverte ici.",
       link: "L'histoire complète →",
       timeline: [
         { when: '8 ans', what: 'FFG, niveau national' },
         { when: 'nov. 2024', what: 'VertiFlow' },
-        { when: 'juil. 2025', what: 'PKBA, association loi 1901' },
-        { when: '—', what: 'Reportage France 3 Nouvelle-Aquitaine' },
-        { when: "aujourd'hui", what: '80+ licenciés' },
+        { when: '—', what: 'Une blessure, puis un retour' },
+        { when: "aujourd'hui", what: 'Neuf pièces, imprimées à la demande' },
       ],
     },
   },
@@ -168,7 +167,7 @@ const fr: Dictionary = {
     sizeGuideLink: 'Guide des tailles →',
   },
   footer: {
-    tagline: "Des vêtements faits pour bouger, par un athlète qui a fondé un club. Bassin d'Arcachon.",
+    tagline: "Huit ans de mouvement. Des vêtements faits pour ça. Bassin d'Arcachon.",
     shopTitle: 'Boutique',
     shopEssentials: "L'essentiel",
     shopSizeGuide: 'Guide des tailles',
@@ -208,7 +207,7 @@ const en: Dictionary = {
       headingAfter: 'Not to',
       headingEmphasis: 'go around',
       intro:
-        'Eight years of competition. A club of 80 members. Clothes built to move in, and everything you need to get started.',
+        'Eight years of competition. Clothes that hold up, and everything you need to get started.',
       ctaStart: 'Come train',
       ctaShop: 'Shop',
     },
@@ -219,7 +218,7 @@ const en: Dictionary = {
       bodyPrimary:
         "Nobody shows up already knowing how. In your first class, you'll miss things, and that's exactly what we expect. Some of our members started just last month.",
       bodySecondary:
-        "Sessions happen on the Bassin, with the PKBA club. Your first one is free, and there's nothing to pay just to come watch.",
+        "Sessions happen on the Bassin, outdoors. Your first one is free, and there's nothing to pay just to come watch.",
       link: 'How to join →',
     },
     essentials: {
@@ -231,16 +230,15 @@ const en: Dictionary = {
       number: '03',
       title: 'Where this comes from',
       bodyPrimary:
-        "VertiFlow isn't a streetwear label that picked parkour as a backdrop. It was started by a national-level FFG athlete who founded a club, and the club is still running.",
+        "VertiFlow isn't a streetwear label that picked parkour as a backdrop. It was started by a national-level FFG athlete who knew exactly what fails mid-session.",
       bodySecondary:
         "An injury put all of it on hold. The comeback was harder than starting ever was, and that's part of why the door stays open here.",
       link: 'The full story →',
       timeline: [
         { when: '8 years', what: 'FFG, national level' },
         { when: 'Nov. 2024', what: 'VertiFlow' },
-        { when: 'Jul. 2025', what: 'PKBA, a nonprofit association' },
-        { when: '—', what: 'Featured on France 3 Nouvelle-Aquitaine' },
-        { when: 'Today', what: '80+ members' },
+        { when: '—', what: 'An injury, then a comeback' },
+        { when: 'Today', what: 'Nine pieces, printed to order' },
       ],
     },
   },
@@ -270,7 +268,7 @@ const en: Dictionary = {
     sizeGuideLink: 'Size guide →',
   },
   footer: {
-    tagline: "Clothes built to move in, from an athlete who founded a club. Bassin d'Arcachon, France.",
+    tagline: "Eight years of movement. Clothes built to move in. Bassin d'Arcachon, France.",
     shopTitle: 'Shop',
     shopEssentials: 'The essentials',
     shopSizeGuide: 'Size guide',

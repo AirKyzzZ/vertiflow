@@ -5,11 +5,11 @@ import Link from 'next/link'
 export const metadata: Metadata = {
   title: 'À propos',
   description:
-    "Huit ans de compétition, une blessure, deux structures nées du même fondateur. Pourquoi VertiFlow existe, et ce qu'elle refuse d'être.",
+    "Huit ans de compétition, une blessure, et ce que ça a changé à la façon de faire des vêtements. Pourquoi VertiFlow existe, et ce qu'elle refuse d'être.",
   openGraph: {
     title: 'À propos',
     description:
-      "Huit ans de compétition, une blessure, deux structures nées du même fondateur.",
+      "Huit ans de compétition, une blessure, et ce que ça a changé à la façon de faire des vêtements.",
     images: [{ url: '/images/site/divider-seawall.webp', width: 2048, height: 1536 }],
   },
   alternates: { canonical: '/a-propos' },
@@ -134,12 +134,11 @@ export function APropos() {
               C&apos;est un parcours réel.
             </p>
             <p className="leading-relaxed">
-              En novembre 2024, il lance VertiFlow, une micro-entreprise de vêtements
-              basée à Bordeaux. En juillet 2025, il fonde aussi PKBA — Parkour Bassin
-              d&apos;Arcachon —, une association loi 1901 où il est aujourd&apos;hui
-              trésorier. Deux structures, deux dates, le même fondateur. Le club compte
-              aujourd&apos;hui plus de 80 licenciés, et France 3 Nouvelle-Aquitaine lui a
-              consacré un reportage.
+              Huit ans à s&apos;entraîner, ça apprend surtout ce qui lâche : un tissu qui
+              se déchire sur une réception, une coupe qui remonte pendant un saut de bras,
+              une couture qui accroche au moment de passer un mur. En novembre 2024, il a
+              commencé à corriger ça, pièce par pièce. VertiFlow est basée à Bordeaux, née
+              de cette liste de détails, pas d&apos;une envie de vendre des t-shirts.
             </p>
             <p className="leading-relaxed">
               Puis une blessure a tout mis en pause. Revenir a pris plus de temps, et a
@@ -153,27 +152,23 @@ export function APropos() {
 
       <section className="border-y border-ink/10 bg-neutral-100/60">
         <div className="mx-auto max-w-[88rem] px-5 py-20 lg:px-10 lg:py-28">
-          <ChapterHeading n="Chapitre 4" title="Deux structures" />
+          <ChapterHeading n="Chapitre 4" title="Ce qu'il porte" />
           <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
             <p className="display text-2xl leading-tight sm:text-3xl">
-              VertiFlow est une micro-entreprise. Le club PKBA est une association loi
-              1901 distincte.
+              Ce qu&apos;il porte à l&apos;entraînement, c&apos;est ce qu&apos;il vend.
             </p>
             <div className="space-y-5 text-neutral-700">
               <p className="leading-relaxed">
-                Même fondateur, même terrain. VertiFlow vend des vêtements, rien
-                d&apos;autre. Le club fait cours sur le Bassin d&apos;Arcachon. Il a ses
-                propres statuts, sa propre trésorerie, ses propres 80+ licenciés.
+                L&apos;essentiel, ce sont les neuf pièces que VertiFlow vend
+                aujourd&apos;hui : imprimées à la demande, pensées pour un corps qui
+                bouge plus qu&apos;il ne pose. Rien de saisonnier, rien qui change parce
+                que la mode a changé d&apos;avis.
               </p>
               <p className="leading-relaxed">
-                Une commande sur la boutique ne finance rien côté club, et les deux
-                budgets ne se croisent pas. Maxime a fondé les deux structures, à des
-                moments différents, sans jamais les faire dépendre l&apos;une de
-                l&apos;autre.
-              </p>
-              <p className="leading-relaxed">
-                Le club gère ses inscriptions, ses créneaux et ses tarifs sur son propre
-                site — pas ici.
+                À côté de la marque, il a aussi fondé un club : PKBA, une association loi
+                1901 distincte, budgets séparés, aujourd&apos;hui plus de 80 licenciés.
+                Pas la raison d&apos;être de VertiFlow — la preuve qu&apos;il construit
+                des choses qui tiennent debout.
               </p>
               <a
                 href={PKBA_URL}
@@ -193,8 +188,7 @@ export function APropos() {
             Envie de bouger, ou envie de porter la marque ?
           </h2>
           <p className="mt-6 max-w-md leading-relaxed text-neutral-700">
-            Le club accueille les débutants qui veulent essayer. La boutique est
-            ouverte si tu veux porter la marque à côté.
+            Une première séance ou une pièce à porter — les deux commencent ici.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link

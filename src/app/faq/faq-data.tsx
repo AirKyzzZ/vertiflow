@@ -92,8 +92,8 @@ export const faqGroups: FaqGroup[] = [
         question: "D'où vient VertiFlow ?",
         answer: (
           <>
-            Du parkour, pas l&apos;inverse : huit ans de compétition, puis un club fondé sur
-            le Bassin d&apos;Arcachon. L&apos;histoire complète est sur{' '}
+            Du parkour, pas l&apos;inverse : huit ans de compétition, et tout ce que ça
+            apprend sur un vêtement. L&apos;histoire complète est sur{' '}
             <Link href="/">la page d&apos;accueil</Link>.
           </>
         ),

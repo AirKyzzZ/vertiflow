@@ -22,8 +22,8 @@ export const productCopyEn: Record<string, ProductCopy> = {
     ],
   },
   'casquette-vf': {
-    lead: "The club's mark, kept quiet.",
-    body: 'Structured cap, flat brim, adjustable strap at the back. It goes with everything else.',
+    lead: 'The brim that stays put, logo kept quiet up front.',
+    body: 'Structured cap, flat brim, adjustable strap at the back, built to stay on even when things get moving.',
     specs: [
       { label: 'Material', value: 'Cotton twill' },
       { label: 'Adjustment', value: 'Adjustable strap, one size' },

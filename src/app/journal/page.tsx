@@ -5,7 +5,7 @@ import { getJournalPosts } from '@/app/journal/journal-data'
 
 export const metadata: Metadata = {
   title: 'Journal',
-  description: "Les étapes de compétition, et l'histoire du club à côté.",
+  description: "Les étapes de compétition, et ce qui s'est construit après.",
   alternates: { canonical: '/journal' },
 }
 
@@ -22,7 +22,7 @@ export function Journal() {
             <h1 className="display min-w-0 wrap-anywhere text-[clamp(2.5rem,7vw,5rem)]">Journal</h1>
           </div>
           <p className="rule-marker relative mt-8 max-w-md pl-11 leading-relaxed text-neutral-700">
-            Les étapes de compétition, et ce qui se construit à côté sur le Bassin
+            Les étapes de compétition, et ce qui s&apos;est construit après, sur le Bassin
             d&apos;Arcachon.
           </p>
         </header>

@@ -28,8 +28,8 @@ export const productCopy: Record<string, ProductCopy> = {
     ],
   },
   'casquette-vf': {
-    lead: 'Le repère du club, discret devant.',
-    body: 'Casquette structurée, visière plate, sangle réglable à l’arrière. Elle va avec tout le reste.',
+    lead: 'La visière qui reste en place, logo discret devant.',
+    body: 'Casquette structurée, visière plate, sangle réglable à l’arrière, pensée pour tenir même quand ça bouge.',
     specs: [
       { label: 'Matière', value: 'Coton twill' },
       { label: 'Réglage', value: 'Sangle ajustable, taille unique' },
