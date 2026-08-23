@@ -1,5 +1,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
 const { redirectMap } = require('../src/lib/redirect-map.ts');
 
 test('every ported legacy path redirects permanently', () => {
@@ -26,15 +28,28 @@ test('every ported legacy path redirects permanently', () => {
     '/no-color.html': '/boutique',
     '/details-produit.html': '/boutique',
     '/product-detail.html': '/boutique',
+    '/faq.html': '/faq',
+    '/about.html': '/a-propos',
+    '/blog.html': '/journal',
+    '/contact.html': '/contact',
+    '/guide-des-tailles.html': '/guide-des-tailles',
+    '/metz-2025.html': '/journal/metz-2025',
+    '/la-teste-de-buch-2025.html': '/journal/la-teste-de-buch-2025',
+    '/pkba-partenariat-2025.html': '/journal/pkba-partenariat-2025',
+    '/accessibilite.html': '/mentions-legales',
+    '/conditions-utilisation.html': '/mentions-legales',
+    '/propriete-intellectuelle.html': '/mentions-legales',
   };
   const actual = Object.fromEntries(redirectMap().map((rule) => [rule.source, rule.destination]));
   assert.deepEqual(actual, expected);
   assert.ok(redirectMap().every((rule) => rule.permanent === true));
 });
 
-test('unported pages are not redirected', () => {
-  const sources = redirectMap().map((rule) => rule.source);
-  for (const path of ['/faq.html', '/blog.html', '/about.html', '/contact.html', '/guide-des-tailles.html']) {
-    assert.ok(!sources.includes(path), `${path} must keep serving until its replacement exists`);
+test('every legacy .html file still in public/ has a permanent redirect', () => {
+  const publicDir = path.resolve(__dirname, '../public');
+  const legacyPages = fs.readdirSync(publicDir).filter((name) => name.endsWith('.html'));
+  const sources = new Set(redirectMap().map((rule) => rule.source));
+  for (const page of legacyPages) {
+    assert.ok(sources.has(`/${page}`), `public/${page} has no redirect and would serve the old design`);
   }
 });

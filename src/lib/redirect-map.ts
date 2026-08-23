@@ -28,5 +28,16 @@ export function redirectMap(): RedirectRule[] {
     { source: '/no-color.html', destination: '/boutique', permanent: true },
     { source: '/details-produit.html', destination: '/boutique', permanent: true },
     { source: '/product-detail.html', destination: '/boutique', permanent: true },
+    { source: '/faq.html', destination: '/faq', permanent: true },
+    { source: '/about.html', destination: '/a-propos', permanent: true },
+    { source: '/blog.html', destination: '/journal', permanent: true },
+    { source: '/contact.html', destination: '/contact', permanent: true },
+    { source: '/guide-des-tailles.html', destination: '/guide-des-tailles', permanent: true },
+    { source: '/metz-2025.html', destination: '/journal/metz-2025', permanent: true },
+    { source: '/la-teste-de-buch-2025.html', destination: '/journal/la-teste-de-buch-2025', permanent: true },
+    { source: '/pkba-partenariat-2025.html', destination: '/journal/pkba-partenariat-2025', permanent: true },
+    { source: '/accessibilite.html', destination: '/mentions-legales', permanent: true },
+    { source: '/conditions-utilisation.html', destination: '/mentions-legales', permanent: true },
+    { source: '/propriete-intellectuelle.html', destination: '/mentions-legales', permanent: true },
   ]
 }
