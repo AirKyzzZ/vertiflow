@@ -9,7 +9,7 @@
     "schema_version": { "const": 2 },
     "generated_at": { "type": "string", "format": "date-time" },
     "currency": { "type": "string", "pattern": "^[A-Z]{3}$" },
-    "products": { "type": "array", "minItems": 9, "maxItems": 9, "items": { "$ref": "#/$defs/product" } }
+    "products": { "type": "array", "minItems": 9, "items": { "$ref": "#/$defs/product" } }
   },
   "$defs": {
     "nullableString": { "type": ["string", "null"] },
