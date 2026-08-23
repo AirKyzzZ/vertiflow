@@ -76,7 +76,7 @@ The France 3 Nouvelle-Aquitaine feature airing 15 January 2026, and PKBA's 200 m
 
 ## What shipped
 
-17 commits, 198+ tests green, clean production build.
+33 commits, 246 tests green, clean production build, 62 static routes.
 
 **The store** — `/boutique` with a staggered 12-column editorial grid, 9 product pages with colour-synced galleries, `/panier`, `/commande` with an embedded Stripe Payment Element, plus success and cancelled states.
 
@@ -84,7 +84,11 @@ The France 3 Nouvelle-Aquitaine feature airing 15 January 2026, and PKBA's 200 m
 
 **Legal** — CGV, mentions légales, confidentialité and livraison migrated verbatim into the new brand, verified by word-level diff against the originals.
 
-**In progress when this was written** — English at `/en` alongside French, then SEO (sitemap, robots, canonicals, Product JSON-LD) and generated per-product Open Graph images.
+**English** — `/en`, `/en/shop`, `/en/shop/[slug]`, with hreflang self-referencing correctly. Legal stays French-only, deliberately.
+
+**SEO** — sitemap (35 URLs, 66 hreflang alternates), robots.txt, canonicals, Product/Organization/BreadcrumbList JSON-LD sourced from the curated media map so a blank square can never reach Google's product index. Transactional routes correctly excluded.
+
+**Share cards** — 19 generated Open Graph images. Every product link shared to Instagram, WhatsApp or Discord now renders as a designed card instead of a bare URL, in both languages.
 
 ---
 
@@ -119,8 +123,6 @@ I reported the mobile navigation as broken — a launch blocker that would kill 
 ```
 
 Also: production is missing five env vars that exist in `deploy-preview`. That single scoping gap is why `vertiflow.fr` checkout returns 500 today, and why it always worked when you tested a preview.
-
----
 
 ---
 
