@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { loadStripe } from '@stripe/stripe-js'
 import type { StripeCheckoutLoadActionsSuccess } from '@stripe/stripe-js'
 import { useCart } from '@/components/cart-provider'
@@ -119,7 +120,8 @@ type CheckoutFormProps = {
 }
 
 export function CheckoutForm({ promoCode, step, onStepChange }: CheckoutFormProps) {
-  const { lines } = useCart()
+  const { lines, clear } = useCart()
+  const router = useRouter()
   const [form, setForm] = useState<ShippingForm>(EMPTY_FORM)
   const [error, setError] = useState<string | null>(null)
   const [canConfirm, setCanConfirm] = useState(false)
@@ -196,11 +198,14 @@ export function CheckoutForm({ promoCode, step, onStepChange }: CheckoutFormProp
     if (!actionsRef.current) return
     setError(null)
     onStepChange('confirming')
-    const result = await actionsRef.current.confirm()
+    const result = await actionsRef.current.confirm({ redirect: 'if_required' })
     if (result.type === 'error') {
       setError(result.error.message || 'Le paiement a échoué. Réessaie avec une autre carte.')
       onStepChange('ready')
+      return
     }
+    clear()
+    router.push(`/commande/succes?session_id=${encodeURIComponent(result.session.id)}`)
   }
 
   return (
