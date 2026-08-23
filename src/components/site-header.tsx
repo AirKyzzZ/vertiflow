@@ -11,11 +11,12 @@ export function SiteHeader() {
   const locale = localeFromPathname(pathname)
   const dict = getDictionary(locale)
 
+  const frenchOnly = locale === 'en' ? ' (FR)' : ''
   const links = [
-    { href: '/commencer', label: dict.nav.start },
+    { href: '/commencer', label: `${dict.nav.start}${frenchOnly}` },
     { href: SHOP_PATHS[locale], label: dict.nav.shop },
-    { href: '/journal', label: dict.nav.journal },
-    { href: '/a-propos', label: dict.nav.about },
+    { href: '/journal', label: `${dict.nav.journal}${frenchOnly}` },
+    { href: '/a-propos', label: `${dict.nav.about}${frenchOnly}` },
   ]
 
   return (
@@ -38,7 +39,7 @@ export function SiteHeader() {
             ))}
           </nav>
           <LanguageSwitcher />
-          <CartCount />
+          <CartCount locale={locale} />
         </div>
 
         <details className="group relative md:hidden">
@@ -56,7 +57,7 @@ export function SiteHeader() {
               </Link>
             ))}
             <div className="mt-2 flex items-center justify-between border-t border-ink/10 pt-2">
-              <CartCount />
+              <CartCount locale={locale} />
               <LanguageSwitcher />
             </div>
           </div>

@@ -8,6 +8,7 @@ export type Dictionary = {
     shop: string
     journal: string
     about: string
+    cart: string
   }
   home: {
     seo: { title: string; description: string }
@@ -64,6 +65,25 @@ export type Dictionary = {
     modelLabel: string
     sizeGuideLink: string
   }
+  footer: {
+    tagline: string
+    shopTitle: string
+    shopEssentials: string
+    shopSizeGuide: string
+    shopShipping: string
+    brandTitle: string
+    brandStart: string
+    brandAbout: string
+    brandJournal: string
+    brandContact: string
+    legalTitle: string
+    legalMentions: string
+    legalTerms: string
+    legalPrivacy: string
+    copyrightTemplate: string
+    clubNotePrefix: string
+    clubNoteSuffix: string
+  }
 }
 
 const fr: Dictionary = {
@@ -72,6 +92,7 @@ const fr: Dictionary = {
     shop: 'Boutique',
     journal: 'Journal',
     about: 'À propos',
+    cart: 'Panier',
   },
   home: {
     seo: {
@@ -146,6 +167,25 @@ const fr: Dictionary = {
     modelLabel: 'Modèle',
     sizeGuideLink: 'Guide des tailles →',
   },
+  footer: {
+    tagline: "Des vêtements faits pour bouger, par un athlète qui a fondé un club. Bassin d'Arcachon.",
+    shopTitle: 'Boutique',
+    shopEssentials: "L'essentiel",
+    shopSizeGuide: 'Guide des tailles',
+    shopShipping: 'Livraison et paiement',
+    brandTitle: 'La marque',
+    brandStart: 'Commencer le parkour',
+    brandAbout: 'Notre histoire',
+    brandJournal: 'Journal',
+    brandContact: 'Contact',
+    legalTitle: 'Légal',
+    legalMentions: 'Mentions légales',
+    legalTerms: 'CGV',
+    legalPrivacy: 'Confidentialité',
+    copyrightTemplate: '© {year} VertiFlow — micro-entreprise',
+    clubNotePrefix: 'Le club',
+    clubNoteSuffix: 'est une association loi 1901 distincte.',
+  },
 }
 
 const en: Dictionary = {
@@ -154,6 +194,7 @@ const en: Dictionary = {
     shop: 'Shop',
     journal: 'Journal',
     about: 'About',
+    cart: 'Cart',
   },
   home: {
     seo: {
@@ -227,6 +268,25 @@ const en: Dictionary = {
     oneSize: 'One size',
     modelLabel: 'Model',
     sizeGuideLink: 'Size guide →',
+  },
+  footer: {
+    tagline: "Clothes built to move in, from an athlete who founded a club. Bassin d'Arcachon, France.",
+    shopTitle: 'Shop',
+    shopEssentials: 'The essentials',
+    shopSizeGuide: 'Size guide',
+    shopShipping: 'Shipping and payment',
+    brandTitle: 'The brand',
+    brandStart: 'Start parkour',
+    brandAbout: 'Our story',
+    brandJournal: 'Journal',
+    brandContact: 'Contact',
+    legalTitle: 'Legal',
+    legalMentions: 'Legal notice',
+    legalTerms: 'Terms of sale',
+    legalPrivacy: 'Privacy',
+    copyrightTemplate: '© {year} VertiFlow — micro-entreprise',
+    clubNotePrefix: 'The',
+    clubNoteSuffix: 'club is a separate nonprofit association.',
   },
 }
 

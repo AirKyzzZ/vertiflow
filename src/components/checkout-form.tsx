@@ -3,7 +3,7 @@
 import { useRef, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { formatPrice } from '@/lib/i18n'
+import { formatPrice, type Locale } from '@/lib/i18n'
 import { loadStripe } from '@stripe/stripe-js'
 import type { StripeCheckoutLoadActionsSuccess, StripeCheckoutSession } from '@stripe/stripe-js'
 import { useCart } from '@/components/cart-provider'
@@ -130,9 +130,10 @@ type CheckoutFormProps = {
   promoCode: string
   step: CheckoutStep
   onStepChange: (step: CheckoutStep) => void
+  locale?: Locale
 }
 
-export function CheckoutForm({ promoCode, step, onStepChange }: CheckoutFormProps) {
+export function CheckoutForm({ promoCode, step, onStepChange, locale = 'fr' }: CheckoutFormProps) {
   const { lines, clear } = useCart()
   const router = useRouter()
   const [form, setForm] = useState<ShippingForm>(EMPTY_FORM)
@@ -189,7 +190,7 @@ export function CheckoutForm({ promoCode, step, onStepChange }: CheckoutFormProp
       if (response.status === 400) throw new Error('invalid-customer-details')
       if (!response.ok) throw new Error('request-failed')
 
-      const stripe = await loadStripe(payload.publishableKey, { locale: 'fr' })
+      const stripe = await loadStripe(payload.publishableKey, { locale })
       if (!stripe) throw new Error('stripe-unavailable')
 
       const checkout = stripe.initCheckoutElementsSdk({ clientSecret: payload.clientSecret })
@@ -313,11 +314,11 @@ export function CheckoutForm({ promoCode, step, onStepChange }: CheckoutFormProp
                   <div className="mt-6 space-y-2 border-t border-ink/10 pt-4 text-sm">
                     <div className="flex items-center justify-between text-neutral-500">
                       <span>Livraison</span>
-                      <span>{formatPrice(totals.shipping, 'fr')}</span>
+                      <span>{formatPrice(totals.shipping, locale)}</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="eyebrow">Total</span>
-                      <span className="eyebrow text-base">{formatPrice(totals.total, 'fr')}</span>
+                      <span className="eyebrow text-base">{formatPrice(totals.total, locale)}</span>
                     </div>
                   </div>
                 )}

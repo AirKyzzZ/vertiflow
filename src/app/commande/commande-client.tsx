@@ -52,7 +52,7 @@ export function CommandeClient({ products, locale = 'fr' }: CommandeClientProps)
       </header>
 
       <div className="mt-14 grid gap-12 lg:grid-cols-[1.3fr_1fr] lg:gap-16">
-        <CheckoutForm promoCode={promoCode} step={step} onStepChange={setStep} />
+        <CheckoutForm promoCode={promoCode} step={step} onStepChange={setStep} locale={locale} />
 
         <aside className="border border-ink/10 bg-neutral-100/60 p-6 lg:sticky lg:top-24 lg:self-start">
           <span className="eyebrow text-neutral-500">Résumé</span>
