@@ -3,14 +3,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useCart } from '@/components/cart-provider'
-import { heroFor } from '@/lib/product-media'
+import { cartTotal, priceLines, SHIPPING_DISCLOSURE, type ProductSummary } from '@/lib/cart-pricing'
 import { formatPrice, type Locale } from '@/lib/i18n'
-
-export type ProductSummary = {
-  slug: string
-  name: string
-  price: string
-}
 
 type PanierClientProps = {
   products: ProductSummary[]
@@ -21,10 +15,6 @@ type QuantityStepperProps = {
   quantity: number
   productName: string
   onChange: (quantity: number) => void
-}
-
-function findProduct(products: ProductSummary[], slug: string): ProductSummary | undefined {
-  return products.find((product) => product.slug === slug)
 }
 
 function QuantityStepper({ quantity, productName, onChange }: QuantityStepperProps) {
@@ -61,18 +51,8 @@ function QuantityStepper({ quantity, productName, onChange }: QuantityStepperPro
 export function PanierClient({ products, locale = 'fr' }: PanierClientProps) {
   const { lines, ready, setQuantity, remove } = useCart()
 
-  const priced = lines.map((line) => {
-    const product = findProduct(products, line.slug)
-    const unit = product ? Number(product.price) : 0
-    return {
-      line,
-      name: product?.name ?? line.slug,
-      total: unit * line.quantity,
-      image: heroFor(line.slug, line.color),
-    }
-  })
-
-  const total = priced.reduce((sum, entry) => sum + entry.total, 0)
+  const priced = priceLines(lines, products)
+  const total = cartTotal(priced)
 
   if (!ready) return <main className="min-h-[60vh]" />
 
@@ -122,6 +102,9 @@ export function PanierClient({ products, locale = 'fr' }: PanierClientProps) {
                   <p className="eyebrow mt-2 text-neutral-500">
                     {line.color} · {line.size}
                   </p>
+                  {lineTotal === null && (
+                    <p className="eyebrow mt-2 text-accent">Indisponible</p>
+                  )}
                 </div>
 
                 <div className="mt-4 flex flex-wrap items-center gap-5">
@@ -141,7 +124,9 @@ export function PanierClient({ products, locale = 'fr' }: PanierClientProps) {
                 </div>
               </div>
 
-              <p className="eyebrow whitespace-nowrap pt-1 text-neutral-700">{formatPrice(lineTotal, locale)}</p>
+              <p className="eyebrow whitespace-nowrap pt-1 text-neutral-700">
+                {lineTotal === null ? '—' : formatPrice(lineTotal, locale)}
+              </p>
             </li>
           ))}
         </ul>
@@ -150,7 +135,7 @@ export function PanierClient({ products, locale = 'fr' }: PanierClientProps) {
           <span className="eyebrow text-neutral-500">Sous-total</span>
           <p className="display mt-2 text-3xl">{formatPrice(total, locale)}</p>
           <p className="mt-3 text-xs leading-relaxed text-neutral-500">
-            Livraison à partir de 6,99 € (France).{' '}
+            {SHIPPING_DISCLOSURE}{' '}
             <Link href="/livraison-et-paiement" className="text-accent underline">
               Voir les délais et tarifs
             </Link>

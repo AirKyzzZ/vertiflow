@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { getProducts } from '@/lib/catalogue'
-import { CommandeClient, type ProductSummary } from './commande-client'
+import { CommandeClient } from './commande-client'
+import type { ProductSummary } from '@/lib/cart-pricing'
 
 export const metadata: Metadata = {
   title: 'Commande',

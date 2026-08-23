@@ -5,22 +5,12 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { CheckoutForm, type CheckoutStep } from '@/components/checkout-form'
 import { useCart } from '@/components/cart-provider'
-import { heroFor } from '@/lib/product-media'
+import { cartTotal, priceLines, SHIPPING_DISCLOSURE, type ProductSummary } from '@/lib/cart-pricing'
 import { formatPrice, type Locale } from '@/lib/i18n'
-
-export type ProductSummary = {
-  slug: string
-  name: string
-  price: string
-}
 
 type CommandeClientProps = {
   products: ProductSummary[]
   locale?: Locale
-}
-
-function findProduct(products: ProductSummary[], slug: string): ProductSummary | undefined {
-  return products.find((product) => product.slug === slug)
 }
 
 export function CommandeClient({ products, locale = 'fr' }: CommandeClientProps) {
@@ -28,18 +18,8 @@ export function CommandeClient({ products, locale = 'fr' }: CommandeClientProps)
   const [promoCode, setPromoCode] = useState('')
   const [step, setStep] = useState<CheckoutStep>('idle')
 
-  const priced = lines.map((line) => {
-    const product = findProduct(products, line.slug)
-    const unit = product ? Number(product.price) : 0
-    return {
-      line,
-      name: product?.name ?? line.slug,
-      total: unit * line.quantity,
-      image: heroFor(line.slug, line.color),
-    }
-  })
-
-  const total = priced.reduce((sum, entry) => sum + entry.total, 0)
+  const priced = priceLines(lines, products)
+  const total = cartTotal(priced)
 
   if (!ready) return <main className="min-h-[60vh]" />
 
@@ -88,8 +68,13 @@ export function CommandeClient({ products, locale = 'fr' }: CommandeClientProps)
                   <p className="eyebrow mt-1 text-neutral-500">
                     {line.color} · {line.size} · x{line.quantity}
                   </p>
+                  {lineTotal === null && (
+                    <p className="eyebrow mt-1 text-accent">Indisponible</p>
+                  )}
                 </div>
-                <p className="eyebrow whitespace-nowrap pt-1 text-neutral-700">{formatPrice(lineTotal, locale)}</p>
+                <p className="eyebrow whitespace-nowrap pt-1 text-neutral-700">
+                  {lineTotal === null ? '—' : formatPrice(lineTotal, locale)}
+                </p>
               </li>
             ))}
           </ul>
@@ -98,7 +83,10 @@ export function CommandeClient({ products, locale = 'fr' }: CommandeClientProps)
             <span className="eyebrow text-neutral-500">Sous-total</span>
             <p className="display mt-2 text-3xl">{formatPrice(total, locale)}</p>
             <p className="mt-3 text-xs leading-relaxed text-neutral-500">
-              Frais de livraison calculés à l&apos;étape du paiement.
+              {SHIPPING_DISCLOSURE}{' '}
+              <Link href="/livraison-et-paiement" className="text-accent underline">
+                Voir les délais et tarifs
+              </Link>
             </p>
           </div>
 
