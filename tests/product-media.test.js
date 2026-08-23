@@ -30,7 +30,8 @@ test('no mapped path points at the printful cdn or an artwork file', () => {
   for (const byColour of Object.values(productMedia)) {
     for (const images of Object.values(byColour)) {
       for (const image of images) {
-        assert.ok(image.startsWith('/images/product/'), `${image} must be a local path`);
+        const isLocalPath = image.startsWith('/images/product/') || image.startsWith('/images/photos/');
+        assert.ok(isLocalPath, `${image} must be a local path`);
       }
     }
   }
@@ -48,10 +49,10 @@ test('heroFor returns the first image', () => {
   assert.equal(heroFor('tshirt-climb', 'Noir'), mediaFor('tshirt-climb', 'Noir')[0]);
 });
 
-test('each colourway holds at most four images', () => {
+test('each colourway holds at most eight images', () => {
   for (const byColour of Object.values(productMedia)) {
     for (const images of Object.values(byColour)) {
-      assert.ok(images.length <= 4);
+      assert.ok(images.length <= 8);
     }
   }
 });

@@ -42,7 +42,7 @@ test('product json-ld never sources images from the printful cdn or a blank artw
     for (const image of jsonLd.image) {
       assert.ok(!image.includes('files.cdn.printful.com'), `${product.slug} leaked a Printful CDN url into json-ld`);
       assert.ok(!image.includes('printful'), `${product.slug} leaked a printful reference into json-ld`);
-      assert.match(image, /^https:\/\/vertiflow\.fr\/images\/product\//);
+      assert.match(image, /^https:\/\/vertiflow\.fr\/images\/(product|photos)\//);
     }
   }
 });

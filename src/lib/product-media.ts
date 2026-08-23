@@ -1,6 +1,9 @@
 export const productMedia: Record<string, Record<string, string[]>> = {
   'tshirt-climb': {
     Noir: [
+      '/images/photos/product/img-0737.webp',
+      '/images/photos/product/img-0946.webp',
+      '/images/photos/product/img-0839.webp',
       '/images/product/front_tshirt.png',
       '/images/product/back_tshirt.png',
       '/images/product/tshirt4.png',
@@ -15,6 +18,9 @@ export const productMedia: Record<string, Record<string, string[]>> = {
   },
   'hoodie-vf-definition': {
     Noir: [
+      '/images/photos/product/img-0732.webp',
+      '/images/photos/product/img-1009.webp',
+      '/images/photos/product/img-1026.webp',
       '/images/product/front_hoodie.png',
       '/images/product/back_hoodie.png',
       '/images/product/hoodie3.png',
@@ -29,10 +35,10 @@ export const productMedia: Record<string, Record<string, string[]>> = {
   },
   'casquette-vf': {
     Noir: [
+      '/images/product/cap3.png',
       '/images/product/front_cap.png',
       '/images/product/back_cap.png',
       '/images/product/side_cap.png',
-      '/images/product/cap3.png',
     ],
     Blanc: [
       '/images/product/front_cap_white.png',
@@ -43,6 +49,7 @@ export const productMedia: Record<string, Record<string, string[]>> = {
   },
   'shorts-performance-vf': {
     Noir: [
+      '/images/photos/product/img-1153.webp',
       '/images/product/front_shorts.png',
       '/images/product/shorts2.png',
       '/images/product/shorts3.png',
@@ -71,14 +78,14 @@ export const productMedia: Record<string, Record<string, string[]>> = {
   },
   'debardeur-vf': {
     Noir: [
+      '/images/product/debardeur3_black.png',
       '/images/product/front_debardeur_black.png',
       '/images/product/back_debardeur_black.png',
-      '/images/product/debardeur3_black.png',
     ],
     Blanc: [
+      '/images/product/debardeur3_white.png',
       '/images/product/front_debardeur_white.png',
       '/images/product/back_debardeur_white.png',
-      '/images/product/debardeur3_white.png',
     ],
   },
   'cache-cou-vf': {
@@ -90,16 +97,16 @@ export const productMedia: Record<string, Record<string, string[]>> = {
   },
   'bob-vf': {
     Blanc: [
+      '/images/product/side_bob.png',
       '/images/product/front_bob.png',
       '/images/product/back_bob.png',
-      '/images/product/side_bob.png',
       '/images/product/bob_detail.png',
     ],
   },
   'short-confort-vf': {
     Blanc: [
-      '/images/product/back_short_confort.png',
       '/images/product/short_confort_detail.png',
+      '/images/product/back_short_confort.png',
       '/images/product/side_short_confort.png',
       '/images/product/front_short_confort.png',
     ],
@@ -120,4 +127,8 @@ export function heroFor(slug: string, colour?: string): string {
   const [firstColour] = Object.keys(byColour)
   const images = (colour ? byColour[colour] : undefined) ?? byColour[firstColour] ?? []
   return images[0] ?? ''
+}
+
+export function isRealPhoto(src: string): boolean {
+  return src.startsWith('/images/photos/')
 }

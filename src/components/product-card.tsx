@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { colours, type Product } from '@/lib/catalogue'
-import { mediaFor } from '@/lib/product-media'
+import { isRealPhoto, mediaFor } from '@/lib/product-media'
 import { swatchClass } from '@/lib/swatch'
 import { formatPrice, productPaths, type Locale } from '@/lib/i18n'
 
@@ -23,7 +23,7 @@ export function ProductCard({ product, index, locale = 'fr' }: ProductCardProps)
           alt={product.name}
           fill
           sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
-          className="object-contain transition-opacity duration-500 group-hover:opacity-0"
+          className={`transition-opacity duration-500 group-hover:opacity-0 ${isRealPhoto(front) ? 'object-cover' : 'object-contain'}`}
         />
         {alt && (
           <Image
@@ -32,7 +32,7 @@ export function ProductCard({ product, index, locale = 'fr' }: ProductCardProps)
             fill
             aria-hidden
             sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
-            className="scale-[1.02] object-contain opacity-0 transition-all duration-500 group-hover:scale-100 group-hover:opacity-100"
+            className={`scale-[1.02] opacity-0 transition-all duration-500 group-hover:scale-100 group-hover:opacity-100 ${isRealPhoto(alt) ? 'object-cover' : 'object-contain'}`}
           />
         )}
       </div>

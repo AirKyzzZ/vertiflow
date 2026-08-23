@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useCart } from '@/components/cart-provider'
 import { cartTotal, priceLines, SHIPPING_DISCLOSURE, type ProductSummary } from '@/lib/cart-pricing'
 import { formatPrice, type Locale } from '@/lib/i18n'
+import { isRealPhoto } from '@/lib/product-media'
 
 type PanierClientProps = {
   products: ProductSummary[]
@@ -92,7 +93,13 @@ export function PanierClient({ products, locale = 'fr' }: PanierClientProps) {
             <li key={`${line.slug}-${line.color}-${line.size}`} className="flex gap-5 py-8 sm:gap-8">
               <div className="grain relative h-28 w-24 shrink-0 overflow-hidden bg-neutral-100 sm:h-32 sm:w-28">
                 {image && (
-                  <Image src={image} alt="" fill sizes="128px" className="object-contain p-3" />
+                  <Image
+                    src={image}
+                    alt=""
+                    fill
+                    sizes="128px"
+                    className={isRealPhoto(image) ? 'object-cover' : 'object-contain p-3'}
+                  />
                 )}
               </div>
 
