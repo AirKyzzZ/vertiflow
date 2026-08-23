@@ -78,14 +78,14 @@ export const productMedia: Record<string, Record<string, string[]>> = {
   },
   'debardeur-vf': {
     Noir: [
-      '/images/product/debardeur3_black.png',
       '/images/product/front_debardeur_black.png',
       '/images/product/back_debardeur_black.png',
+      '/images/product/debardeur3_black.png',
     ],
     Blanc: [
-      '/images/product/debardeur3_white.png',
       '/images/product/front_debardeur_white.png',
       '/images/product/back_debardeur_white.png',
+      '/images/product/debardeur3_white.png',
     ],
   },
   'cache-cou-vf': {
