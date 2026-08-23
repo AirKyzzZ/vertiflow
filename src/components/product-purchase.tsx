@@ -50,7 +50,7 @@ export function ProductPurchase({
         </span>
         <h1 className="display mt-3 text-[clamp(2rem,5vw,3.5rem)]">{name}</h1>
         <p className="display mt-6 text-2xl leading-tight">{lead}</p>
-        <p className="mt-4 max-w-md leading-relaxed text-neutral-700">{body}</p>
+        <p className="rule-marker relative mt-4 max-w-md pl-11 leading-relaxed text-neutral-700">{body}</p>
 
         <p className="mt-8 text-2xl">{formattedPrice}</p>
         <p className="eyebrow mt-2 text-neutral-500">{dict.fulfilmentNote}</p>

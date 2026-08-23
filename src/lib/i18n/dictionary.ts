@@ -52,6 +52,11 @@ export type Dictionary = {
     bandLine: string
   }
   product: {
+    craftEyebrow: string
+    craftTitle: string
+    craftStatement: string
+    craftBodyPrimary: string
+    craftBodySecondary: string
     crossSellEyebrow: string
     crossSellTitle: string
     crossSellLink: string
@@ -153,6 +158,13 @@ const fr: Dictionary = {
     bandLine: "Ce qu'on porte pour y retourner.",
   },
   product: {
+    craftEyebrow: 'Fabrication',
+    craftTitle: 'Fabriqué à la demande',
+    craftStatement: "Ta pièce n'existe pas encore quand tu commandes.",
+    craftBodyPrimary:
+      'Rien ne dort en entrepôt ici. Chaque pièce est brodée ou imprimée après ta commande, jamais avant.',
+    craftBodySecondary:
+      "Compte 5 à 10 jours ouvrés. C'est le prix d'un stock qui n'existe pas, pas un retard : personne n'a produit ta pièce en trop, et personne ne la jettera dans six mois.",
     crossSellEyebrow: 'Aussi dans la boutique',
     crossSellTitle: 'Pour compléter',
     crossSellLink: 'Toute la boutique →',
@@ -254,6 +266,13 @@ const en: Dictionary = {
     bandLine: 'What we wear to get back out there.',
   },
   product: {
+    craftEyebrow: "How it's made",
+    craftTitle: 'Made to order',
+    craftStatement: "Your piece doesn't exist yet when you order it.",
+    craftBodyPrimary:
+      'Nothing sits in a warehouse here. Every piece is embroidered or printed after your order, never before.',
+    craftBodySecondary:
+      "Allow 5 to 10 working days. That's the cost of a stock that doesn't exist, not a delay: nobody overproduced your piece, and nobody will throw it out in six months.",
     crossSellEyebrow: 'Also in the shop',
     crossSellTitle: 'To go with it',
     crossSellLink: 'The full shop →',

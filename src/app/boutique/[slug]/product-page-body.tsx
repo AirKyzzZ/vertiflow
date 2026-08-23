@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { ProductCard } from '@/components/product-card'
 import { ProductPurchase } from '@/components/product-purchase'
@@ -44,6 +45,31 @@ export function ProductPageBody({
           dict={dict.product}
         />
       </div>
+
+      <section className="mx-auto max-w-[88rem] px-5 py-16 lg:px-10 lg:py-24">
+        <p className="eyebrow text-accent">{dict.product.craftEyebrow}</p>
+        <h2 className="display mt-4 text-2xl sm:text-3xl">{dict.product.craftTitle}</h2>
+        <div className="mt-10 grid items-center gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
+          <div className="grain relative aspect-[3/2] overflow-hidden bg-neutral-100">
+            <Image
+              src="/images/factory.webp"
+              alt=""
+              fill
+              sizes="(min-width: 1024px) 40vw, 90vw"
+              className="object-cover"
+            />
+          </div>
+          <div>
+            <p className="display text-2xl leading-tight sm:text-3xl">{dict.product.craftStatement}</p>
+            <div className="mt-5 space-y-4 text-neutral-700">
+              <p className="rule-marker relative max-w-md pl-11 leading-relaxed">
+                {dict.product.craftBodyPrimary}
+              </p>
+              <p className="leading-relaxed">{dict.product.craftBodySecondary}</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section className="border-y border-ink/10 bg-neutral-100/60">
         <div className="mx-auto max-w-[88rem] px-5 py-16 lg:px-10 lg:py-24">
