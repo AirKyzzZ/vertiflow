@@ -25,7 +25,9 @@ function validateEnvironment(environment) {
   if (typeof environment.STRIPE_SHIPPING_RATE_ID !== 'string' || !environment.STRIPE_SHIPPING_RATE_ID.trim()) {
     throw new Error('Stripe shipping rate is required');
   }
-  const testAccessSha256 = testAccessDigest(environment.VERTIFLOW_TEST_ACCESS_TOKEN);
+  const testAccessSha256 = secretMode === 'test'
+    ? testAccessDigest(environment.VERTIFLOW_TEST_ACCESS_TOKEN)
+    : null;
   let siteUrl;
   try {
     siteUrl = new URL(environment.SITE_URL || environment.DEPLOY_PRIME_URL || environment.URL);

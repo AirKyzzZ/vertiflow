@@ -292,3 +292,38 @@ test('legacy PaymentIntent endpoint is permanently retired', async () => {
   assert.equal(response.statusCode, 410);
   assert.deepEqual(JSON.parse(response.body), { error: 'Checkout endpoint replaced' });
 });
+
+function liveCatalogueFixture() {
+  const catalogue = catalogueFixture();
+  catalogue.products[0].stripe_product_id = { test: 'prod_test_hoodie', live: 'prod_live_hoodie' };
+  catalogue.products[0].variants[0].stripe_price_id = {
+    test: 'price_test_hoodie_black_m',
+    live: 'price_live_hoodie_black_m',
+  };
+  return catalogue;
+}
+
+test('live mode does not require VERTIFLOW_TEST_ACCESS_TOKEN', async () => {
+  const stripe = { checkout: { sessions: { create: async () => ({ id: 'cs_live_1', client_secret: 'cs_live_secret' }) } } };
+  const environment = environmentFixture({
+    STRIPE_SECRET_KEY: 'sk_live_example',
+    STRIPE_PUBLISHABLE_KEY: 'pk_live_example',
+    VERTIFLOW_TEST_ACCESS_TOKEN: undefined,
+  });
+  delete environment.VERTIFLOW_TEST_ACCESS_TOKEN;
+  const event = eventFixture({ headers: {} });
+
+  const response = await createCheckoutHandler({ stripe, catalogue: liveCatalogueFixture(), environment })(event);
+
+  assert.equal(response.statusCode, 200);
+});
+
+test('test mode still refuses to configure without VERTIFLOW_TEST_ACCESS_TOKEN', async () => {
+  const stripe = { checkout: { sessions: { create: async () => ({ id: 'cs_test_1', client_secret: 'cs_test_secret' }) } } };
+  const environment = environmentFixture();
+  delete environment.VERTIFLOW_TEST_ACCESS_TOKEN;
+
+  const response = await createCheckoutHandler({ stripe, catalogue: catalogueFixture(), environment })(eventFixture());
+
+  assert.equal(response.statusCode, 500);
+});
