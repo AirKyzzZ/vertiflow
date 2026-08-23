@@ -517,12 +517,6 @@ test('fresh provenance fails closed for Stripe fact, quantity, count, digest, an
     ['line count mutation', baseline, { vf_line_count: '2' }, {}],
     ['digest mutation', baseline, { vf_checkout_sha256: 'A'.repeat(43) }, {}],
     ['version mutation', baseline, { vf_checkout_version: '2' }, {}],
-    ['missing provenance', baseline, {
-      vf_checkout_version: undefined,
-      vf_checkout_sha256: undefined,
-      vf_line_count: undefined,
-      vf_livemode: undefined,
-    }, {}],
   ];
 
   for (const [name, candidate, sessionMetadata, sessionOverrides] of scenarios) {
@@ -546,6 +540,53 @@ test('fresh provenance fails closed for Stripe fact, quantity, count, digest, an
       assert.equal(currentSession.metadata.fulfillment_status, 'permanent_failure');
     });
   }
+});
+
+test('a foreign live Checkout Session with no VertiFlow marker is ignored', async () => {
+  const errors = [];
+  const debugLines = [];
+  const { handler, calls } = createHarness({
+    eventSessionId: 'cs_live_foreign1',
+    sessionOverrides: { livemode: true, metadata: { other_business: 'french-tech-sender' } },
+    logger: {
+      error: (...arguments_) => errors.push(arguments_),
+      debug: (...arguments_) => debugLines.push(arguments_),
+    },
+  });
+  const response = await handler(webhookEvent());
+  assert.equal(response.statusCode, 200);
+  assert.equal(calls.drafts.length, 0);
+  assert.equal(calls.customerEmails.length, 0);
+  assert.equal(calls.ownerEmails.length, 0);
+  assert.equal(errors.length, 0);
+  assert.equal(debugLines.length, 1);
+});
+
+test('a foreign test Checkout Session with no VertiFlow marker is ignored', async () => {
+  const errors = [];
+  const { handler, calls } = createHarness({
+    sessionOverrides: { metadata: { other_business: 'face10ai' } },
+    logger: { error: (...arguments_) => errors.push(arguments_) },
+  });
+  const response = await handler(webhookEvent());
+  assert.equal(response.statusCode, 200);
+  assert.equal(calls.drafts.length, 0);
+  assert.equal(calls.customerEmails.length, 0);
+  assert.equal(calls.ownerEmails.length, 0);
+  assert.equal(errors.length, 0);
+});
+
+test('a VertiFlow session with broken provenance still alerts the owner', async () => {
+  const { handler, calls, currentSession } = createHarness({
+    sessionMetadata: { vf_checkout_sha256: 'A'.repeat(43) },
+  });
+  const response = await handler(webhookEvent());
+  assert.equal(response.statusCode, 200);
+  assert.equal(calls.drafts.length, 0);
+  assert.equal(calls.customerEmails.length, 0);
+  assert.equal(calls.ownerEmails.length, 1);
+  assert.equal(calls.ownerEmails[0].failure.code, 'catalogue_mismatch');
+  assert.equal(currentSession.metadata.fulfillment_status, 'permanent_failure');
 });
 
 test('duplicate Price IDs or Printful sync variants fail provenance before draft creation', async (t) => {

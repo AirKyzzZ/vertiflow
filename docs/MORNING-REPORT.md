@@ -148,6 +148,16 @@ The whole-branch review's sharpest finding was about my process, not the code: *
 
 **Operational reality for Monday:** Printful orders are created with `confirm=false`, so every paid order waits as an unconfirmed draft until you open the dashboard. And every alert — including "this order failed" — goes to one inbox through the same EmailJS provider that would be failing.
 
+## The Stripe account is shared with two other live businesses
+
+`acct_1Qw8utImMzY0wzqJ` (display name "vertiflow.fr") is not VertiFlow-only. Checked live with the Stripe CLI: the only LIVE products on it are "French Tech Sender - Accès Complet", "face10ai PREMIUM", and "face10ai PRO" — zero VertiFlow products. The only LIVE webhook endpoint is `https://french-tech-sender.vercel.app/api/webhooks/stripe`, subscribed to `checkout.session.completed`. The only TEST webhook endpoint is `https://face10ai.vercel.app/api/stripe/webhook`.
+
+Stripe doesn't route an event to "the right" endpoint, it fans every matching event out to every endpoint on the account subscribed to that event type. Checklist item 6 above has you creating a live webhook at `https://vertiflow.fr/api/stripe/webhook`. The moment it exists, it will also receive `checkout.session.completed` for every French Tech Sender and face10ai sale.
+
+**What I fixed.** Before tonight, an event for someone else's sale would fall through into VertiFlow's provenance check, come back as a `PermanentOrderError`, and fire the owner-alert email — an "order failed" email for every sale that isn't yours. `stripe-webhook.js` now checks first whether the Checkout Session carries VertiFlow's own `vf_checkout_version` metadata, stamped by `checkoutMetadata()` on every session VertiFlow creates, in both test and live mode, independent of the `vf_test_access` gate that goes away at launch. No marker means it isn't VertiFlow's: the webhook returns 200, creates nothing, emails nobody, and never reaches the code that raises an alert. A real VertiFlow session that fails provenance still alerts exactly as before, so this narrows what gets ignored instead of swallowing genuine failures.
+
+**What's still yours to decide.** The fix only protects VertiFlow's side. Once VertiFlow is live, Stripe will just as happily fan VertiFlow's own `checkout.session.completed` events out to French Tech Sender's webhook. Whatever that handler does with a session it doesn't recognize is up to that other codebase — this repo can't see it and can't change it. The clean, permanent answer is a separate Stripe account for VertiFlow, so there's nothing left to fan out across. That's an account-level decision, not a code change.
+
 ## Operational note for Monday
 
 Printful orders are created with `confirm=false` — every paid order sits as an unconfirmed draft until you open the dashboard. That was the deliberate choice, but it means a Monday-evening order waits until you next look. And every alert, including "this order failed", goes to one inbox through the same EmailJS provider that would be failing.

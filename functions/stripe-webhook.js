@@ -4,6 +4,7 @@ const catalogue = require('../data/products.json');
 const { reviewedUnitAmount } = require('./lib/catalogue');
 const {
   CHECKOUT_VERSION,
+  isVertiflowCheckoutSession,
   matchesCheckoutDigest,
 } = require('./lib/checkout-provenance');
 const { EmailJsClient } = require('./lib/emailjs');
@@ -445,6 +446,9 @@ function createWebhookHandler({
   const logError = typeof logger?.error === 'function'
     ? logger.error.bind(logger)
     : console.error.bind(console);
+  const logDebug = typeof logger?.debug === 'function'
+    ? logger.debug.bind(logger)
+    : console.debug.bind(console);
 
   return async (event) => {
     let stripeEvent;
@@ -481,6 +485,12 @@ function createWebhookHandler({
         throw new Error('Stripe returned an invalid Checkout Session');
       }
       if (context.session.payment_status !== 'paid') {
+        return jsonResponse(200, { received: true });
+      }
+      if (!isVertiflowCheckoutSession(context.session.metadata)) {
+        logDebug('Ignoring a paid Checkout Session with no VertiFlow checkout marker', {
+          sessionId: context.session.id,
+        });
         return jsonResponse(200, { received: true });
       }
       if (context.session.livemode !== false) {
