@@ -26,14 +26,14 @@ export function HomeBody({ dict, locale, products }: HomeBodyProps) {
     <main lang={locale === 'en' ? 'en' : undefined}>
       <section className="grain relative isolate flex min-h-[86vh] items-end overflow-hidden bg-ink text-paper">
         <Image
-          src="/images/slideshow/banner.webp"
+          src="/images/site/home-door.webp"
           alt=""
           fill
           priority
           sizes="100vw"
-          className="-z-10 object-cover opacity-40"
+          className="-z-10 object-cover"
         />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-ink via-ink/70 to-ink/20" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-ink via-ink/75 to-ink/10" />
 
         <div className="mx-auto w-full max-w-[88rem] px-5 pb-16 lg:px-10 lg:pb-24">
           <p className="eyebrow text-accent">{hero.eyebrow}</p>
