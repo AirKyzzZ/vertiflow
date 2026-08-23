@@ -3,8 +3,9 @@
 import { useRef, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { formatPrice } from '@/lib/i18n'
 import { loadStripe } from '@stripe/stripe-js'
-import type { StripeCheckoutLoadActionsSuccess } from '@stripe/stripe-js'
+import type { StripeCheckoutLoadActionsSuccess, StripeCheckoutSession } from '@stripe/stripe-js'
 import { useCart } from '@/components/cart-provider'
 
 export type CheckoutStep = 'idle' | 'creating' | 'ready' | 'confirming'
@@ -113,6 +114,18 @@ function Field({ label, name, value, onChange, type = 'text', required, autoComp
   )
 }
 
+type CheckoutTotals = {
+  total: number
+  shipping: number
+}
+
+function sessionTotals(session: StripeCheckoutSession): CheckoutTotals {
+  return {
+    total: session.total.total.minorUnitsAmount / 100,
+    shipping: session.total.shippingRate.minorUnitsAmount / 100,
+  }
+}
+
 type CheckoutFormProps = {
   promoCode: string
   step: CheckoutStep
@@ -125,6 +138,7 @@ export function CheckoutForm({ promoCode, step, onStepChange }: CheckoutFormProp
   const [form, setForm] = useState<ShippingForm>(EMPTY_FORM)
   const [error, setError] = useState<string | null>(null)
   const [canConfirm, setCanConfirm] = useState(false)
+  const [totals, setTotals] = useState<CheckoutTotals | null>(null)
   const actionsRef = useRef<StripeCheckoutLoadActionsSuccess | null>(null)
 
   const needsState = STATE_REQUIRED_COUNTRIES.has(form.country)
@@ -178,7 +192,10 @@ export function CheckoutForm({ promoCode, step, onStepChange }: CheckoutFormProp
       if (!stripe) throw new Error('stripe-unavailable')
 
       const checkout = stripe.initCheckoutElementsSdk({ clientSecret: payload.clientSecret })
-      checkout.on('change', (session) => setCanConfirm(session.canConfirm))
+      checkout.on('change', (session) => {
+        setCanConfirm(session.canConfirm)
+        setTotals(sessionTotals(session))
+      })
 
       const paymentElement = checkout.createPaymentElement()
       paymentElement.mount('#payment-element')
@@ -287,6 +304,18 @@ export function CheckoutForm({ promoCode, step, onStepChange }: CheckoutFormProp
             <div id="payment-element" className="min-h-[16rem]" />
             {step !== 'creating' && (
               <>
+                {totals && (
+                  <div className="mt-6 space-y-2 border-t border-ink/10 pt-4 text-sm">
+                    <div className="flex items-center justify-between text-neutral-500">
+                      <span>Livraison</span>
+                      <span>{formatPrice(totals.shipping, 'fr')}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="eyebrow">Total</span>
+                      <span className="eyebrow text-base">{formatPrice(totals.total, 'fr')}</span>
+                    </div>
+                  </div>
+                )}
                 <button
                   type="button"
                   onClick={confirmPayment}
