@@ -111,7 +111,7 @@ const fr: Dictionary = {
       headingAfter: 'pas à',
       headingEmphasis: 'contourner',
       intro:
-        "Huit ans de compétition. Des vêtements qui tiennent le coup, et tout ce qu'il faut pour commencer.",
+        "Des vêtements qui tiennent le choc, et tout ce qu'il faut pour commencer.",
       ctaStart: "Venir s'entraîner",
       ctaShop: 'La boutique',
     },
@@ -134,7 +134,7 @@ const fr: Dictionary = {
       number: '03',
       title: "D'où ça vient",
       bodyPrimary:
-        "VertiFlow n'est pas une marque de streetwear qui a choisi le parkour comme décor. Elle est née d'un athlète FFG de niveau national qui savait exactement ce qui lâche pendant une séance.",
+        "VertiFlow n'est pas une marque de streetwear qui a choisi le parkour comme décor. Elle existe parce qu'un vêtement de sport classique ne survit pas à une vraie séance — fondée par un athlète FFG de niveau national qui savait exactement ce qui lâche.",
       bodySecondary:
         "Une blessure a tout mis en pause. Revenir a été plus dur que commencer, et c'est une des raisons pour lesquelles la porte reste ouverte ici.",
       link: "L'histoire complète →",
@@ -179,7 +179,7 @@ const fr: Dictionary = {
     sizeGuideLink: 'Guide des tailles →',
   },
   footer: {
-    tagline: "Huit ans de mouvement. Des vêtements faits pour ça. Bassin d'Arcachon.",
+    tagline: "La porte d'entrée vers le parkour, à porter. Bassin d'Arcachon.",
     shopTitle: 'Boutique',
     shopEssentials: "L'essentiel",
     shopSizeGuide: 'Guide des tailles',
@@ -219,7 +219,7 @@ const en: Dictionary = {
       headingAfter: 'Not to',
       headingEmphasis: 'go around',
       intro:
-        'Eight years of competition. Clothes that hold up, and everything you need to get started.',
+        'Clothes built to take a hit, and everything you need to get started.',
       ctaStart: 'Come train',
       ctaShop: 'Shop',
     },
@@ -242,7 +242,7 @@ const en: Dictionary = {
       number: '03',
       title: 'Where this comes from',
       bodyPrimary:
-        "VertiFlow isn't a streetwear label that picked parkour as a backdrop. It was started by a national-level FFG athlete who knew exactly what fails mid-session.",
+        "VertiFlow isn't a streetwear label that picked parkour as a backdrop. It exists because ordinary sportswear doesn't survive a real session — founded by a national-level FFG athlete who knew exactly what fails mid-session.",
       bodySecondary:
         "An injury put all of it on hold. The comeback was harder than starting ever was, and that's part of why the door stays open here.",
       link: 'The full story →',
@@ -287,7 +287,7 @@ const en: Dictionary = {
     sizeGuideLink: 'Size guide →',
   },
   footer: {
-    tagline: "Eight years of movement. Clothes built to move in. Bassin d'Arcachon, France.",
+    tagline: "The door into parkour, worn. Bassin d'Arcachon, France.",
     shopTitle: 'Shop',
     shopEssentials: 'The essentials',
     shopSizeGuide: 'Size guide',

@@ -5,11 +5,11 @@ import Link from 'next/link'
 export const metadata: Metadata = {
   title: 'À propos',
   description:
-    "Huit ans de compétition, une blessure, et ce que ça a changé à la façon de faire des vêtements. Pourquoi VertiFlow existe, et ce qu'elle refuse d'être.",
+    "Pourquoi VertiFlow existe, et ce qu'elle refuse d'être : huit ans de compétition, une blessure, et ce que ça a changé à la façon de faire des vêtements.",
   openGraph: {
     title: 'À propos',
     description:
-      "Huit ans de compétition, une blessure, et ce que ça a changé à la façon de faire des vêtements.",
+      "Pourquoi VertiFlow existe, et ce qu'elle refuse d'être : huit ans de compétition, une blessure, et ce que ça a changé.",
     images: [{ url: '/images/site/divider-seawall.webp', width: 2048, height: 1536 }],
   },
   alternates: { canonical: '/a-propos' },
@@ -96,9 +96,10 @@ export function APropos() {
             </p>
             <div className="space-y-5 text-neutral-700">
               <p className="leading-relaxed">
-                Huit ans de compétition sont venus avant la première pièce vendue. Si
-                cette histoire disparaissait, il ne resterait qu&apos;un compte de
-                streetwear générique parmi cent autres — et la marque se l&apos;interdit.
+                La première pièce vendue est arrivée après huit ans de compétition, pas
+                avant. Si cette histoire disparaissait, il ne resterait qu&apos;un compte
+                de streetwear générique parmi cent autres — et la marque se
+                l&apos;interdit.
               </p>
               <p className="leading-relaxed">
                 Elle s&apos;interdit aussi l&apos;intimidation. Des lignes parfaites, des
@@ -130,21 +131,18 @@ export function APropos() {
             <p className="leading-relaxed">
               Maxime pratique la compétition de parkour depuis huit ans, niveau
               national, sous la FFG — la Fédération Française de Gymnastique, qui
-              encadre le parkour en France. Ce n&apos;est pas une ligne de marketing.
-              C&apos;est un parcours réel.
+              encadre le parkour en France. Un parcours réel, pas une ligne de
+              marketing : huit ans à s&apos;entraîner, ça apprend surtout ce qui lâche —
+              un tissu qui se déchire sur une réception, une coupe qui remonte pendant un
+              saut de bras, une couture qui accroche au moment de passer un mur.
             </p>
             <p className="leading-relaxed">
-              Huit ans à s&apos;entraîner, ça apprend surtout ce qui lâche : un tissu qui
-              se déchire sur une réception, une coupe qui remonte pendant un saut de bras,
-              une couture qui accroche au moment de passer un mur. En novembre 2024, il a
-              commencé à corriger ça, pièce par pièce. VertiFlow est basée à Bordeaux, née
-              de cette liste de détails, pas d&apos;une envie de vendre des t-shirts.
-            </p>
-            <p className="leading-relaxed">
-              Puis une blessure a tout mis en pause. Revenir a pris plus de temps, et a
-              été plus dur, que les huit années de compétition qui précédaient — de son
-              propre aveu. C&apos;est aussi pour ça que la porte reste ouverte : celui
-              qui a dû tout reconstruire ne juge pas une première séance ratée.
+              En novembre 2024, il a commencé à corriger ça, pièce par pièce : VertiFlow,
+              basée à Bordeaux. Puis une blessure a tout mis en pause. Revenir a pris plus
+              de temps, et a été plus dur, que les huit années de compétition qui
+              précédaient — de son propre aveu. C&apos;est aussi pour ça que la porte
+              reste ouverte ici : celui qui a dû tout reconstruire ne juge pas une
+              première séance ratée.
             </p>
           </div>
         </div>
@@ -162,17 +160,18 @@ export function APropos() {
         <div className="absolute inset-x-5 bottom-10 lg:inset-x-10 lg:bottom-16">
           <p className="eyebrow text-accent">Bordeaux</p>
           <p className="display mt-4 max-w-lg text-3xl text-paper sm:text-4xl lg:text-5xl">
-            Huit ans plus tard, il s&apos;entraîne encore dehors.
+            Le terrain, pas le studio.
           </p>
         </div>
       </section>
 
       <section className="border-y border-ink/10 bg-neutral-100/60">
         <div className="mx-auto max-w-[88rem] px-5 py-20 lg:px-10 lg:py-28">
-          <ChapterHeading n="Chapitre 4" title="Ce qu'il porte" />
+          <ChapterHeading n="Chapitre 4" title="Ce qu'on porte" />
           <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
             <p className="display text-2xl leading-tight sm:text-3xl">
-              Ce qu&apos;il porte à l&apos;entraînement, c&apos;est ce qu&apos;il vend.
+              Ce qu&apos;on porte à l&apos;entraînement, c&apos;est ce que VertiFlow
+              vend.
             </p>
             <div className="space-y-5 text-neutral-700">
               <p className="leading-relaxed">
@@ -182,10 +181,11 @@ export function APropos() {
                 que la mode a changé d&apos;avis.
               </p>
               <p className="leading-relaxed">
-                À côté de la marque, il a aussi fondé un club : PKBA, une association loi
-                1901 distincte, budgets séparés, aujourd&apos;hui plus de 80 licenciés.
-                Pas la raison d&apos;être de VertiFlow — la preuve qu&apos;il construit
-                des choses qui tiennent debout.
+                À côté de la marque, un club existe aussi : PKBA, fondé par la même
+                personne, une association loi 1901 distincte, budgets séparés,
+                aujourd&apos;hui plus de 80 licenciés. Pas la raison d&apos;être de
+                VertiFlow — une preuve de plus que tout ça vient d&apos;une vraie
+                pratique, pas d&apos;un moodboard.
               </p>
               <a
                 href={PKBA_URL}

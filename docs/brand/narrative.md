@@ -4,12 +4,13 @@ Not a mission statement. This is the spine: who this is for, what it refuses to 
 story as it can honestly be told, the tension it resolves, and the words it uses. Every
 piece of copy — Instagram, site, journal — should trace back to this without restating it.
 
-**The line: eight years of moving, made wearable.** VertiFlow is a clothing brand with a
-real maker behind it. The story is his own practice — eight years of competing taught him
-exactly what fails when you actually train in clothes, and that knowledge is the product.
-PKBA is real and it matters, but it is evidence that Maxime builds things that last, not
-the reason VertiFlow exists. See "Where PKBA appears, and how much" below for exactly how
-that plays out page by page.
+**The line: the door into parkour, made wearable.** VertiFlow is a clothing brand for
+people who haven't started yet — clothes built from what actually fails in a real session,
+not from a lookbook. Two things back that up: a founder who competed eight years at
+national level and knows exactly what tears, and PKBA, the club he later built on the
+Bassin. Both are real, both matter, and neither is the reason VertiFlow exists — the door
+is. See "Where PKBA and the founder appear, and how much" below for exactly how that plays
+out page by page.
 
 ## Who this is for
 
@@ -27,9 +28,9 @@ question, and the honest answer is yes, starting exactly where they are.
 ## What it refuses to be
 
 - **A streetwear label that picked parkour as a backdrop.** The clothes exist because
-  eight years of actually training came first — not because a club exists. If the founder's
-  practice disappeared from the story, VertiFlow would be indistinguishable from a hundred
-  generic drop-shipped athleisure accounts. It is not allowed to become that.
+  real training came first — not a lookbook, not a club. If that training disappeared from
+  the story, VertiFlow would be indistinguishable from a hundred generic drop-shipped
+  athleisure accounts. It is not allowed to become that.
 - **An intimidation reel.** Flawless lines, elite bodies, nothing but the make — that is
   what every other parkour account already posts, and it is precisely what keeps beginners
   out. VertiFlow's craft is allowed to look expensive; its subjects are not allowed to look
@@ -73,15 +74,15 @@ training in whatever he owned taught him what fails, long before it taught him a
 about running a brand: a fabric that tears on a landing, a cut that rides up mid-vault, a
 seam that catches on a rail.
 
-In November 2024 he started VertiFlow to fix that, piece by piece. It's a clothing brand
-first — the founder's own training is where the product decisions come from, not a story
-bolted on afterward.
+In November 2024, VertiFlow started — built to fix that, piece by piece. It's a clothing
+brand first: product decisions come from real training, not a story bolted on afterward.
 
 Separately, in July 2025, he also founded PKBA — Parkour Bassin d'Arcachon — as a loi 1901
 association, where he now serves as treasurer. It now has 80+ licenciés, and France 3
-Nouvelle-Aquitaine has featured the club. PKBA is evidence that Maxime builds things that
-last. It is not the reason VertiFlow exists, and copy should not treat it as one — see
-"Where PKBA appears, and how much" below for exactly how much room it gets.
+Nouvelle-Aquitaine has featured the club. PKBA and the eight years of competing are the
+same kind of evidence — proof this comes from real practice, not a moodboard — and neither
+is the reason VertiFlow exists. The door is. See "Where PKBA and the founder appear, and
+how much" below for exactly how much room each gets.
 
 Then an injury paused all of it. The comeback took longer and was harder than starting had
 ever been — harder than the eight years of competing, by Maxime's own account. That's not
@@ -142,29 +143,33 @@ until Maxime confirms them.
 - *VertiFlow x PKBA*, or any other co-branded lockup phrasing. This is covered in full
   below, but it belongs on this list too: it is a vocabulary error before it is a legal one.
 
-## Where PKBA appears, and how much
+## Where PKBA and the founder appear, and how much
 
-VertiFlow is the brand. The product is the hero. PKBA is real, it's Maxime's, and it is not
-why VertiFlow exists — the eight years of training are. Reaching for PKBA's numbers (80+
-licenciés, a France 3 feature, a real venue) is tempting, because they're the most provable
-credibility available. Leaning on them anyway turns VertiFlow's copy into a recruitment
-page for a club it isn't. Keep to this, page by page:
+VertiFlow is the brand. The product is the hero. Neither PKBA nor Maxime's own competitive
+history is why VertiFlow exists — the door is: people who watch parkour and conclude it
+isn't for them. Both PKBA's numbers (80+ licenciés, a France 3 feature) and Maxime's own
+credentials (eight years FFG, national level) are tempting to reach for, because they're
+the most provable credibility available. Leaning on either turns VertiFlow's copy into
+someone else's story. Keep to this, page by page:
 
-- **`/a-propos`** — one mention, placed late in the page, framed explicitly as evidence
-  Maxime builds real things — not as the reason VertiFlow exists. The founder's competitive
-  practice is the spine of this page. The club is a footnote to it, not a chapter of it.
+- **`/a-propos`** — the one page where a fuller version of both legitimately lives, and
+  even here neither gets to be the spine. Lead with the brand and what it's for. The founder
+  gets one contained passage, framed as origin, not as the reason to buy. PKBA gets one
+  paragraph alongside it, in the same weight, framed as evidence Maxime builds real things —
+  not as the reason VertiFlow exists.
 - **`/commencer`** — PKBA is legitimately central here. Questions 3 (`Where?`) and 4
   (`When?`) have no honest answer that doesn't name the club. Keep it — but the page's voice
-  stays VertiFlow helping a beginner start, not a PKBA recruitment page. Don't let
-  credentials (licenciés count, press coverage) creep into Question 1 (`What is this?`);
-  save them for the questions they actually answer.
-- **Home page, `/boutique`, product pages, `/journal`** — absent or incidental. The
-  homepage's origin timeline lists VertiFlow's own milestones, not PKBA's. A journal post
-  *about* PKBA (a clearly labelled announcement) is fine on its own terms; PKBA showing up
-  inside unrelated product or shop copy is not.
+  stays VertiFlow helping a beginner start, not a PKBA recruitment page, and not a founder
+  bio. Don't let credentials (licenciés count, press coverage, competition history) creep
+  into Question 1 (`What is this?`); save them for the questions they actually answer.
+- **Home page, `/boutique`, product pages, `/journal`** — both absent or incidental. The
+  homepage's origin timeline lists VertiFlow's own milestones, not a biography. A journal
+  post *about* PKBA (a clearly labelled announcement) is fine on its own terms; PKBA or
+  Maxime's own history showing up inside unrelated product or shop copy is not.
 
-If a page reaches for PKBA's credibility to make its point, that's a sign the point is
-about PKBA, not VertiFlow — write it on `/commencer`, or leave it for PKBA's own site.
+If a page reaches for PKBA's credibility, or leans on Maxime's own story, to make its point,
+that's a sign the point is about them, not VertiFlow — write it on `/commencer` or
+`/a-propos`, or leave it for PKBA's own site.
 
 ## The entity boundary — a hard rule, not a style note
 
