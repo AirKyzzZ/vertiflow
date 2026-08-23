@@ -53,3 +53,10 @@ test('every legacy .html file still in public/ has a permanent redirect', () => 
     assert.ok(sources.has(`/${page}`), `public/${page} has no redirect and would serve the old design`);
   }
 });
+
+test('no file in public/ shadows its own redirect on the CDN', () => {
+  const publicDir = path.resolve(__dirname, '../public');
+  const sources = new Set(redirectMap().map((rule) => rule.source));
+  const shadowing = fs.readdirSync(publicDir).filter((name) => sources.has(`/${name}`));
+  assert.deepEqual(shadowing, [], `public/ files served before Next.js routing shadow their own redirect: ${shadowing.join(', ')}`);
+});

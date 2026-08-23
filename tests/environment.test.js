@@ -180,9 +180,7 @@ test('browser checkout has no authority over provider keys, amounts, fulfillment
     .map((file) => readProjectFile(file))
     .filter((source) => /^\s*['"]use client['"]/m.test(source));
   const browser = [
-    readProjectFile('public/checkout.html'),
     readProjectFile('public/js/custom.js'),
-    readProjectFile('public/success.html'),
     ...clientComponents,
   ].join('\n');
   assert.doesNotMatch(browser, /(?:sk|rk|pk)_(?:live|test)_[A-Za-z0-9]+|whsec_[A-Za-z0-9]+/);
