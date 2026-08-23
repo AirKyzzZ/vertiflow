@@ -122,6 +122,24 @@ Also: production is missing five env vars that exist in `deploy-preview`. That s
 
 ---
 
+---
+
+## Launch checklist — the store cannot take a euro until these are done
+
+The whole-branch review's sharpest finding was about my process, not the code: **the branch reads as launch-ready and is not.** I escalated these correctly and then stopped tracking them. Collected here so that cannot happen again.
+
+**Blocking, in order:**
+
+1. **Tell me the Stripe key mode.** `! netlify env:get STRIPE_SECRET_KEY --context production | head -c 8`
+2. **Scope five variables to production.** They exist in `deploy-preview` but not `production`, which is the entire reason `vertiflow.fr` checkout returns 500 today: `STRIPE_PUBLISHABLE_KEY`, `STRIPE_SHIPPING_RATE_ID`, `STRIPE_WEBHOOK_SECRET`, `EMAILJS_PRIVATE_KEY`, `EMAILJS_CUSTOMER_TEMPLATE_ID`.
+3. **Mode-keyed prices.** `data/products.json` still holds flat test-mode `stripe_price_id` strings. Live Stripe rejects every line item until these become `{test, live}` and 107 live Prices exist.
+4. **Lift five mode guards together.** `create-checkout-session.js:25`, `get-checkout-session.js:10`, `stripe-webhook.js:643`, `stripe-webhook.js:486`, `scripts/sync-stripe-prices.js:17`. `tests/mode-guard-consistency.test.js` now FAILS if they are lifted out of step — I verified it fires by breaking one deliberately. That test is the safety net; do not delete it to make the build pass.
+5. **Remove the access gate.** `create-checkout-session.js:55` returns 403 without an `x-vertiflow-test-access` header that nothing in the codebase sends. Every public request is refused today.
+6. **Create a live shipping rate and a live webhook endpoint.** A test-mode `shr_` does not resolve against live keys. The webhook endpoint is `https://vertiflow.fr/api/stripe/webhook`, events `checkout.session.completed` and `checkout.session.async_payment_succeeded`.
+7. **Rehearse on a preview URL, then buy something with a real card and refund it.** Seven things can only be verified against live Stripe: the success path, a declined card re-enabling the Pay button, the Modifier→resubmit path, whether `shipping_options` without `shipping_address_collection` is accepted for `ui_mode:'elements'`, a US/CA/AU checkout, promo application, and whether `payment_status` is reliably `paid` when the success page reads it.
+
+**Operational reality for Monday:** Printful orders are created with `confirm=false`, so every paid order waits as an unconfirmed draft until you open the dashboard. And every alert — including "this order failed" — goes to one inbox through the same EmailJS provider that would be failing.
+
 ## Operational note for Monday
 
 Printful orders are created with `confirm=false` — every paid order sits as an unconfirmed draft until you open the dashboard. That was the deliberate choice, but it means a Monday-evening order waits until you next look. And every alert, including "this order failed", goes to one inbox through the same EmailJS provider that would be failing.
