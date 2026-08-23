@@ -186,6 +186,7 @@ export function CheckoutForm({ promoCode, step, onStepChange }: CheckoutFormProp
         body: JSON.stringify({ items: lines, customer, promoCode }),
       })
       const payload = await response.json()
+      if (response.status === 400) throw new Error('invalid-customer-details')
       if (!response.ok) throw new Error('request-failed')
 
       const stripe = await loadStripe(payload.publishableKey, { locale: 'fr' })
@@ -205,8 +206,12 @@ export function CheckoutForm({ promoCode, step, onStepChange }: CheckoutFormProp
       actionsRef.current = loadResult.actions
 
       onStepChange('ready')
-    } catch {
-      setError("Le paiement n'est pas disponible pour le moment. Réessaie dans un instant.")
+    } catch (error) {
+      setError(
+        error instanceof Error && error.message === 'invalid-customer-details'
+          ? 'Vérifie tes coordonnées.'
+          : "Le paiement n'est pas disponible pour le moment. Réessaie dans un instant.",
+      )
       onStepChange('idle')
     }
   }
