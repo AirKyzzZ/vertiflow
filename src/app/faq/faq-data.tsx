@@ -92,8 +92,8 @@ export const faqGroups: FaqGroup[] = [
         question: "D'où vient VertiFlow ?",
         answer: (
           <>
-            Du parkour, pas l&apos;inverse : huit ans de compétition, et tout ce que ça
-            apprend sur un vêtement. L&apos;histoire complète est sur{' '}
+            Du parkour, pas l&apos;inverse. Les pièces sont dessinées à partir de ce que
+            le mouvement exige d&apos;un vêtement. L&apos;histoire complète est sur{' '}
             <Link href="/">la page d&apos;accueil</Link>.
           </>
         ),
