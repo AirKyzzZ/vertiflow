@@ -5,6 +5,61 @@ const OWNER_PREPARED_SUBJECT = 'Commande VertiFlow à confirmer';
 const OWNER_FAILURE_SUBJECT = 'Commande VertiFlow en échec';
 const REQUEST_TIMEOUT_MS = 15_000;
 const MINIMUM_SEND_INTERVAL_MS = 1_100;
+const SITE_URL = 'https://vertiflow.fr';
+const GENERIC_THUMBNAIL_URL = `${SITE_URL}/images/logo-transparent.png`;
+const LARGE_ORDER_AMOUNT_CENTS = 20_000;
+const LARGE_ORDER_QUANTITY = 6;
+
+const catalogue = require('../../data/products.json');
+const { reviewedUnitAmount } = require('./catalogue');
+
+const PRODUCT_THUMBNAIL_PATHS = {
+  'T-shirt CLIMB': {
+    Noir: '/images/product/front_tshirt.png',
+    Blanc: '/images/product/front_tshirt_white.png',
+  },
+  'Hoodie VF Definition': {
+    Noir: '/images/product/front_hoodie.png',
+    Blanc: '/images/product/front_hoodie_white.png',
+  },
+  'Casquette VF': {
+    Noir: '/images/product/front_cap.png',
+    Blanc: '/images/product/front_cap_white.png',
+  },
+  'Shorts Performance VF': {
+    Noir: '/images/product/front_shorts.png',
+    Blanc: '/images/product/front_shorts_white.png',
+  },
+  'Coque iPhone VF': {
+    Noir: '/images/product/front_case.png',
+    Blanc: '/images/product/front_case_white.png',
+  },
+  'Débardeur VF': {
+    Noir: '/images/product/front_debardeur_black.png',
+    Blanc: '/images/product/front_debardeur_white.png',
+  },
+  'Cache-cou VF': { Noir: '/images/product/cachecou3.png' },
+  'Bob VF': { Blanc: '/images/product/front_bob.png' },
+  'Short Confort VF': { Blanc: '/images/product/front_short_confort.png' },
+};
+
+function catalogueUnitAmountsByName() {
+  const amounts = new Map();
+  const products = Array.isArray(catalogue?.products) ? catalogue.products : [];
+  for (const product of products) {
+    if (!product || typeof product.name !== 'string' || typeof product.price !== 'string') continue;
+    let amount;
+    try {
+      amount = reviewedUnitAmount(product.price);
+    } catch {
+      continue;
+    }
+    amounts.set(product.name.trim(), amount);
+  }
+  return amounts;
+}
+
+const CATALOGUE_UNIT_AMOUNTS_BY_NAME = catalogueUnitAmountsByName();
 
 class EmailJsError extends Error {
   constructor(message, { retryable = true, status } = {}) {
@@ -102,7 +157,7 @@ function normalizeRecipient(recipient, failure) {
   };
 }
 
-function normalizeCustomerOrder(order) {
+function normalizePersonalInfo(order) {
   if (!order || typeof order !== 'object' || Array.isArray(order)) throw invalidOrder();
   return {
     firstName: requiredString(order.firstName, 100),
@@ -111,54 +166,58 @@ function normalizeCustomerOrder(order) {
   };
 }
 
+function normalizeAmount(order) {
+  if (!Number.isInteger(order.amountTotal) || order.amountTotal < 0) throw invalidOrder();
+  const currency = requiredString(order.currency, 3).toUpperCase();
+  if (!/^[A-Z]{3}$/.test(currency)) throw invalidOrder();
+  return { amountTotal: order.amountTotal, currency };
+}
+
+function normalizeExternalId(value) {
+  const printfulExternalId = requiredString(value, 32);
+  if (!/^[A-Za-z0-9_-]{1,32}$/.test(printfulExternalId)) throw invalidOrder();
+  return printfulExternalId;
+}
+
+function normalizeCustomerOrder(order) {
+  const personal = normalizePersonalInfo(order);
+  const lines = Array.isArray(order.lines) ? order.lines.map(normalizeLine) : null;
+  if (!lines || lines.length === 0 || lines.length > 100) throw invalidOrder();
+  return {
+    ...personal,
+    printfulExternalId: normalizeExternalId(order.printfulExternalId),
+    recipient: normalizeRecipient(order.recipient, null),
+    lines,
+    ...normalizeAmount(order),
+  };
+}
+
 function normalizeOwnerOrder(order) {
-  const customer = normalizeCustomerOrder(order);
+  const personal = normalizePersonalInfo(order);
   const failure = normalizeFailure(order.failure);
   const lines = Array.isArray(order.lines) ? order.lines.map(normalizeLine) : null;
   if (!lines || (lines.length === 0 && !failure) || lines.length > 100) throw invalidOrder();
   const stripeSessionId = requiredString(order.stripeSessionId, 255);
   const paymentIntentId = requiredString(order.paymentIntentId, 255);
-  const printfulExternalId = requiredString(order.printfulExternalId, 32);
+  const printfulExternalId = normalizeExternalId(order.printfulExternalId);
   if (!/^cs_[A-Za-z0-9_]+$/.test(stripeSessionId) || !/^pi_[A-Za-z0-9_]+$/.test(paymentIntentId)) {
     throw invalidOrder();
   }
-  if (!/^[A-Za-z0-9_-]{1,32}$/.test(printfulExternalId)) throw invalidOrder();
   const printfulOrderId = order.printfulOrderId == null ? null : Number(order.printfulOrderId);
   if (printfulOrderId != null && (!Number.isInteger(printfulOrderId) || printfulOrderId <= 0)) {
     throw invalidOrder();
   }
-  if (!Number.isInteger(order.amountTotal) || order.amountTotal < 0) throw invalidOrder();
-  const currency = requiredString(order.currency, 3).toUpperCase();
-  if (!/^[A-Z]{3}$/.test(currency)) throw invalidOrder();
   return {
-    ...customer,
+    ...personal,
     stripeSessionId,
     paymentIntentId,
-    amountTotal: order.amountTotal,
-    currency,
     printfulOrderId,
     printfulExternalId,
     recipient: normalizeRecipient(order.recipient, failure),
     lines,
     failure,
+    ...normalizeAmount(order),
   };
-}
-
-function customerMessage({ firstName, lastName }) {
-  return [
-    `Bonjour ${firstName} ${lastName},`,
-    '',
-    'VertiFlow confirme la bonne réception de votre commande. Tout est en ordre : la préparation est en cours et la livraison est estimée à environ 7-10 jours ouvrés.',
-    '',
-    'Pour toute question ou modification, il suffit de répondre à ce message.',
-    '',
-    'Cordialement,',
-    '',
-    'Maxime Mansiet',
-    'Fondateur — VertiFlow',
-    OWNER_EMAIL,
-    '07 83 97 23 60',
-  ].join('\n');
 }
 
 function ownerMessage({
@@ -229,6 +288,77 @@ function formatLegacyCartItems(lines) {
     `<tr><td>${escapeHtml(line.name)} — ${escapeHtml(line.color)} — ${escapeHtml(line.size)}</td>`
     + `<td>${escapeHtml(String(line.quantity))}</td><td>Prix unitaire non disponible</td></tr>`
   )).join('');
+}
+
+function formatEuroAmount(amountInCents) {
+  return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(amountInCents / 100);
+}
+
+function productThumbnailUrl(name, color) {
+  const colorPaths = PRODUCT_THUMBNAIL_PATHS[name];
+  if (!colorPaths) return GENERIC_THUMBNAIL_URL;
+  const path = colorPaths[color] ?? colorPaths[Object.keys(colorPaths)[0]];
+  return `${SITE_URL}${path}`;
+}
+
+function customerLineRow(line) {
+  const unitAmount = CATALOGUE_UNIT_AMOUNTS_BY_NAME.get(line.name);
+  const lineTotal = unitAmount == null ? '' : formatEuroAmount(unitAmount * line.quantity);
+  const thumbnailUrl = productThumbnailUrl(line.name, line.color);
+  const alt = escapeHtml(`${line.name} — ${line.color}`);
+  return '<tr>'
+    + `<td style="padding:14px 0;border-bottom:1px solid #e4e2de;width:72px;" valign="top">`
+    + `<img src="${thumbnailUrl}" width="64" height="64" alt="${alt}" `
+    + `style="display:block;width:64px;height:64px;border-radius:6px;object-fit:cover;background-color:#f7f4ef;" />`
+    + '</td>'
+    + '<td style="padding:14px 12px;border-bottom:1px solid #e4e2de;'
+    + 'font-family:Arial,Helvetica,sans-serif;color:#0b0b0c;font-size:14px;line-height:1.5;" valign="top">'
+    + `${escapeHtml(line.name)}<br />`
+    + `<span style="color:#6e6e76;">${escapeHtml(line.color)} &middot; ${escapeHtml(line.size)} &middot; Qté ${line.quantity}</span>`
+    + '</td>'
+    + '<td style="padding:14px 0;border-bottom:1px solid #e4e2de;font-family:Arial,Helvetica,sans-serif;'
+    + 'color:#0b0b0c;font-size:14px;text-align:right;white-space:nowrap;" valign="top">'
+    + `${lineTotal}`
+    + '</td>'
+    + '</tr>';
+}
+
+function customerLinesHtml(lines) {
+  return lines.map(customerLineRow).join('');
+}
+
+function unusualOrderFlags(normalized) {
+  const flags = [];
+  if (normalized.recipient && normalized.recipient.country_code !== 'FR') {
+    flags.push(`Adresse hors France : livraison en ${escapeHtml(normalized.recipient.country_code)}.`);
+  }
+  const totalQuantity = normalized.lines.reduce((sum, line) => sum + line.quantity, 0);
+  if (normalized.amountTotal >= LARGE_ORDER_AMOUNT_CENTS || totalQuantity >= LARGE_ORDER_QUANTITY) {
+    flags.push('Montant ou quantité inhabituels pour une commande VertiFlow.');
+  }
+  return flags;
+}
+
+function unusualFlagsHtml(flags) {
+  if (flags.length === 0) return '';
+  const items = flags.map((flag) => `<li style="margin:0 0 4px;">${flag}</li>`).join('');
+  return '<tr><td style="padding:16px;background-color:#fbe6cc;border:1px solid #e8912d;border-radius:6px;'
+    + 'font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#0b0b0c;">'
+    + '<strong>À vérifier avant de confirmer :</strong>'
+    + `<ul style="margin:8px 0 0;padding-left:18px;">${items}</ul>`
+    + '</td></tr>';
+}
+
+function mismatchDetailsHtml(failure) {
+  if (!failure || failure.code !== 'draft_mismatch') return '';
+  const expected = escapeHtml(formatMismatchLines(failure.expectedItems)).replace(/\n/g, '<br />');
+  const actual = escapeHtml(formatMismatchLines(failure.actualItems)).replace(/\n/g, '<br />');
+  return '<tr><td style="padding:16px;background-color:#fbeaea;border:1px solid #c0392b;border-radius:6px;'
+    + 'font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#0b0b0c;">'
+    + '<strong>Le brouillon Printful ne correspond pas à la commande payée&nbsp;:</strong>'
+    + `<div style="margin-top:8px;"><strong>Attendu&nbsp;:</strong><br />${expected}</div>`
+    + `<div style="margin-top:8px;"><strong>Reçu&nbsp;:</strong><br />${actual}</div>`
+    + '</td></tr>';
 }
 
 function defaultSleep(milliseconds) {
@@ -343,11 +473,20 @@ class EmailJsClient {
     const normalized = normalizeCustomerOrder(order);
     await this.send(this.customerTemplateId, {
       to_email: normalized.customerEmail,
-      first_name: normalized.firstName,
-      last_name: normalized.lastName,
+      first_name: escapeHtml(normalized.firstName),
+      last_name: escapeHtml(normalized.lastName),
       reply_to: OWNER_EMAIL,
       subject: CUSTOMER_EMAIL_SUBJECT,
-      message: customerMessage(normalized),
+      preheader_text: `Commande ${normalized.printfulExternalId} confirmée, livraison estimée sous 7 à 10 jours ouvrés.`,
+      order_reference: normalized.printfulExternalId,
+      order_lines_html: customerLinesHtml(normalized.lines),
+      order_total: formatEuroAmount(normalized.amountTotal),
+      shipping_name: escapeHtml(normalized.recipient.name),
+      shipping_address1: escapeHtml(normalized.recipient.address1),
+      shipping_address2: normalized.recipient.address2 ? `${escapeHtml(normalized.recipient.address2)}<br />` : '',
+      shipping_city: escapeHtml(normalized.recipient.city),
+      shipping_zip: escapeHtml(normalized.recipient.zip),
+      shipping_country: escapeHtml(normalized.recipient.country_code),
     });
   }
 
@@ -403,6 +542,8 @@ class EmailJsClient {
       address: shippingDetails,
       total: legacyTotal,
       cartItems: formatLegacyCartItems(normalized.lines),
+      unusual_flags_html: unusualFlagsHtml(unusualOrderFlags(normalized)),
+      mismatch_details_html: mismatchDetailsHtml(normalized.failure),
       ...mismatchParams,
     });
   }

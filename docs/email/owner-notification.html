@@ -1,0 +1,130 @@
+<!--
+VertiFlow — owner order notification (operations tool, not marketing)
+EmailJS template: paste this whole file into the template's CONTENT/HTML tab.
+
+VARIABLES USED IN THIS BODY (sent by functions/lib/emailjs.js -> sendOwnerReview):
+  {{subject}}                also used as the body heading, so it always matches the
+                              subject line: "Commande VertiFlow à confirmer" or "... en échec"
+  {{unusual_flags_html}}     pre-rendered <tr>, empty string when nothing is unusual
+  {{mismatch_details_html}}  pre-rendered <tr>, empty string unless the Printful draft
+                              did not match the paid order (failure.code === 'draft_mismatch')
+  {{printful_external_id}}   order reference (also the Printful order's external_id)
+  {{amount_total}}           order total, formatted "36,98 EUR"
+  {{printful_order_id}}      Printful draft order id, or "Non créé"
+  {{printful_dashboard_url}} direct link to confirm the draft, or "Non disponible"
+  {{order_lines}}            plain text, one line per item, includes sync_variant_id
+  {{shipping_details}}       plain text shipping address block
+  {{failure_details}}        "Aucune" normally, or "<code>: <details>" on a permanent failure
+  {{stripe_session_id}}      traceability, for support/debugging
+  {{payment_intent_id}}      traceability, for support/debugging
+
+ALSO SENT BY emailjs.js BUT NOT PART OF THIS HTML BODY — set these two in the EmailJS
+template SETTINGS tab (not the content editor):
+  {{to_email}}   -> "To Email" field (always vertiflow.pro@gmail.com)
+  {{reply_to}}   -> "Reply To" field
+
+SENT BY emailjs.js BUT DELIBERATELY NOT USED HERE — legacy aliases kept only for
+backward compatibility with whatever owner template predates this one:
+  {{message}}, {{name}}, {{email}}, {{address}}, {{total}}, {{cartItems}},
+  {{expected_printful_lines}}, {{actual_printful_lines}}
+See docs/email/README.md for why these are safe to ignore.
+-->
+<!doctype html>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="color-scheme" content="light" />
+<meta name="supported-color-schemes" content="light" />
+<meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+<title>Commande VertiFlow &mdash; back-office</title>
+</head>
+<body style="margin:0;padding:0;background-color:#f7f4ef;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f7f4ef;">
+  <tr>
+    <td align="center" style="padding:20px 12px;">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;background-color:#ffffff;">
+        <tr>
+          <td style="background-color:#0b0b0c;padding:20px 24px;">
+            <div style="font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:11px;letter-spacing:3px;color:#e8912d;text-transform:uppercase;margin-bottom:6px;">VertiFlow &middot; Back-office</div>
+            <div style="font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:20px;color:#ffffff;">{{subject}}</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:20px 24px 0 24px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+              {{unusual_flags_html}}
+              {{mismatch_details_html}}
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:20px 24px 0 24px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td width="50%" style="font-family:Arial,Helvetica,sans-serif;" valign="top">
+                  <div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#6e6e76;margin-bottom:4px;">Référence</div>
+                  <div style="font-size:16px;color:#0b0b0c;font-weight:700;word-break:break-all;">{{printful_external_id}}</div>
+                </td>
+                <td width="50%" align="right" style="font-family:Arial,Helvetica,sans-serif;" valign="top">
+                  <div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#6e6e76;margin-bottom:4px;">Total</div>
+                  <div style="font-size:22px;color:#0b0b0c;font-weight:700;">{{amount_total}}</div>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:20px 24px 0 24px;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#3d3d42;">
+            Printful order&nbsp;: <strong style="color:#0b0b0c;">{{printful_order_id}}</strong>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:12px 24px 0 24px;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td bgcolor="#e8912d" style="border-radius:6px;">
+                  <a href="{{printful_dashboard_url}}" style="display:inline-block;padding:14px 28px;font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:15px;color:#0b0b0c;text-decoration:none;">Confirmer sur Printful &rarr;</a>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:16px 24px 0 24px;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#3d3d42;">
+            Échec de préparation&nbsp;: <strong style="color:#0b0b0c;">{{failure_details}}</strong>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:24px 24px 0 24px;">
+            <div style="font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#0b0b0c;border-top:1px solid #e4e2de;padding-top:18px;margin-bottom:10px;">Articles &mdash; variant ID Printful</div>
+            <div style="font-family:'Courier New',Courier,monospace;font-size:13px;line-height:1.7;color:#0b0b0c;background-color:#f7f4ef;border:1px solid #e4e2de;padding:12px 14px;white-space:pre-line;">{{order_lines}}</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:20px 24px 0 24px;">
+            <div style="font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#0b0b0c;border-top:1px solid #e4e2de;padding-top:18px;margin-bottom:10px;">Livraison</div>
+            <div style="font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.7;color:#3d3d42;white-space:pre-line;">{{shipping_details}}</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:20px 24px 24px 24px;">
+            <div style="font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#0b0b0c;border-top:1px solid #e4e2de;padding-top:18px;margin-bottom:8px;">Traçabilité</div>
+            <div style="font-family:'Courier New',Courier,monospace;font-size:12px;line-height:1.8;color:#6e6e76;word-break:break-all;">
+              Stripe&nbsp;: {{stripe_session_id}}<br />
+              PaymentIntent&nbsp;: {{payment_intent_id}}
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="background-color:#0b0b0c;padding:16px 24px;font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#6e6e76;">
+            Notification automatique VertiFlow &middot; le brouillon Printful reste en attente de ta confirmation manuelle tant que tu n'as pas cliqué ci-dessus.
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
