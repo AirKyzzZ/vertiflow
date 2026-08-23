@@ -150,6 +150,23 @@ export function APropos() {
         </div>
       </section>
 
+      <section className="grain relative aspect-[16/9] w-full overflow-hidden bg-ink">
+        <Image
+          src="/images/photos/editorial/img-1161.webp"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent" />
+        <div className="absolute inset-x-5 bottom-10 lg:inset-x-10 lg:bottom-16">
+          <p className="eyebrow text-accent">Bordeaux</p>
+          <p className="display mt-4 max-w-lg text-3xl text-paper sm:text-4xl lg:text-5xl">
+            Huit ans plus tard, il s&apos;entraîne encore dehors.
+          </p>
+        </div>
+      </section>
+
       <section className="border-y border-ink/10 bg-neutral-100/60">
         <div className="mx-auto max-w-[88rem] px-5 py-20 lg:px-10 lg:py-28">
           <ChapterHeading n="Chapitre 4" title="Ce qu'il porte" />
