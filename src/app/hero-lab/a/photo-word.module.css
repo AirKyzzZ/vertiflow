@@ -1,0 +1,27 @@
+.photoWord {
+  background-image: url('/images/photos/hero/img-1136.webp');
+  background-repeat: no-repeat;
+  background-size: 145% auto;
+  background-position: 45% 40%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--color-ink);
+  animation: heroLabPhotoPan 17s ease-in-out infinite alternate;
+}
+
+@keyframes heroLabPhotoPan {
+  from {
+    background-position: 32% 34%;
+  }
+  to {
+    background-position: 68% 48%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photoWord {
+    animation: none;
+    background-position: 50% 40%;
+  }
+}
