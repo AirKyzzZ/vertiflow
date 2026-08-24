@@ -26,18 +26,18 @@ export function HomeBody({ dict, locale, products }: HomeBodyProps) {
     <main lang={locale === 'en' ? 'en' : undefined}>
       <section className="grain relative isolate flex min-h-[86vh] items-end overflow-hidden bg-ink text-paper">
         <Image
-          src="/images/site/home-door.webp"
+          src="/images/photos/hero/img-1136.webp"
           alt=""
           fill
-          priority
+          preload
           sizes="100vw"
-          className="-z-10 object-cover"
+          className="-z-10 animate-hero-drift object-cover object-right motion-reduce:animate-none sm:object-center"
         />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-ink via-ink/75 to-ink/10" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-ink via-ink/80 to-ink/20" />
 
         <div className="mx-auto w-full max-w-[88rem] px-5 pb-16 lg:px-10 lg:pb-24">
           <p className="eyebrow text-accent">{hero.eyebrow}</p>
-          <h1 className="display mt-6 max-w-5xl text-[clamp(2.75rem,9vw,7.5rem)]">
+          <h1 className="display mt-6 max-w-5xl text-[clamp(2rem,9vw,7.5rem)]">
             {hero.headingBefore}
             <br />
             {hero.headingAfter} <span className="text-accent">{hero.headingEmphasis}</span>.

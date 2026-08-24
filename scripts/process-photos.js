@@ -12,6 +12,7 @@ const EXCLUDED_SOURCES = new Set([
 ])
 
 const EDITORIAL_WIDTH = 2048
+const HERO_WIDTH = 1600
 const PRODUCT_WIDTH = 1200
 const THUMB_WIDTH = 640
 const WEBP_QUALITY = 82
@@ -26,6 +27,7 @@ const SKY_GRADIENT_MAX_OPACITY = 0.55
 
 const TIERS = [
   { name: 'editorial', width: EDITORIAL_WIDTH },
+  { name: 'hero', width: HERO_WIDTH },
   { name: 'product', width: PRODUCT_WIDTH },
   { name: 'thumb', width: THUMB_WIDTH },
 ]
