@@ -9,6 +9,8 @@ const LAB_LINKS = [
   { href: '/hero-lab/a', label: 'A · Photo in type' },
   { href: '/hero-lab/b', label: 'B · Frame burst' },
   { href: '/hero-lab/c', label: 'C · Bold amplitude' },
+  { href: '/hero-lab/d', label: 'D · Magic UI text animate' },
+  { href: '/hero-lab/e', label: 'E · GSAP SplitText' },
 ]
 
 export default function HeroLabLayout({ children }: { children: React.ReactNode }) {

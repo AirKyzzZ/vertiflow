@@ -22,6 +22,16 @@ const VARIANTS = [
     title: 'C — Bold amplitude',
     copy: 'The current concept, dialled up until it clearly registers.',
   },
+  {
+    href: '/hero-lab/d',
+    title: 'D — Magic UI text animate',
+    copy: 'Same photo, type and CTAs as C. The headline reveal swapped for shadcn/Magic UI’s TextAnimate, blur-in by word.',
+  },
+  {
+    href: '/hero-lab/e',
+    title: 'E — GSAP SplitText',
+    copy: 'Same photo, type and CTAs as C. The headline reveal swapped for a per-word masked reveal, masks built by SplitText itself.',
+  },
 ]
 
 export function HeroLabIndex() {
