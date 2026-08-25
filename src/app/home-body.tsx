@@ -56,10 +56,10 @@ export function HomeBody({ dict, locale, products }: HomeBodyProps) {
             emphasis={hero.headingEmphasis}
             className="display mt-6 max-w-5xl text-[clamp(2rem,9vw,7.5rem)]"
           />
-          <LineReveal as="p" className="mt-8 max-w-xl text-base leading-relaxed text-neutral-300" delay={0.5}>
+          <LineReveal as="p" className="mt-8 max-w-xl text-base leading-relaxed text-neutral-300" delay={1.05}>
             {hero.intro}
           </LineReveal>
-          <RiseIn className="mt-10 flex flex-wrap gap-3" delay={0.7}>
+          <RiseIn className="mt-10 flex flex-wrap gap-3" delay={1.3}>
             <Link
               href="/commencer"
               className="eyebrow bg-accent px-7 py-4 text-ink transition-transform hover:-translate-y-0.5"

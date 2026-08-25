@@ -1,7 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
-import { gsap, useGSAP, MOTION_OK } from './gsap'
+import { TextAnimate } from '@/components/ui/text-animate'
 
 type HeroHeadlineProps = {
   before: string
@@ -11,38 +10,58 @@ type HeroHeadlineProps = {
 }
 
 export function HeroHeadline({ before, after, emphasis, className = '' }: HeroHeadlineProps) {
-  const scope = useRef<HTMLHeadingElement>(null)
-
-  useGSAP(
-    () => {
-      const mm = gsap.matchMedia()
-      mm.add(MOTION_OK, () => {
-        const lines = gsap.utils.toArray<HTMLElement>('[data-hero-line]', scope.current)
-
-        gsap.set(lines, { y: 28, opacity: 0, fontStretch: '75%' })
-
-        gsap.to(lines, {
-          y: 0,
-          opacity: 1,
-          fontStretch: '125%',
-          duration: 0.9,
-          stagger: 0.15,
-          ease: 'power3.out',
-        })
-      })
-
-      return () => mm.revert()
-    },
-    { scope },
-  )
-
   return (
-    <h1 ref={scope} className={className}>
-      <span className="block" data-hero-line>
-        {before}
+    <h1 className={className}>
+      <span className="motion-reduce:hidden">
+        <span className="block" data-hero-line>
+          <TextAnimate
+            as="span"
+            by="word"
+            animation="blurInUp"
+            duration={0.7}
+            delay={0.1}
+            startOnView={false}
+            once
+            className="inline"
+          >
+            {before}
+          </TextAnimate>
+        </span>
+        <span className="block" data-hero-line>
+          <TextAnimate
+            as="span"
+            by="word"
+            animation="blurInUp"
+            duration={0.5}
+            delay={0.6}
+            startOnView={false}
+            once
+            className="inline"
+          >
+            {after}
+          </TextAnimate>{' '}
+          <TextAnimate
+            as="span"
+            by="word"
+            animation="blurInUp"
+            duration={0.45}
+            delay={1}
+            startOnView={false}
+            once
+            className="inline text-accent"
+          >
+            {`${emphasis}.`}
+          </TextAnimate>
+        </span>
       </span>
-      <span className="block" data-hero-line>
-        {after} <span className="text-accent">{emphasis}</span>.
+
+      <span className="hidden motion-reduce:block">
+        <span className="block" data-hero-line>
+          {before}
+        </span>
+        <span className="block" data-hero-line>
+          {after} <span className="text-accent">{emphasis}.</span>
+        </span>
       </span>
     </h1>
   )
