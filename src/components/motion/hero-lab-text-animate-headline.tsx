@@ -47,7 +47,7 @@ export function HeroLabTextAnimateHeadline({
           </TextAnimate>{' '}
           <TextAnimate
             as="span"
-            by="character"
+            by="word"
             animation="blurInUp"
             duration={0.45}
             delay={1}
