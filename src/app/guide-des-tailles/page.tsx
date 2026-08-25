@@ -1,7 +1,32 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { Fragment } from 'react'
+import { Badge } from '@/components/ui/badge'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { oneSizeProducts, sizedProducts } from './size-data'
 import { SizeTable } from './size-table'
+
+type GarmentTab =
+  | { kind: 'sized'; product: (typeof sizedProducts)[number] }
+  | { kind: 'oneSize'; product: (typeof oneSizeProducts)[number] }
+
+const garmentGroups: { label: string; slugs: string[] }[] = [
+  { label: 'Hauts', slugs: ['tshirt-climb', 'hoodie-vf-definition', 'debardeur-vf'] },
+  { label: 'Bas', slugs: ['shorts-performance-vf', 'short-confort-vf'] },
+  { label: 'Accessoires', slugs: ['casquette-vf', 'bob-vf', 'cache-cou-vf'] },
+]
+
+function findGarment(slug: string): GarmentTab {
+  const sized = sizedProducts.find((product) => product.slug === slug)
+  if (sized) return { kind: 'sized', product: sized }
+  const oneSize = oneSizeProducts.find((product) => product.slug === slug)
+  if (oneSize) return { kind: 'oneSize', product: oneSize }
+  throw new Error(`guide-des-tailles: unknown garment slug "${slug}"`)
+}
+
+const garmentTabs = garmentGroups.flatMap((group) =>
+  group.slugs.map((slug) => ({ group: group.label, ...findGarment(slug) })),
+)
 
 export const metadata: Metadata = {
   title: 'Guide des tailles',
@@ -99,11 +124,49 @@ export function GuideDesTaillesPage() {
 
         <section className="mt-16 border-t border-ink/10 pt-16 lg:mt-20 lg:pt-20">
           <h2 className="display text-2xl sm:text-3xl">Les tailles, pièce par pièce</h2>
-          <div className="mt-10 divide-y divide-ink/10">
-            {sizedProducts.map((product) => (
-              <article key={product.slug} className="py-10 first:pt-0">
+          <p className="mt-4 max-w-2xl leading-relaxed text-neutral-700">
+            Trois pièces n&apos;ont qu&apos;une taille. Voici ce que ça veut dire, concrètement,
+            pour chacune.
+          </p>
+
+          <Tabs defaultValue={garmentTabs[0].product.slug} className="mt-10">
+            <div className="overflow-x-auto pb-2">
+              <TabsList variant="line" aria-label="Choisir une pièce">
+                {garmentGroups.map((group, groupIndex) => (
+                  <Fragment key={group.label}>
+                    {groupIndex > 0 && (
+                      <span
+                        aria-hidden="true"
+                        className="mx-1 h-5 w-px shrink-0 self-center bg-ink/10"
+                      />
+                    )}
+                    {group.slugs.map((slug) => {
+                      const garment = findGarment(slug)
+                      return (
+                        <TabsTrigger key={slug} value={slug} className="shrink-0">
+                          {garment.product.name}
+                        </TabsTrigger>
+                      )
+                    })}
+                  </Fragment>
+                ))}
+              </TabsList>
+            </div>
+
+            {garmentTabs.map(({ kind, product }) => (
+              <TabsContent
+                key={product.slug}
+                value={product.slug}
+                forceMount
+                className="mt-8 data-[state=inactive]:hidden"
+              >
                 <div className="flex flex-wrap items-baseline justify-between gap-4">
-                  <h3 className="display min-w-0 wrap-anywhere text-xl sm:text-2xl">{product.name}</h3>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <h3 className="display min-w-0 wrap-anywhere text-xl sm:text-2xl">
+                      {product.name}
+                    </h3>
+                    {kind === 'oneSize' && <Badge variant="outline">Taille unique</Badge>}
+                  </div>
                   <Link
                     href={`/boutique/${product.slug}`}
                     className="eyebrow border-b-2 border-accent pb-1 text-ink"
@@ -111,41 +174,30 @@ export function GuideDesTaillesPage() {
                     Voir la fiche →
                   </Link>
                 </div>
-                <p className="mt-3 max-w-2xl text-sm leading-relaxed text-neutral-700">
-                  {product.fit} {product.fabric}
-                </p>
-                {product.note && (
-                  <p className="eyebrow mt-3 max-w-md text-accent">{product.note}</p>
-                )}
-                <div className="mt-6">
-                  <SizeTable sizes={product.sizes} measurements={product.measurements} />
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
 
-        <section className="mt-16 border-t border-ink/10 pt-16 lg:mt-20 lg:pt-20">
-          <h2 className="display text-2xl sm:text-3xl">Taille unique, en vrai</h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-neutral-700">
-            Trois pièces n&apos;ont qu&apos;une taille. Voici ce que ça veut dire, concrètement,
-            pour chacune.
-          </p>
-          <div className="mt-10 grid gap-10 sm:grid-cols-3">
-            {oneSizeProducts.map((product) => (
-              <div key={product.slug}>
-                <span className="eyebrow text-accent">{product.mechanism}</span>
-                <h3 className="display mt-2 text-lg">{product.name}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-neutral-700">{product.fit}</p>
-                <Link
-                  href={`/boutique/${product.slug}`}
-                  className="eyebrow mt-4 inline-block border-b-2 border-accent pb-1 text-ink"
-                >
-                  Voir la fiche →
-                </Link>
-              </div>
+                {kind === 'sized' ? (
+                  <>
+                    <p className="mt-3 max-w-2xl text-sm leading-relaxed text-neutral-700">
+                      {product.fit} {product.fabric}
+                    </p>
+                    {product.note && (
+                      <p className="eyebrow mt-3 max-w-md text-accent">{product.note}</p>
+                    )}
+                    <div className="mt-6">
+                      <SizeTable sizes={product.sizes} measurements={product.measurements} />
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <span className="eyebrow mt-3 inline-block text-accent">{product.mechanism}</span>
+                    <p className="mt-3 max-w-2xl text-sm leading-relaxed text-neutral-700">
+                      {product.fit}
+                    </p>
+                  </>
+                )}
+              </TabsContent>
             ))}
-          </div>
+          </Tabs>
         </section>
 
         <section className="mt-16 border-t border-ink/10 pt-16 lg:mt-20 lg:pt-20">

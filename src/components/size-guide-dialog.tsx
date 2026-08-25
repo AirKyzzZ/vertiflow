@@ -9,6 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import { Badge } from '@/components/ui/badge'
 import { SizeTable } from '@/app/guide-des-tailles/size-table'
 import { oneSizeProducts, sizedProducts } from '@/app/guide-des-tailles/size-data'
 import type { Dictionary } from '@/lib/i18n'
@@ -38,8 +39,11 @@ export function SizeGuideDialog({ slug, name, dict }: SizeGuideDialogProps) {
       </DialogTrigger>
       <DialogContent className="max-w-[calc(100%-2rem)] sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>
-            {dict.sizeGuideDialogTitle} · {name}
+          <DialogTitle className="flex flex-wrap items-center gap-2">
+            <span>
+              {dict.sizeGuideDialogTitle} · {name}
+            </span>
+            {oneSize && <Badge variant="outline">{dict.oneSize}</Badge>}
           </DialogTitle>
           <DialogDescription>{sized ? sized.fit : oneSize?.fit}</DialogDescription>
         </DialogHeader>

@@ -1,5 +1,11 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
 import { faqGroups } from './faq-data'
 
 export const metadata: Metadata = {
@@ -30,24 +36,18 @@ export function FaqPage() {
           {faqGroups.map((group) => (
             <section key={group.title}>
               <h2 className="display text-2xl sm:text-3xl">{group.title}</h2>
-              <div className="mt-8 divide-y divide-ink/10 border-t border-ink/10">
+              <Accordion type="multiple" className="mt-8 border-t border-ink/10">
                 {group.items.map((item) => (
-                  <details
-                    key={item.question}
-                    className="group py-5 [&::-webkit-details-marker]:hidden"
-                  >
-                    <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
-                      <span className="text-base leading-snug">{item.question}</span>
-                      <span className="eyebrow shrink-0 text-accent transition-transform duration-200 group-open:rotate-45">
-                        +
-                      </span>
-                    </summary>
-                    <div className="mt-4 max-w-md pr-8 text-sm leading-relaxed text-neutral-700 [&_a]:text-accent [&_a]:underline">
+                  <AccordionItem key={item.question} value={item.question} className="border-ink/10">
+                    <AccordionTrigger className="gap-4 py-5 text-base leading-snug font-normal hover:no-underline **:data-[slot=accordion-trigger-icon]:text-accent">
+                      {item.question}
+                    </AccordionTrigger>
+                    <AccordionContent className="max-w-md pr-8 text-sm leading-relaxed text-neutral-700 [&_a]:text-accent [&_a]:underline">
                       {item.answer}
-                    </div>
-                  </details>
+                    </AccordionContent>
+                  </AccordionItem>
                 ))}
-              </div>
+              </Accordion>
             </section>
           ))}
         </div>
