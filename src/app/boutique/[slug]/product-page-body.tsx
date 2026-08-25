@@ -47,6 +47,7 @@ export function ProductPageBody({
           sizes={sizeOptions}
           specs={copy.specs}
           dict={dict.product}
+          cartDict={dict.cart}
         />
       </div>
 

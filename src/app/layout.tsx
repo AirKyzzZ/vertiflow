@@ -4,6 +4,11 @@ import { HtmlLangSync } from '@/components/html-lang-sync'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { CartProvider } from '@/components/cart-provider'
+import { CartDrawer } from '@/components/cart-drawer'
+import { CartDrawerProvider } from '@/components/cart-drawer-provider'
+import { Toaster } from '@/components/ui/sonner'
+import { getProducts } from '@/lib/catalogue'
+import type { ProductSummary } from '@/lib/cart-pricing'
 import { DEFAULT_LOCALE } from '@/lib/i18n'
 import { organizationJsonLd } from '@/lib/structured-data'
 import './globals.css'
@@ -32,6 +37,12 @@ export const metadata: Metadata = {
 }
 
 export function RootLayout({ children }: { children: React.ReactNode }) {
+  const summaries: ProductSummary[] = getProducts().map((product) => ({
+    slug: product.slug,
+    name: product.name,
+    price: product.price,
+  }))
+
   return (
     <html lang={DEFAULT_LOCALE} className={`${archivo.variable} ${inter.variable}`}>
       <body className="bg-paper font-body text-ink antialiased">
@@ -41,10 +52,14 @@ export function RootLayout({ children }: { children: React.ReactNode }) {
         />
         <HtmlLangSync />
         <CartProvider>
-          <SiteHeader />
-          {children}
-          <SiteFooter />
+          <CartDrawerProvider>
+            <SiteHeader />
+            {children}
+            <SiteFooter />
+            <CartDrawer products={summaries} />
+          </CartDrawerProvider>
         </CartProvider>
+        <Toaster position="top-center" />
       </body>
     </html>
   )

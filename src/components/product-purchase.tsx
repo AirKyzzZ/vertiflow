@@ -24,6 +24,7 @@ type ProductPurchaseProps = {
   sizes: string[]
   specs: SpecRow[]
   dict: Dictionary['product']
+  cartDict: Dictionary['cart']
 }
 
 export function ProductPurchase({
@@ -38,6 +39,7 @@ export function ProductPurchase({
   sizes,
   specs,
   dict,
+  cartDict,
 }: ProductPurchaseProps) {
   const [colour, setColour] = useState(palette[0])
   const [size, setSize] = useState(sizes[0])
@@ -82,7 +84,7 @@ export function ProductPurchase({
           />
         </div>
 
-        <AddToCart slug={slug} colour={colour} size={size} dict={dict} />
+        <AddToCart slug={slug} name={name} colour={colour} size={size} dict={dict} cartDict={cartDict} />
 
         <StaggerGrid as="dl" className="mt-12 divide-y divide-ink/10 border-y border-ink/10">
           {specs.map((row) => (

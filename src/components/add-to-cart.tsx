@@ -1,20 +1,22 @@
 'use client'
 
-import { useState } from 'react'
-import Link from 'next/link'
+import { toast } from 'sonner'
 import { useCart } from '@/components/cart-provider'
+import { useCartDrawer } from '@/components/cart-drawer-provider'
 import type { Dictionary } from '@/lib/i18n'
 
 type AddToCartProps = {
   slug: string
+  name: string
   colour: string
   size: string
   dict: Dictionary['product']
+  cartDict: Dictionary['cart']
 }
 
-export function AddToCart({ slug, colour, size, dict }: AddToCartProps) {
+export function AddToCart({ slug, name, colour, size, dict, cartDict }: AddToCartProps) {
   const { add } = useCart()
-  const [added, setAdded] = useState(false)
+  const { openOnAdd } = useCartDrawer()
 
   return (
     <div className="mt-8">
@@ -22,22 +24,14 @@ export function AddToCart({ slug, colour, size, dict }: AddToCartProps) {
         type="button"
         onClick={() => {
           add({ slug, color: colour, size, quantity: 1 })
-          setAdded(true)
+          openOnAdd()
+          toast(cartDict.toastAddedTemplate.replace('{name}', name))
         }}
+        aria-controls="cart-drawer"
         className="eyebrow w-full bg-accent px-8 py-4 text-ink transition-transform hover:-translate-y-0.5"
       >
         {dict.addToCart}
       </button>
-
-      <span role="status" aria-live="polite" className="sr-only">
-        {added ? dict.addedToCart : ''}
-      </span>
-
-      {added && (
-        <Link href="/panier" className="eyebrow mt-4 block text-center text-accent underline">
-          {dict.viewCart}
-        </Link>
-      )}
     </div>
   )
 }

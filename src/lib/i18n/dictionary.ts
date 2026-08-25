@@ -94,6 +94,23 @@ export type Dictionary = {
     clubNotePrefix: string
     clubNoteSuffix: string
   }
+  cart: {
+    title: string
+    description: string
+    subtotalLabel: string
+    shippingLink: string
+    checkoutCta: string
+    viewFullCart: string
+    unavailable: string
+    decreaseLabelTemplate: string
+    increaseLabelTemplate: string
+    removeAction: string
+    removeLabelTemplate: string
+    toastAddedTemplate: string
+    emptyTitle: string
+    emptyBodyTemplate: string
+    emptyCta: string
+  }
 }
 
 const fr: Dictionary = {
@@ -207,6 +224,23 @@ const fr: Dictionary = {
     clubNotePrefix: 'Le club',
     clubNoteSuffix: 'est une association loi 1901 distincte.',
   },
+  cart: {
+    title: 'Panier',
+    description: 'Récapitulatif des pièces ajoutées à ton panier.',
+    subtotalLabel: 'Sous-total',
+    shippingLink: 'Voir les délais et tarifs',
+    checkoutCta: 'Commander',
+    viewFullCart: 'Voir le panier complet →',
+    unavailable: 'Indisponible',
+    decreaseLabelTemplate: 'Diminuer la quantité de {name}',
+    increaseLabelTemplate: 'Augmenter la quantité de {name}',
+    removeAction: 'Retirer',
+    removeLabelTemplate: 'Retirer {name} du panier',
+    toastAddedTemplate: '{name} ajouté au panier.',
+    emptyTitle: "Vide pour l'instant",
+    emptyBodyTemplate: 'La boutique compte {count} pièces, imprimées à la demande.',
+    emptyCta: 'Voir la boutique',
+  },
 }
 
 const en: Dictionary = {
@@ -319,6 +353,23 @@ const en: Dictionary = {
     copyrightTemplate: '© {year} VertiFlow — micro-entreprise',
     clubNotePrefix: 'The',
     clubNoteSuffix: 'club is a separate nonprofit association.',
+  },
+  cart: {
+    title: 'Cart',
+    description: "A summary of what's in your cart.",
+    subtotalLabel: 'Subtotal',
+    shippingLink: 'See timelines and rates',
+    checkoutCta: 'Checkout',
+    viewFullCart: 'View full cart →',
+    unavailable: 'Unavailable',
+    decreaseLabelTemplate: 'Decrease the quantity of {name}',
+    increaseLabelTemplate: 'Increase the quantity of {name}',
+    removeAction: 'Remove',
+    removeLabelTemplate: 'Remove {name} from cart',
+    toastAddedTemplate: '{name} added to cart.',
+    emptyTitle: 'Empty for now',
+    emptyBodyTemplate: 'The shop has {count} pieces, printed to order.',
+    emptyCta: 'View the shop',
   },
 }
 

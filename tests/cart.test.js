@@ -1,6 +1,14 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { readCart, addLine, setQuantity, removeLine } = require('../src/lib/cart.ts');
+const {
+  readCart,
+  addLine,
+  setQuantity,
+  removeLine,
+  countLines,
+  canDecreaseQuantity,
+  canIncreaseQuantity,
+} = require('../src/lib/cart.ts');
 
 test('legacy cart items keyed by id migrate to slug and drop cached fields', () => {
   const legacy = JSON.stringify([
@@ -50,4 +58,31 @@ test('removeLine drops only the targeted index', () => {
     { slug: 'casquette-vf', color: 'Noir', size: 'Unique', quantity: 1 },
   ];
   assert.deepEqual(removeLine(lines, 0), [{ slug: 'casquette-vf', color: 'Noir', size: 'Unique', quantity: 1 }]);
+});
+
+test('canDecreaseQuantity is false at the floor and true above it', () => {
+  assert.equal(canDecreaseQuantity(1), false);
+  assert.equal(canDecreaseQuantity(2), true);
+});
+
+test('canIncreaseQuantity is false at the ten-unit ceiling and true below it', () => {
+  assert.equal(canIncreaseQuantity(10), false);
+  assert.equal(canIncreaseQuantity(9), true);
+});
+
+test('canDecreaseQuantity and canIncreaseQuantity ignore out-of-range input rather than throwing', () => {
+  assert.equal(canDecreaseQuantity(0), false);
+  assert.equal(canIncreaseQuantity(11), false);
+});
+
+test('countLines is zero for an empty cart, the drawer\'s empty-state condition', () => {
+  assert.equal(countLines([]), 0);
+});
+
+test('countLines sums quantities, not line count, once the cart has items', () => {
+  const lines = [
+    { slug: 'bob-vf', color: 'Blanc', size: 'Unique', quantity: 2 },
+    { slug: 'casquette-vf', color: 'Noir', size: 'Unique', quantity: 3 },
+  ];
+  assert.equal(countLines(lines), 5);
 });

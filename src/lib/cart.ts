@@ -7,8 +7,8 @@ export type CartLine = {
 
 export const CART_STORAGE_KEY = 'cart'
 
-const MIN_QUANTITY = 1
-const MAX_QUANTITY = 10
+export const MIN_QUANTITY = 1
+export const MAX_QUANTITY = 10
 const MAX_LINES = 100
 
 function clampQuantity(quantity: number): number {
@@ -66,4 +66,12 @@ export function removeLine(lines: CartLine[], index: number): CartLine[] {
 
 export function countLines(lines: CartLine[]): number {
   return lines.reduce((total, line) => total + line.quantity, 0)
+}
+
+export function canDecreaseQuantity(quantity: number): boolean {
+  return quantity > MIN_QUANTITY
+}
+
+export function canIncreaseQuantity(quantity: number): boolean {
+  return quantity < MAX_QUANTITY
 }
