@@ -69,6 +69,11 @@ export type Dictionary = {
     oneSize: string
     modelLabel: string
     sizeGuideLink: string
+    sizeGuideDialogTitle: string
+    sizeGuideFitLabel: string
+    sizeGuideFabricLabel: string
+    sizeGuideMechanismLabel: string
+    sizeGuideFullLink: string
   }
   footer: {
     tagline: string
@@ -177,6 +182,11 @@ const fr: Dictionary = {
     oneSize: 'Taille unique',
     modelLabel: 'Modèle',
     sizeGuideLink: 'Guide des tailles →',
+    sizeGuideDialogTitle: 'Guide des tailles',
+    sizeGuideFitLabel: 'Coupe',
+    sizeGuideFabricLabel: 'Matière',
+    sizeGuideMechanismLabel: 'Réglage',
+    sizeGuideFullLink: 'Voir le guide complet →',
   },
   footer: {
     tagline: "La porte d'entrée vers le parkour, à porter. Bassin d'Arcachon.",
@@ -285,6 +295,11 @@ const en: Dictionary = {
     oneSize: 'One size',
     modelLabel: 'Model',
     sizeGuideLink: 'Size guide →',
+    sizeGuideDialogTitle: 'Size guide',
+    sizeGuideFitLabel: 'Fit',
+    sizeGuideFabricLabel: 'Fabric',
+    sizeGuideMechanismLabel: 'Adjustment',
+    sizeGuideFullLink: 'View the full guide →',
   },
   footer: {
     tagline: "The door into parkour, worn. Bassin d'Arcachon, France.",

@@ -1,12 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
 import { AddToCart } from '@/components/add-to-cart'
 import { ProductGallery } from '@/components/product-gallery'
 import { VariantPicker } from '@/components/variant-picker'
 import { LineReveal } from '@/components/motion/line-reveal'
 import { RiseIn } from '@/components/motion/rise-in'
+import { SizeGuideDialog } from '@/components/size-guide-dialog'
 import { StaggerGrid } from '@/components/motion/stagger-grid'
 import { mediaFor } from '@/lib/product-media'
 import type { SpecRow } from '@/lib/product-copy'
@@ -95,12 +95,7 @@ export function ProductPurchase({
           ))}
         </StaggerGrid>
 
-        <Link
-          href="/guide-des-tailles"
-          className="eyebrow mt-6 inline-block border-b-2 border-accent pb-1 text-ink"
-        >
-          {dict.sizeGuideLink}
-        </Link>
+        <SizeGuideDialog slug={slug} name={name} dict={dict} />
       </div>
     </>
   )
