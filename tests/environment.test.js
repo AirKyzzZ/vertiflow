@@ -42,6 +42,17 @@ function collectJavaScriptFiles(directory) {
     });
 }
 
+function collectTypeScriptFiles(directory) {
+  const absolute = path.join(ROOT, directory);
+  if (!fs.existsSync(absolute)) return [];
+  return fs.readdirSync(absolute, { withFileTypes: true })
+    .flatMap((entry) => {
+      const relativePath = path.join(directory, entry.name);
+      if (entry.isDirectory()) return collectTypeScriptFiles(relativePath);
+      return /\.tsx?$/.test(entry.name) ? [relativePath] : [];
+    });
+}
+
 function extractCommerceEnvironmentReads(source) {
   let codeOnly = '';
   let state = 'code';
@@ -110,8 +121,11 @@ test('environment discovery includes only actual commerce reads', () => {
 });
 
 test('documents every commerce environment variable consumed by runtime code with empty values', () => {
-  const accessed = [...collectJavaScriptFiles('functions'), ...collectJavaScriptFiles('scripts')]
-    .flatMap((file) => extractCommerceEnvironmentReads(readProjectFile(file)));
+  const accessed = [
+    ...collectJavaScriptFiles('functions'),
+    ...collectJavaScriptFiles('scripts'),
+    ...collectTypeScriptFiles('src'),
+  ].flatMap((file) => extractCommerceEnvironmentReads(readProjectFile(file)));
   assert.deepEqual([...new Set(accessed)].sort(), COMMERCE_ENVIRONMENT);
 
   const entries = readProjectFile('.env.example')
@@ -122,11 +136,16 @@ test('documents every commerce environment variable consumed by runtime code wit
   assert.doesNotMatch(readProjectFile('.env.example'), /(?:sk|rk|pk|whsec)_(?:live|test)_[A-Za-z0-9]+|re_[A-Za-z0-9]+/);
 });
 
-test('bundles the generated catalogue in Netlify functions without replacing build settings', () => {
+test('builds Next.js on Netlify and reaches the catalogue through the server-only barrel', () => {
   const netlify = readProjectFile('netlify.toml');
-  assert.match(netlify, /\[build\][\s\S]*functions = "functions"[\s\S]*publish = "public"/);
-  assert.match(netlify, /\[functions\]\s*included_files = \["data\/products\.json"\]/);
+  assert.match(netlify, /\[build\][\s\S]*publish = "\.next"/);
+  assert.match(netlify, /\[\[plugins\]\]\s*package = "@netlify\/plugin-nextjs"/);
   assert.match(netlify, /\[\[headers\]\]/);
+  assert.doesNotMatch(netlify, /publish = "public"/);
+
+  const barrel = readProjectFile('src/lib/commerce.server.ts');
+  assert.match(barrel, /^import 'server-only'/m);
+  assert.match(barrel, /import catalogueData from '\.\.\/\.\.\/data\/products\.json'/);
 });
 
 test('pins supported Node runtimes in package and Netlify configuration', () => {
@@ -157,10 +176,12 @@ test('committed catalogue is the reviewed nine-product, 107-variant Printful pro
 });
 
 test('browser checkout has no authority over provider keys, amounts, fulfillment, legacy payment, or email delivery', () => {
+  const clientComponents = collectTypeScriptFiles('src')
+    .map((file) => readProjectFile(file))
+    .filter((source) => /^\s*['"]use client['"]/m.test(source));
   const browser = [
-    readProjectFile('public/checkout.html'),
     readProjectFile('public/js/custom.js'),
-    readProjectFile('public/success.html'),
+    ...clientComponents,
   ].join('\n');
   assert.doesNotMatch(browser, /(?:sk|rk|pk)_(?:live|test)_[A-Za-z0-9]+|whsec_[A-Za-z0-9]+/);
   assert.doesNotMatch(browser, /create-payment-intent|paymentIntents\.create|amount\s*:/i);

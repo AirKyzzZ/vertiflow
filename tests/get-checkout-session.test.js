@@ -48,6 +48,17 @@ test('uses a test-mode secret and returns a controlled server error', async () =
   assert.deepEqual(JSON.parse(response.body), { error: 'Checkout status unavailable' });
 });
 
+test('accepts a live Stripe secret key', async () => {
+  const response = await createCheckoutStatusHandler({
+    stripe: { checkout: { sessions: { retrieve: async () => ({
+      status: 'complete', payment_status: 'paid',
+    }) } } },
+    environment: { STRIPE_SECRET_KEY: 'sk_live_example' },
+  })(event({ sessionId: 'cs_live_123' }));
+  assert.equal(response.statusCode, 200);
+  assert.deepEqual(JSON.parse(response.body), { status: 'complete', paymentStatus: 'paid' });
+});
+
 test('accepts a permissioned restricted test key', async () => {
   const stripe = { checkout: { sessions: { retrieve: async () => ({
     status: 'complete', payment_status: 'paid',

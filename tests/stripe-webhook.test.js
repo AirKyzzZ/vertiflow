@@ -2,6 +2,7 @@ const assert = require('node:assert/strict');
 const test = require('node:test');
 
 const catalogue = require('../data/products.json');
+const { priceIdFor, productIdFor } = require('../functions/lib/catalogue');
 const { checkoutMetadata } = require('../functions/lib/checkout-provenance');
 const { PrintfulOrderError } = require('../functions/lib/printful-orders');
 const {
@@ -16,24 +17,24 @@ const TEST_ACCESS_TOKEN = 'vertiflow-test-access-token-1234567890';
 const firstVariant = catalogue.products[0].variants[0];
 const secondVariant = catalogue.products[0].variants[1];
 
-function stripeLine(variant = firstVariant, overrides = {}) {
-  const product = catalogue.products.find((candidate) => candidate.variants.includes(variant));
+function stripeLine(variant = firstVariant, overrides = {}, mode = 'test', sourceCatalogue = catalogue) {
+  const product = sourceCatalogue.products.find((candidate) => candidate.variants.includes(variant));
   return {
     id: `li_${variant.printful_sync_variant_id}`,
     quantity: 1,
     price: {
-      id: variant.stripe_price_id,
+      id: priceIdFor(variant, mode),
       active: true,
-      livemode: false,
+      livemode: mode === 'live',
       type: 'one_time',
       recurring: null,
       currency: catalogue.currency.toLowerCase(),
       unit_amount: Number(product.price) * 100,
       product: {
-        id: product.stripe_product_id,
+        id: productIdFor(product, mode),
         name: product.name,
         active: true,
-        livemode: false,
+        livemode: mode === 'live',
         metadata: {
           integration: 'vertiflow',
           commercial_slug: product.slug,
@@ -242,18 +243,51 @@ test('signature failures are controlled and happen before any Stripe retrieval',
   assert.doesNotMatch(response.body, /signature details/);
 });
 
-test('unauthorized or live sessions are acknowledged without fulfillment side effects', async () => {
-  for (const sessionOverrides of [
-    { metadata: { ...createHarness().currentSession.metadata, vf_test_access: undefined } },
-    { livemode: true },
-  ]) {
-    const { handler, calls } = createHarness({ sessionOverrides });
-    const response = await handler(webhookEvent());
-    assert.equal(response.statusCode, 200);
-    assert.equal(calls.drafts.length, 0);
-    assert.equal(calls.customerEmails.length, 0);
-    assert.equal(calls.ownerEmails.length, 0);
-  }
+test('an unauthorized test session is acknowledged without fulfillment side effects', async () => {
+  const sessionOverrides = { metadata: { ...createHarness().currentSession.metadata, vf_test_access: undefined } };
+  const { handler, calls } = createHarness({ sessionOverrides });
+  const response = await handler(webhookEvent());
+  assert.equal(response.statusCode, 200);
+  assert.equal(calls.drafts.length, 0);
+  assert.equal(calls.customerEmails.length, 0);
+  assert.equal(calls.ownerEmails.length, 0);
+});
+
+test('a live session fails loudly instead of being silently swallowed', async () => {
+  const errors = [];
+  const { handler, calls } = createHarness({
+    sessionOverrides: { livemode: true },
+    logger: { error: (...arguments_) => errors.push(arguments_) },
+  });
+  const response = await handler(webhookEvent());
+  assert.equal(response.statusCode, 500);
+  assert.equal(calls.drafts.length, 0);
+  assert.equal(calls.customerEmails.length, 0);
+  assert.equal(calls.ownerEmails.length, 0);
+  assert.equal(errors.length, 1);
+  assert.equal(errors[0][0], 'Paid session livemode does not match its recorded checkout metadata');
+});
+
+test('a live session with matching recorded livemode metadata proceeds past the fulfilment gate', async () => {
+  const liveCatalogue = structuredClone(catalogue);
+  const liveProduct = liveCatalogue.products[0];
+  const liveVariant = liveProduct.variants[0];
+  liveProduct.stripe_product_id = { test: liveProduct.stripe_product_id, live: 'prod_live_example' };
+  liveVariant.stripe_price_id = { test: liveVariant.stripe_price_id, live: 'price_live_example' };
+  const liveLine = stripeLine(liveVariant, {}, 'live', liveCatalogue);
+  const { handler, calls } = createHarness({
+    pages: [{ data: [liveLine], has_more: false }],
+    provenanceLines: [provenanceLine(liveLine)],
+    runtimeCatalogue: liveCatalogue,
+    sessionOverrides: { livemode: true },
+    sessionMetadata: checkoutMetadata([provenanceLine(liveLine)], 'live'),
+  });
+
+  const response = await handler(webhookEvent());
+  assert.equal(response.statusCode, 200);
+  assert.equal(calls.drafts.length, 1);
+  assert.equal(calls.customerEmails.length, 1);
+  assert.equal(calls.ownerEmails.length, 1);
 });
 
 test('authorized Session marker remains valid after checkout access-token rotation', async () => {
@@ -506,12 +540,6 @@ test('fresh provenance fails closed for Stripe fact, quantity, count, digest, an
     ['line count mutation', baseline, { vf_line_count: '2' }, {}],
     ['digest mutation', baseline, { vf_checkout_sha256: 'A'.repeat(43) }, {}],
     ['version mutation', baseline, { vf_checkout_version: '2' }, {}],
-    ['missing provenance', baseline, {
-      vf_checkout_version: undefined,
-      vf_checkout_sha256: undefined,
-      vf_line_count: undefined,
-      vf_livemode: undefined,
-    }, {}],
   ];
 
   for (const [name, candidate, sessionMetadata, sessionOverrides] of scenarios) {
@@ -522,10 +550,11 @@ test('fresh provenance fails closed for Stripe fact, quantity, count, digest, an
         sessionMetadata,
         sessionOverrides,
       });
-      assert.equal((await handler(webhookEvent())).statusCode, 200);
+      const isSessionLivemodeMutation = name.includes('Session livemode');
+      assert.equal((await handler(webhookEvent())).statusCode, isSessionLivemodeMutation ? 500 : 200);
       assert.equal(calls.drafts.length, 0);
       assert.equal(calls.customerEmails.length, 0);
-      if (name.includes('Session livemode')) {
+      if (isSessionLivemodeMutation) {
         assert.equal(calls.ownerEmails.length, 0);
         return;
       }
@@ -534,6 +563,53 @@ test('fresh provenance fails closed for Stripe fact, quantity, count, digest, an
       assert.equal(currentSession.metadata.fulfillment_status, 'permanent_failure');
     });
   }
+});
+
+test('a foreign live Checkout Session with no VertiFlow marker is ignored', async () => {
+  const errors = [];
+  const debugLines = [];
+  const { handler, calls } = createHarness({
+    eventSessionId: 'cs_live_foreign1',
+    sessionOverrides: { livemode: true, metadata: { other_business: 'french-tech-sender' } },
+    logger: {
+      error: (...arguments_) => errors.push(arguments_),
+      debug: (...arguments_) => debugLines.push(arguments_),
+    },
+  });
+  const response = await handler(webhookEvent());
+  assert.equal(response.statusCode, 200);
+  assert.equal(calls.drafts.length, 0);
+  assert.equal(calls.customerEmails.length, 0);
+  assert.equal(calls.ownerEmails.length, 0);
+  assert.equal(errors.length, 0);
+  assert.equal(debugLines.length, 1);
+});
+
+test('a foreign test Checkout Session with no VertiFlow marker is ignored', async () => {
+  const errors = [];
+  const { handler, calls } = createHarness({
+    sessionOverrides: { metadata: { other_business: 'face10ai' } },
+    logger: { error: (...arguments_) => errors.push(arguments_) },
+  });
+  const response = await handler(webhookEvent());
+  assert.equal(response.statusCode, 200);
+  assert.equal(calls.drafts.length, 0);
+  assert.equal(calls.customerEmails.length, 0);
+  assert.equal(calls.ownerEmails.length, 0);
+  assert.equal(errors.length, 0);
+});
+
+test('a VertiFlow session with broken provenance still alerts the owner', async () => {
+  const { handler, calls, currentSession } = createHarness({
+    sessionMetadata: { vf_checkout_sha256: 'A'.repeat(43) },
+  });
+  const response = await handler(webhookEvent());
+  assert.equal(response.statusCode, 200);
+  assert.equal(calls.drafts.length, 0);
+  assert.equal(calls.customerEmails.length, 0);
+  assert.equal(calls.ownerEmails.length, 1);
+  assert.equal(calls.ownerEmails[0].failure.code, 'catalogue_mismatch');
+  assert.equal(currentSession.metadata.fulfillment_status, 'permanent_failure');
 });
 
 test('duplicate Price IDs or Printful sync variants fail provenance before draft creation', async (t) => {
@@ -747,7 +823,7 @@ test('exported Netlify handler validates configuration before constructing authe
   }
 });
 
-test('webhook environment accepts only test Stripe keys and survives access-token removal', () => {
+test('webhook environment accepts test or live Stripe keys and survives access-token removal', () => {
   const environment = {
     STRIPE_SECRET_KEY: 'sk_test_example',
     STRIPE_WEBHOOK_SECRET: 'whsec_example',
@@ -762,9 +838,10 @@ test('webhook environment accepts only test Stripe keys and survives access-toke
   };
 
   assert.doesNotThrow(() => validateWebhookEnvironment(environment));
+  assert.doesNotThrow(() => validateWebhookEnvironment({ ...environment, STRIPE_SECRET_KEY: 'sk_live_example' }));
   assert.throws(
-    () => validateWebhookEnvironment({ ...environment, STRIPE_SECRET_KEY: 'sk_live_example' }),
-    /test Stripe secret/i,
+    () => validateWebhookEnvironment({ ...environment, STRIPE_SECRET_KEY: 'not-a-stripe-secret' }),
+    /Stripe secret/i,
   );
   assert.doesNotThrow(() => validateWebhookEnvironment({
     ...environment,

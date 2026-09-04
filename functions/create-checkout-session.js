@@ -22,11 +22,12 @@ function validateEnvironment(environment) {
   if (!secretMode || !publishableMode || secretMode !== publishableMode) {
     throw new Error('Stripe key modes must match');
   }
-  if (secretMode !== 'test') throw new Error('Live Stripe keys require a live catalogue');
   if (typeof environment.STRIPE_SHIPPING_RATE_ID !== 'string' || !environment.STRIPE_SHIPPING_RATE_ID.trim()) {
     throw new Error('Stripe shipping rate is required');
   }
-  const testAccessSha256 = testAccessDigest(environment.VERTIFLOW_TEST_ACCESS_TOKEN);
+  const testAccessSha256 = secretMode === 'test'
+    ? testAccessDigest(environment.VERTIFLOW_TEST_ACCESS_TOKEN)
+    : null;
   let siteUrl;
   try {
     siteUrl = new URL(environment.SITE_URL || environment.DEPLOY_PRIME_URL || environment.URL);
@@ -52,10 +53,13 @@ function createCheckoutHandler({ stripe, catalogue: runtimeCatalogue, environmen
 
     try {
       const { siteUrl, stripeMode: mode, testAccessSha256 } = validateEnvironment(environment);
-      if (!matchesTestAccess(headerValue(event.headers, 'x-vertiflow-test-access'), testAccessSha256)) {
+      if (
+        mode === 'test'
+        && !matchesTestAccess(headerValue(event.headers, 'x-vertiflow-test-access'), testAccessSha256)
+      ) {
         return response(403, { error: 'Test checkout access denied' });
       }
-      const resolvedItems = resolveCart(runtimeCatalogue, payload.items);
+      const resolvedItems = resolveCart(runtimeCatalogue, payload.items, mode);
       const customer = validateCustomer(payload.customer);
       const promoCode = typeof payload.promoCode === 'string' ? payload.promoCode.trim() : '';
       const params = {
@@ -63,7 +67,7 @@ function createCheckoutHandler({ stripe, catalogue: runtimeCatalogue, environmen
         mode: 'payment',
         line_items: resolvedItems.map(({ priceId, quantity }) => ({ price: priceId, quantity })),
         customer_email: customer.email,
-        return_url: `${siteUrl}/success.html?session_id={CHECKOUT_SESSION_ID}`,
+        return_url: `${siteUrl}/commande/succes?session_id={CHECKOUT_SESSION_ID}`,
         shipping_options: [{ shipping_rate: environment.STRIPE_SHIPPING_RATE_ID }],
         payment_intent_data: {
           shipping: {
