@@ -61,81 +61,50 @@ test('checkout zod schema mirrors the server validateCustomer contract', async (
     assert.throws(() => validateCustomer(toServerCustomer(values)), ValidationError);
   });
 
-  await t.test('the US/CA/AU state rule: required when missing, accepted once provided, matching the server', () => {
-    for (const country of STATE_REQUIRED_COUNTRIES) {
-      const withoutState = { ...base, country, state: '' };
-      const clientResult = checkoutSchema.safeParse(withoutState);
-      assert.equal(clientResult.success, false, `${country} without state should fail client-side`);
+  await t.test('France only: every other country is refused client-side and server-side', () => {
+    for (const country of ['DE', 'GB', 'BE', 'CH', 'US', 'BR']) {
+      const values = { ...base, country, state: 'XX' };
+      const result = checkoutSchema.safeParse(values);
+      assert.equal(result.success, false, `${country} should fail client-side`);
       assert.ok(
-        clientResult.error.issues.some((issue) => issue.path.join('.') === 'state'),
-        `${country} without state should flag the state field`,
+        result.error.issues.some((issue) => issue.path.join('.') === 'country'),
+        `${country} should flag the country field`,
       );
       assert.throws(
-        () => validateCustomer(toServerCustomer(withoutState)),
+        () => validateCustomer(toServerCustomer(values)),
         ValidationError,
-        `${country} without state should also 400 server-side`,
+        `${country} should also 400 server-side, not just be hidden from the dropdown`,
       );
-
-      const withState = { ...base, country, state: 'CA' };
-      assert.equal(checkoutSchema.safeParse(withState).success, true, `${country} with a state should pass client-side`);
-      assert.doesNotThrow(() => validateCustomer(toServerCustomer(withState)), `${country} with a state should pass server-side`);
     }
   });
 
-  await t.test('does not require a state outside US/CA/AU', () => {
-    for (const country of ['FR', 'DE', 'GB', 'JP']) {
-      if (STATE_REQUIRED_COUNTRIES.has(country)) continue;
-      const values = { ...base, country: COUNTRIES.some((c) => c.code === country) ? country : 'FR', state: '' };
-      assert.equal(checkoutSchema.safeParse(values).success, true);
-    }
+  await t.test('France needs no state', () => {
+    assert.equal(checkoutSchema.safeParse({ ...base, country: 'FR', state: '' }).success, true);
+    assert.doesNotThrow(() => validateCustomer(toServerCustomer({ ...base, country: 'FR', state: '' })));
   });
 
-  await t.test('GB-not-UK: UK is rejected client-side with a message pointing at GB, and the server agrees', () => {
-    const ukValues = { ...base, country: 'UK' };
-    const result = checkoutSchema.safeParse(ukValues);
+  await t.test('UK still gets the GB-not-UK message rather than the France message', () => {
+    const result = checkoutSchema.safeParse({ ...base, country: 'UK' });
     assert.equal(result.success, false);
     assert.ok(result.error.issues.some((issue) => issue.path.join('.') === 'country' && /GB/.test(issue.message)));
-    assert.throws(() => validateCustomer(toServerCustomer(ukValues)), ValidationError);
-
-    const gbValues = { ...base, country: 'GB' };
-    assert.equal(checkoutSchema.safeParse(gbValues).success, true);
-    assert.doesNotThrow(() => validateCustomer(toServerCustomer(gbValues)));
+    assert.throws(() => validateCustomer(toServerCustomer({ ...base, country: 'UK' })), /GB/);
   });
 
-  await t.test('BR rejection: Brazil is refused client-side, matching the server’s tax-number rule', () => {
-    const values = { ...base, country: 'BR' };
-    const result = checkoutSchema.safeParse(values);
-    assert.equal(result.success, false);
-    assert.ok(result.error.issues.some((issue) => issue.path.join('.') === 'country'));
-    assert.throws(() => validateCustomer(toServerCustomer(values)), ValidationError);
-  });
-
-  await t.test('the client country list is well-formed: unique, 2-letter uppercase, GB present, UK absent', () => {
+  await t.test('the client country list is well-formed: unique, 2-letter uppercase, France only', () => {
     const codes = COUNTRIES.map((option) => option.code);
     assert.equal(new Set(codes).size, codes.length, 'no duplicate country codes');
     assert.ok(codes.every((code) => /^[A-Z]{2}$/.test(code)), 'every code is exactly 2 uppercase letters');
-    assert.ok(codes.includes('GB'), 'GB must be offered for the United Kingdom');
+    assert.deepEqual(codes, ['FR'], 'only France is offered while one flat shipping rate is configured');
     assert.ok(!codes.includes('UK'), 'UK must never be offered, only GB');
   });
 
-  await t.test('every non-Brazil code the client offers is actually accepted by the real server contract', () => {
+  await t.test('every code the client offers is actually accepted by the real server contract', () => {
     for (const option of COUNTRIES) {
-      if (option.code === 'BR') continue;
-      const values = {
-        ...base,
-        country: option.code,
-        state: STATE_REQUIRED_COUNTRIES.has(option.code) ? 'XX' : '',
-      };
+      const values = { ...base, country: option.code, state: STATE_REQUIRED_COUNTRIES.has(option.code) ? 'XX' : '' };
       assert.doesNotThrow(
         () => validateCustomer(toServerCustomer(values)),
         `${option.code} is offered client-side but rejected by validateCustomer — the client list has drifted from the server contract`,
       );
     }
-  });
-
-  await t.test('BR stays listed (disabled) so the server’s explicit Brazil rule is exercised, never silently dropped', () => {
-    const option = COUNTRIES.find((c) => c.code === 'BR');
-    assert.ok(option, 'BR should remain visible-but-disabled rather than silently removed');
-    assert.equal(option.disabled, true);
   });
 });

@@ -15,7 +15,7 @@ export type PricedLine = {
   total: number | null
 }
 
-export const SHIPPING_DISCLOSURE = 'Livraison à partir de 6,99 € (France).'
+export const SHIPPING_DISCLOSURE = 'Livraison 6,99 € (France uniquement).'
 
 function findProduct(products: ProductSummary[], slug: string): ProductSummary | undefined {
   return products.find((product) => product.slug === slug)

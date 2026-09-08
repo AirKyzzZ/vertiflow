@@ -211,7 +211,7 @@ test('validateCustomer trims allowed fields and validates ISO address requiremen
 
   assert.throws(() => validateCustomer(customerFixture({ address: { ...customerFixture().address, country: 'UK' } })), /GB/);
   assert.throws(() => validateCustomer(customerFixture({ address: { ...customerFixture().address, country: 'ZZ' } })), /country/);
-  assert.throws(() => validateCustomer(customerFixture({ address: { ...customerFixture().address, country: 'US' } })), /state/);
+  assert.throws(() => validateCustomer(customerFixture({ address: { ...customerFixture().address, country: 'US' } })), /France/);
   assert.throws(() => validateCustomer(customerFixture({ email: 'not-an-email' })), /email/);
 });
 
