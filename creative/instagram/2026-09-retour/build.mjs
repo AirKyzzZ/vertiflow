@@ -22,8 +22,8 @@ const slides = [
     shot: "editorial/img-0808.webp",
     position: "50% 34%",
     kicker: "BORDEAUX",
-    headline: "TOUJOURS<br>ICI.",
-    sub: "Photographié à Bordeaux, pas ailleurs.",
+    headline: "PAS UN<br>STUDIO.",
+    sub: "Le T-shirt CLIMB, porté là où on s’entraîne.",
   },
   {
     name: "slide-3",
@@ -31,7 +31,7 @@ const slides = [
     position: "50% 45%",
     kicker: "VERTIFLOW.FR",
     headline: "TU COMMENCES<br>QUAND ?",
-    sub: "Le guide pour débuter, lien en bio.",
+    sub: "La boutique et le guide sont sur vertiflow.fr.",
     size: 100,
   },
 ];
