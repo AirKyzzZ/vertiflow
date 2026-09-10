@@ -38,9 +38,26 @@ moitié de l'année.
 VertiFlow est une micro-entreprise, le PKBA une association loi 1901 avec des dossiers
 CERFA de subvention ouverts et Maxime pour trésorier. Le post dit que la même personne a
 monté les deux, ce que `docs/brand/narrative.md` autorise explicitement. Il ne dit **pas**
-que VertiFlow équipe le club, ne fait aucun lien entre les ventes et l'activité de
-l'association, et n'utilise aucun visuel du club. Ces trois lignes sont interdites, pas
-déconseillées.
+que VertiFlow équipe le club et ne fait aucun lien entre les ventes de la marque et
+l'activité de l'association. Ces deux lignes sont interdites, pas déconseillées.
+
+Le carrousel est équilibré à trois slides VertiFlow (1, 2, 3) et trois slides club
+(4, 5, 6) pour que la lecture reste « un fondateur, deux structures » et non « une seule
+organisation ».
+
+## Photos du club
+
+Les slides 4, 5 et 6 viennent du repo PKBA. Elles y sont déjà versionnées et `AirKyzzZ/PKBA`
+est public, donc les committer ici n'expose rien de nouveau.
+
+| Slide | Fichier | Personnes identifiables |
+|---|---|---|
+| 4 | `flyers/_system/photos/IMG_5064.jpg` | une, en mouvement, visage non exploitable |
+| 5 | `flyers/_system/photos/IMG_4970.jpg` | deux, dont un mineur au second plan, visage net |
+| 6 | `flyers/_system/photos/IMG_4919.jpg` | une encadrante et plusieurs mineurs, visages nets |
+
+Le droit à l'image relève des autorisations recueillies par l'association. À vérifier avant
+publication, en particulier pour la slide 6.
 
 ## Faits, et leur source dans le repo PKBA
 

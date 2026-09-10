@@ -1,5 +1,12 @@
 # VertiFlow — Instagram strategy
 
+> **Correction du 2026-09-10.** Le chiffre de 10k abonnés ci-dessous est faux. Vérifié
+> directement sur @vertiflowfreerun : **108 abonnés, 40 posts, zéro Reel, 2 abonnements**.
+> Tout ce document est construit sur une hypothèse de réactivation d'audience dormante,
+> alors que le vrai problème est la construction d'une audience. Les captions, les formats
+> et les règles de ton restent valables ; l'analyse de portée et les tactiques de
+> re-permission ne le sont pas. Le plan à jour est dans `docs/brand/roadmap-2026-09.md`.
+
 An executable plan for one account, roughly 10k followers, silent for months, run by one
 person with a full-time job. Everything below assumes `BRAND.md` and
 `creative/house-look.md` as fixed constraints, not suggestions.

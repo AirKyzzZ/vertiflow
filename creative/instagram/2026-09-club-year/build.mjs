@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 const here = dirname(fileURLToPath(import.meta.url));
 const repo = resolve(here, "../../..");
 const out = resolve(here, "build");
+const pkba = "/Users/samsepiol/Downloads/GithubRepos/Work/Projets-perso/PKBA";
 const chrome = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 
 const slides = [
@@ -35,8 +36,8 @@ const slides = [
   },
   {
     name: "slide-4",
-    shot: "editorial/img-1026.webp",
-    position: "50% 40%",
+    abs: `${pkba}/flyers/_system/photos/IMG_5064.jpg`,
+    position: "57% 50%",
     kicker: "GUJAN-MESTRAS",
     headline: "AUJOURD’HUI,<br>200 M².",
     sub: "66 adhérents, cinq jours par semaine, dès 3 ans.",
@@ -44,16 +45,16 @@ const slides = [
   },
   {
     name: "slide-5",
-    shot: "editorial/img-0946.webp",
-    position: "50% 38%",
+    abs: `${pkba}/flyers/_system/photos/IMG_4970.jpg`,
+    position: "78% 50%",
     kicker: "SAISON 2025/2026",
     headline: "NEUF PODIUMS.",
     sub: "Les traceurs du club, à Rennes en mars puis au championnat de France à Bourges en juin.",
   },
   {
     name: "slide-6",
-    shot: "editorial/img-6561.webp",
-    position: "50% 40%",
+    abs: `${pkba}/flyers/_system/photos/IMG_4919.jpg`,
+    position: "58% 50%",
     kicker: "PKBA.VERTIFLOW.FR",
     headline: "LA RENTRÉE A<br>COMMENCÉ LUNDI.",
     sub: "Première séance offerte, sans engagement.",
@@ -119,7 +120,7 @@ const page = (slide) => `<!doctype html>
 </style>
 </head>
 <body>
-  <img class="shot" src="file://${repo}/public/images/photos/${slide.shot}">
+  <img class="shot" src="file://${slide.abs ?? `${repo}/public/images/photos/${slide.shot}`}">
   <div class="scrim"></div>
   <div class="warm"></div>
   <header>
