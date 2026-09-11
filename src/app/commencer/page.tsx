@@ -4,11 +4,11 @@ import Image from 'next/image'
 export const metadata: Metadata = {
   title: 'Commencer',
   description:
-    "Ce que c'est, si tu peux le faire, où, quand, combien — et si tu seras le pire du groupe. Tout, avant ta première séance sur le Bassin d'Arcachon.",
+    "Ce que c'est, si tu peux le faire, où, quand, combien, et si tu seras le pire du groupe. Tout, avant ta première séance sur le Bassin d'Arcachon.",
   openGraph: {
     title: 'Commencer',
     description:
-      "Ce que c'est, si tu peux le faire, où, quand, combien — et si tu seras le pire du groupe.",
+      "Ce que c'est, si tu peux le faire, où, quand, combien, et si tu seras le pire du groupe.",
     images: [{ url: '/images/site/home-door.webp', width: 2048, height: 1536 }],
   },
   alternates: { canonical: '/commencer' },
@@ -77,7 +77,7 @@ export function Commencer() {
             <p className="leading-relaxed">
               VertiFlow, c&apos;est la marque de vêtements que tu es en train de lire. Le
               parkour, lui, se pratique pour de vrai sur le Bassin d&apos;Arcachon, avec le
-              club PKBA — une association loi 1901, distincte de la marque.
+              club PKBA, une association loi 1901 distincte de la marque.
             </p>
             <p className="leading-relaxed">
               Les deux existent grâce à la même personne : un athlète qui pratique le parkour en
@@ -103,7 +103,7 @@ export function Commencer() {
               </p>
               <p className="leading-relaxed">
                 Pas besoin de matériel particulier : des vêtements dans lesquels tu bouges, des
-                baskets, et c&apos;est tout. Pas besoin d&apos;un niveau de sport non plus — le
+                baskets, et c&apos;est tout. Pas besoin d&apos;un niveau de sport non plus. Le
                 club prend les gens là où ils en sont, pas là où il voudrait qu&apos;ils soient.
               </p>
             </div>
@@ -132,9 +132,8 @@ export function Commencer() {
         <QuestionHeading n="Question 3" question="Où ?" />
         <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
           <p className="display text-2xl leading-tight sm:text-3xl">
-            Sur le Bassin d&apos;Arcachon. La Teste-de-Buch, Gujan-Mestras, Bordeaux — de vrais
-            spots, pas
-            un terrain vague générique.
+            Sur le Bassin d&apos;Arcachon. La Teste-de-Buch, Gujan-Mestras, Bordeaux. De vrais
+            spots, pas un terrain vague générique.
           </p>
           <div className="space-y-5 text-neutral-700">
             <p className="leading-relaxed">
@@ -150,7 +149,7 @@ export function Commencer() {
           <QuestionHeading n="Question 4" question="Quand ?" />
           <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
             <p className="display text-2xl leading-tight sm:text-3xl">
-              Les horaires, c&apos;est PKBA qui les fixe — pas VertiFlow.
+              Les horaires, c&apos;est PKBA qui les fixe, pas VertiFlow.
             </p>
             <div className="space-y-5 text-neutral-700">
               <p className="leading-relaxed">
@@ -180,7 +179,7 @@ export function Commencer() {
               Tu viens, tu essaies, tu vois si ça te plaît. Rien à payer pour ça.
             </p>
             <p className="leading-relaxed">
-              Si tu continues, il te faut une licence — et c&apos;est PKBA qui la délivre, pas
+              Si tu continues, il te faut une licence, et c&apos;est PKBA qui la délivre, pas
               VertiFlow. La marque fait des vêtements, le club fait cours. Deux structures
               séparées, et les tarifs de licence sont sur le site du club.
             </p>
@@ -210,7 +209,7 @@ export function Commencer() {
               <p className="leading-relaxed">
                 Cette personne aussi a commencé un jour en ratant tout. Ce que tu vois défiler
                 sur Instagram, c&apos;est le meilleur essai sur cent, celui qui a fini par
-                marcher. Une séance normale, c&apos;est surtout des ratés — les tiens y compris.
+                marcher. Une séance normale, c&apos;est surtout des ratés, les tiens y compris.
                 C&apos;est même le signe que tu es en train d&apos;apprendre.
               </p>
             </div>
@@ -233,7 +232,7 @@ export function Commencer() {
             La première séance ne coûte rien et ne t&apos;engage à rien.
           </h2>
           <p className="mt-6 max-w-md leading-relaxed text-neutral-700">
-            L&apos;inscription se fait chez PKBA, le club — pas ici. Tu quittes VertiFlow,
+            L&apos;inscription se fait chez PKBA, le club, pas ici. Tu quittes VertiFlow,
             direction le site du club.
           </p>
           <a

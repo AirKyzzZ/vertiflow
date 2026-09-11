@@ -74,13 +74,13 @@ export function APropos() {
             </p>
             <p className="leading-relaxed">
               Cette page ne s&apos;adresse pas à l&apos;athlète qui s&apos;entraîne
-              déjà — il n&apos;a pas besoin d&apos;être convaincu. Ni à qui veut juste le
+              déjà, il n&apos;a pas besoin d&apos;être convaincu. Ni à qui veut juste le
               look sans le sport : VertiFlow lui vendra un hoodie avec plaisir, mais ce
               n&apos;est pas pour lui qu&apos;elle existe.
             </p>
             <p className="leading-relaxed">
               Elle s&apos;adresse à toi. Si tu ne sais toujours pas si tu peux le faire,
-              la réponse honnête est oui — à partir d&apos;où tu en es.
+              la réponse honnête est oui, à partir d&apos;où tu en es.
             </p>
           </div>
         </div>
@@ -98,14 +98,14 @@ export function APropos() {
               <p className="leading-relaxed">
                 La première pièce vendue est arrivée après huit ans de compétition, pas
                 avant. Si cette histoire disparaissait, il ne resterait qu&apos;un compte
-                de streetwear générique parmi cent autres — et la marque se
+                de streetwear générique parmi cent autres. La marque se
                 l&apos;interdit.
               </p>
               <p className="leading-relaxed">
                 Elle s&apos;interdit aussi l&apos;intimidation. Des lignes parfaites, des
                 corps déjà élite, jamais la chute. C&apos;est ce que postent la plupart
                 des comptes parkour, et c&apos;est exactement ce qui tient les débutants
-                à distance. Le soin apporté aux vêtements peut avoir l&apos;air pro — les
+                à distance. Le soin apporté aux vêtements peut avoir l&apos;air pro. Les
                 gens qui les portent n&apos;ont pas à avoir l&apos;air inaccessibles.
               </p>
               <p className="leading-relaxed">
@@ -130,17 +130,16 @@ export function APropos() {
           <div className="space-y-5 text-neutral-700">
             <p className="leading-relaxed">
               Maxime pratique la compétition de parkour depuis huit ans, niveau
-              national, sous la FFG — la Fédération Française de Gymnastique, qui
-              encadre le parkour en France. Un parcours réel, pas une ligne de
-              marketing : huit ans à s&apos;entraîner, ça apprend surtout ce qui lâche —
-              un tissu qui se déchire sur une réception, une coupe qui remonte pendant un
+              national, sous la FFG, la Fédération Française de Gymnastique, qui
+              encadre le parkour en France. Huit ans à s&apos;entraîner, ça apprend
+              surtout ce qui lâche : un tissu qui se déchire sur une réception, une coupe qui remonte pendant un
               saut de bras, une couture qui accroche au moment de passer un mur.
             </p>
             <p className="leading-relaxed">
               En novembre 2024, il a commencé à corriger ça, pièce par pièce : VertiFlow,
               basée à Bordeaux. Puis une blessure a tout mis en pause. Revenir a pris plus
               de temps, et a été plus dur, que les huit années de compétition qui
-              précédaient — de son propre aveu. C&apos;est aussi pour ça que la porte
+              précédaient. C&apos;est aussi pour ça que la porte
               reste ouverte ici : celui qui a dû tout reconstruire ne juge pas une
               première séance ratée.
             </p>
@@ -183,9 +182,9 @@ export function APropos() {
               <p className="leading-relaxed">
                 À côté de la marque, un club existe aussi : PKBA, fondé par la même
                 personne, une association loi 1901 distincte, budgets séparés,
-                aujourd&apos;hui plus de 80 licenciés. Pas la raison d&apos;être de
-                VertiFlow — une preuve de plus que tout ça vient d&apos;une vraie
-                pratique, pas d&apos;un moodboard.
+                aujourd&apos;hui plus de 80 licenciés. Ce n&apos;est pas la raison d&apos;être
+                de VertiFlow, juste une preuve de plus que tout ça vient d&apos;une
+                vraie pratique et pas d&apos;un moodboard.
               </p>
               <a
                 href={PKBA_URL}
@@ -205,7 +204,7 @@ export function APropos() {
             Envie de bouger, ou envie de porter la marque ?
           </h2>
           <p className="mt-6 max-w-md leading-relaxed text-neutral-700">
-            Une première séance ou une pièce à porter — les deux commencent ici.
+            Une première séance ou une pièce à porter, les deux commencent ici.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link

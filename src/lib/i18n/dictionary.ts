@@ -123,12 +123,12 @@ const fr: Dictionary = {
   },
   home: {
     seo: {
-      title: 'VertiFlow — la porte d’entrée vers le parkour',
+      title: 'VertiFlow, la porte d’entrée vers le parkour',
       description:
         'Des vêtements de parkour faits pour bouger, et tout ce qu’il faut pour commencer. Bassin d’Arcachon.',
     },
     hero: {
-      eyebrow: "Bassin d'Arcachon — depuis 2024",
+      eyebrow: "Bassin d'Arcachon, depuis 2024",
       headingBefore: 'Apprends à passer,',
       headingAfter: 'pas à',
       headingEmphasis: 'contourner',
@@ -156,7 +156,7 @@ const fr: Dictionary = {
       number: '03',
       title: "D'où ça vient",
       bodyPrimary:
-        "VertiFlow n'est pas une marque de streetwear qui a choisi le parkour comme décor. Elle existe parce qu'un vêtement de sport classique ne survit pas à une vraie séance — fondée par un athlète FFG de niveau national qui savait exactement ce qui lâche.",
+        "VertiFlow n'est pas une marque de streetwear qui a choisi le parkour comme décor. Elle existe parce qu'un vêtement de sport classique ne survit pas à une vraie séance. Celui qui l'a fondée est un athlète FFG de niveau national, il savait exactement ce qui lâche.",
       bodySecondary:
         "Une blessure a tout mis en pause. Revenir a été plus dur que commencer, et c'est une des raisons pour lesquelles la porte reste ouverte ici.",
       link: "L'histoire complète →",
@@ -220,7 +220,7 @@ const fr: Dictionary = {
     legalMentions: 'Mentions légales',
     legalTerms: 'CGV',
     legalPrivacy: 'Confidentialité',
-    copyrightTemplate: '© {year} VertiFlow — micro-entreprise',
+    copyrightTemplate: '© {year} VertiFlow, micro-entreprise',
     clubNotePrefix: 'Le club',
     clubNoteSuffix: 'est une association loi 1901 distincte.',
   },
@@ -253,12 +253,12 @@ const en: Dictionary = {
   },
   home: {
     seo: {
-      title: 'VertiFlow — the door into parkour',
+      title: 'VertiFlow, the door into parkour',
       description:
         'Parkour clothing built to move in, and everything you need to get started. Bassin d’Arcachon, France.',
     },
     hero: {
-      eyebrow: "Bassin d'Arcachon — since 2024",
+      eyebrow: "Bassin d'Arcachon, since 2024",
       headingBefore: 'Learn to pass.',
       headingAfter: 'Not to',
       headingEmphasis: 'go around',
@@ -286,7 +286,7 @@ const en: Dictionary = {
       number: '03',
       title: 'Where this comes from',
       bodyPrimary:
-        "VertiFlow isn't a streetwear label that picked parkour as a backdrop. It exists because ordinary sportswear doesn't survive a real session — founded by a national-level FFG athlete who knew exactly what fails mid-session.",
+        "VertiFlow isn't a streetwear label that picked parkour as a backdrop. It exists because ordinary sportswear doesn't survive a real session. The person who founded it is a national-level FFG athlete, he knew exactly what fails mid-session.",
       bodySecondary:
         "An injury put all of it on hold. The comeback was harder than starting ever was, and that's part of why the door stays open here.",
       link: 'The full story →',
@@ -350,7 +350,7 @@ const en: Dictionary = {
     legalMentions: 'Legal notice',
     legalTerms: 'Terms of sale',
     legalPrivacy: 'Privacy',
-    copyrightTemplate: '© {year} VertiFlow — micro-entreprise',
+    copyrightTemplate: '© {year} VertiFlow, micro-entreprise',
     clubNotePrefix: 'The',
     clubNoteSuffix: 'club is a separate nonprofit association.',
   },

@@ -4,7 +4,7 @@ import { loadImageDataUri } from '@/lib/og/assets'
 import { loadBrandFonts } from '@/lib/og/fonts'
 import { ogColor, OG_SIZE } from '@/lib/og/theme'
 
-export const alt = 'VertiFlow — la porte d’entrée vers le parkour'
+export const alt = 'VertiFlow, la porte d’entrée vers le parkour'
 export const size = OG_SIZE
 export const contentType = 'image/png'
 

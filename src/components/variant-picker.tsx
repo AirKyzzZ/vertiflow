@@ -22,7 +22,7 @@ export function VariantPicker({ palette, sizes, colour, size, onColour, onSize, 
       {palette.length > 1 && (
         <div>
           <p className="eyebrow text-neutral-500">
-            {dict.colourLabel} — <span className="text-ink">{colour}</span>
+            {dict.colourLabel} : <span className="text-ink">{colour}</span>
           </p>
           <div className="mt-3 flex gap-3">
             {palette.map((value) => (
