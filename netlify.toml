@@ -1,12 +1,12 @@
 [build]
-  functions = "functions"
-  publish = "public"
+  command = "npm run build"
+  publish = ".next"
 
 [build.environment]
   NODE_VERSION = "22"
 
-[functions]
-  included_files = ["data/products.json"]
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
 
 # Cache static assets for 1 year
 [[headers]]

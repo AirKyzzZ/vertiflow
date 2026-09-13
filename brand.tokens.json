@@ -1,0 +1,18 @@
+{
+  "color": {
+    "base": "#0B0B0C",
+    "paper": "#F7F4EF",
+    "accent": "#E8912D",
+    "neutral": {
+      "900": "#1A1A1D",
+      "700": "#3D3D42",
+      "500": "#6E6E76",
+      "300": "#B4B4BC",
+      "100": "#E4E2DE"
+    }
+  },
+  "font": {
+    "display": "'Archivo Expanded', 'Archivo', system-ui, sans-serif",
+    "body": "'Inter', system-ui, sans-serif"
+  }
+}

@@ -11,7 +11,10 @@
         376170525,
         377330919
       ],
-      "stripe_product_id": "prod_Uu1r9rybCSxQ99",
+      "stripe_product_id": {
+        "test": "prod_Uu1r9rybCSxQ99",
+        "live": "prod_V7yP2FQBNMDc3X"
+      },
       "variants": [
         {
           "color": "Noir",
@@ -21,7 +24,10 @@
           "printful_sync_product_id": 376170525,
           "printful_sync_variant_id": 4736126963,
           "printful_catalog_variant_id": 11546,
-          "stripe_price_id": "price_1TuDoAImMzY0wzqJo0rO4uBH",
+          "stripe_price_id": {
+            "test": "price_1TuDoAImMzY0wzqJo0rO4uBH",
+            "live": "price_1U7iSPImMzY0wzqJ2EX4HoNl"
+          },
           "image_url": "https://files.cdn.printful.com/files/972/97276506fec22f1f552dd469b110dbc6_preview.png",
           "active": true
         },
@@ -33,7 +39,10 @@
           "printful_sync_product_id": 376170525,
           "printful_sync_variant_id": 4736126964,
           "printful_catalog_variant_id": 11547,
-          "stripe_price_id": "price_1TuDoBImMzY0wzqJvHmeBfuX",
+          "stripe_price_id": {
+            "test": "price_1TuDoBImMzY0wzqJvHmeBfuX",
+            "live": "price_1U7iSQImMzY0wzqJygEdobQ4"
+          },
           "image_url": "https://files.cdn.printful.com/files/972/97276506fec22f1f552dd469b110dbc6_preview.png",
           "active": true
         },
@@ -45,7 +54,10 @@
           "printful_sync_product_id": 376170525,
           "printful_sync_variant_id": 4736126965,
           "printful_catalog_variant_id": 11548,
-          "stripe_price_id": "price_1TuDoCImMzY0wzqJFGwhdJzv",
+          "stripe_price_id": {
+            "test": "price_1TuDoCImMzY0wzqJFGwhdJzv",
+            "live": "price_1U7iSQImMzY0wzqJ1qfpbLWn"
+          },
           "image_url": "https://files.cdn.printful.com/files/972/97276506fec22f1f552dd469b110dbc6_preview.png",
           "active": true
         },
@@ -57,7 +69,10 @@
           "printful_sync_product_id": 376170525,
           "printful_sync_variant_id": 4736126966,
           "printful_catalog_variant_id": 11549,
-          "stripe_price_id": "price_1TuDoDImMzY0wzqJI2H6hTd8",
+          "stripe_price_id": {
+            "test": "price_1TuDoDImMzY0wzqJI2H6hTd8",
+            "live": "price_1U7iSRImMzY0wzqJmN5oDsxD"
+          },
           "image_url": "https://files.cdn.printful.com/files/972/97276506fec22f1f552dd469b110dbc6_preview.png",
           "active": true
         },
@@ -69,7 +84,10 @@
           "printful_sync_product_id": 376170525,
           "printful_sync_variant_id": 4736126968,
           "printful_catalog_variant_id": 11550,
-          "stripe_price_id": "price_1TuDoEImMzY0wzqJ4xyj4Go6",
+          "stripe_price_id": {
+            "test": "price_1TuDoEImMzY0wzqJ4xyj4Go6",
+            "live": "price_1U7iSRImMzY0wzqJDXPSOtr2"
+          },
           "image_url": "https://files.cdn.printful.com/files/972/97276506fec22f1f552dd469b110dbc6_preview.png",
           "active": true
         },
@@ -81,7 +99,10 @@
           "printful_sync_product_id": 377330919,
           "printful_sync_variant_id": 4748621312,
           "printful_catalog_variant_id": 11576,
-          "stripe_price_id": "price_1TuDoFImMzY0wzqJ5XT7nXxX",
+          "stripe_price_id": {
+            "test": "price_1TuDoFImMzY0wzqJ5XT7nXxX",
+            "live": "price_1U7iSSImMzY0wzqJ8vQpmmGy"
+          },
           "image_url": "https://files.cdn.printful.com/files/cea/cea2815271d823facc281126f8ac85ac_preview.png",
           "active": true
         },
@@ -93,7 +114,10 @@
           "printful_sync_product_id": 377330919,
           "printful_sync_variant_id": 4748621313,
           "printful_catalog_variant_id": 11577,
-          "stripe_price_id": "price_1TuDoGImMzY0wzqJvO1lHWS7",
+          "stripe_price_id": {
+            "test": "price_1TuDoGImMzY0wzqJvO1lHWS7",
+            "live": "price_1U7iSTImMzY0wzqJtKzZhSRv"
+          },
           "image_url": "https://files.cdn.printful.com/files/cea/cea2815271d823facc281126f8ac85ac_preview.png",
           "active": true
         },
@@ -105,7 +129,10 @@
           "printful_sync_product_id": 377330919,
           "printful_sync_variant_id": 4748621314,
           "printful_catalog_variant_id": 11578,
-          "stripe_price_id": "price_1TuDoHImMzY0wzqJyyB3bU41",
+          "stripe_price_id": {
+            "test": "price_1TuDoHImMzY0wzqJyyB3bU41",
+            "live": "price_1U7iSTImMzY0wzqJmBXcHL5J"
+          },
           "image_url": "https://files.cdn.printful.com/files/cea/cea2815271d823facc281126f8ac85ac_preview.png",
           "active": true
         },
@@ -117,7 +144,10 @@
           "printful_sync_product_id": 377330919,
           "printful_sync_variant_id": 4748621315,
           "printful_catalog_variant_id": 11579,
-          "stripe_price_id": "price_1TuDoIImMzY0wzqJCULPtntc",
+          "stripe_price_id": {
+            "test": "price_1TuDoIImMzY0wzqJCULPtntc",
+            "live": "price_1U7iSUImMzY0wzqJYc3M7f4t"
+          },
           "image_url": "https://files.cdn.printful.com/files/cea/cea2815271d823facc281126f8ac85ac_preview.png",
           "active": true
         },
@@ -129,7 +159,10 @@
           "printful_sync_product_id": 377330919,
           "printful_sync_variant_id": 4748621316,
           "printful_catalog_variant_id": 11580,
-          "stripe_price_id": "price_1TuDoJImMzY0wzqJxYeHBIK6",
+          "stripe_price_id": {
+            "test": "price_1TuDoJImMzY0wzqJxYeHBIK6",
+            "live": "price_1U7iSUImMzY0wzqJN5Qp1Qel"
+          },
           "image_url": "https://files.cdn.printful.com/files/cea/cea2815271d823facc281126f8ac85ac_preview.png",
           "active": true
         }
@@ -143,7 +176,10 @@
         376418591,
         377337480
       ],
-      "stripe_product_id": "prod_Uu1sh351lCoCiz",
+      "stripe_product_id": {
+        "test": "prod_Uu1sh351lCoCiz",
+        "live": "prod_V7yPYyy2ItTY6P"
+      },
       "variants": [
         {
           "color": "Noir",
@@ -153,7 +189,10 @@
           "printful_sync_product_id": 376418591,
           "printful_sync_variant_id": 4739108643,
           "printful_catalog_variant_id": 10779,
-          "stripe_price_id": "price_1TuDoKImMzY0wzqJIPXjY1nW",
+          "stripe_price_id": {
+            "test": "price_1TuDoKImMzY0wzqJIPXjY1nW",
+            "live": "price_1U7iSWImMzY0wzqJX2MwyY9p"
+          },
           "image_url": "https://files.cdn.printful.com/files/e28/e2841e982626fd73c5cca8cb7ffbf251_preview.png",
           "active": true
         },
@@ -165,7 +204,10 @@
           "printful_sync_product_id": 376418591,
           "printful_sync_variant_id": 4739108644,
           "printful_catalog_variant_id": 10780,
-          "stripe_price_id": "price_1TuDoLImMzY0wzqJeNoLkLJe",
+          "stripe_price_id": {
+            "test": "price_1TuDoLImMzY0wzqJeNoLkLJe",
+            "live": "price_1U7iSWImMzY0wzqJtTmtCz7B"
+          },
           "image_url": "https://files.cdn.printful.com/files/e28/e2841e982626fd73c5cca8cb7ffbf251_preview.png",
           "active": true
         },
@@ -177,7 +219,10 @@
           "printful_sync_product_id": 376418591,
           "printful_sync_variant_id": 4739108645,
           "printful_catalog_variant_id": 10781,
-          "stripe_price_id": "price_1TuDoMImMzY0wzqJGJjDREyp",
+          "stripe_price_id": {
+            "test": "price_1TuDoMImMzY0wzqJGJjDREyp",
+            "live": "price_1U7iSXImMzY0wzqJIUgEVOq3"
+          },
           "image_url": "https://files.cdn.printful.com/files/e28/e2841e982626fd73c5cca8cb7ffbf251_preview.png",
           "active": true
         },
@@ -189,7 +234,10 @@
           "printful_sync_product_id": 376418591,
           "printful_sync_variant_id": 4739108646,
           "printful_catalog_variant_id": 10782,
-          "stripe_price_id": "price_1TuDoNImMzY0wzqJvh4TOz1I",
+          "stripe_price_id": {
+            "test": "price_1TuDoNImMzY0wzqJvh4TOz1I",
+            "live": "price_1U7iSYImMzY0wzqJnSN4ckzE"
+          },
           "image_url": "https://files.cdn.printful.com/files/e28/e2841e982626fd73c5cca8cb7ffbf251_preview.png",
           "active": true
         },
@@ -201,7 +249,10 @@
           "printful_sync_product_id": 376418591,
           "printful_sync_variant_id": 4739108647,
           "printful_catalog_variant_id": 10783,
-          "stripe_price_id": "price_1TuDoNImMzY0wzqJC30cBYdk",
+          "stripe_price_id": {
+            "test": "price_1TuDoNImMzY0wzqJC30cBYdk",
+            "live": "price_1U7iSYImMzY0wzqJbWr2e7k5"
+          },
           "image_url": "https://files.cdn.printful.com/files/e28/e2841e982626fd73c5cca8cb7ffbf251_preview.png",
           "active": true
         },
@@ -213,7 +264,10 @@
           "printful_sync_product_id": 377337480,
           "printful_sync_variant_id": 4748673535,
           "printful_catalog_variant_id": 10774,
-          "stripe_price_id": "price_1TuDoOImMzY0wzqJcawsoLIl",
+          "stripe_price_id": {
+            "test": "price_1TuDoOImMzY0wzqJcawsoLIl",
+            "live": "price_1U7iSZImMzY0wzqJhiJt7PwG"
+          },
           "image_url": "https://files.cdn.printful.com/files/15c/15c9ca5657bf08b547c6ed9c3b4331db_preview.png",
           "active": true
         },
@@ -225,7 +279,10 @@
           "printful_sync_product_id": 377337480,
           "printful_sync_variant_id": 4748673537,
           "printful_catalog_variant_id": 10775,
-          "stripe_price_id": "price_1TuDoPImMzY0wzqJQ8OPsK0H",
+          "stripe_price_id": {
+            "test": "price_1TuDoPImMzY0wzqJQ8OPsK0H",
+            "live": "price_1U7iSZImMzY0wzqJup0y51xW"
+          },
           "image_url": "https://files.cdn.printful.com/files/15c/15c9ca5657bf08b547c6ed9c3b4331db_preview.png",
           "active": true
         },
@@ -237,7 +294,10 @@
           "printful_sync_product_id": 377337480,
           "printful_sync_variant_id": 4748673539,
           "printful_catalog_variant_id": 10776,
-          "stripe_price_id": "price_1TuDoQImMzY0wzqJvOrIO4mv",
+          "stripe_price_id": {
+            "test": "price_1TuDoQImMzY0wzqJvOrIO4mv",
+            "live": "price_1U7iSaImMzY0wzqJzU0sklVT"
+          },
           "image_url": "https://files.cdn.printful.com/files/15c/15c9ca5657bf08b547c6ed9c3b4331db_preview.png",
           "active": true
         },
@@ -249,7 +309,10 @@
           "printful_sync_product_id": 377337480,
           "printful_sync_variant_id": 4748673542,
           "printful_catalog_variant_id": 10777,
-          "stripe_price_id": "price_1TuDoRImMzY0wzqJGAYy43BO",
+          "stripe_price_id": {
+            "test": "price_1TuDoRImMzY0wzqJGAYy43BO",
+            "live": "price_1U7iSaImMzY0wzqJ3Cst7H2D"
+          },
           "image_url": "https://files.cdn.printful.com/files/15c/15c9ca5657bf08b547c6ed9c3b4331db_preview.png",
           "active": true
         },
@@ -261,7 +324,10 @@
           "printful_sync_product_id": 377337480,
           "printful_sync_variant_id": 4748673544,
           "printful_catalog_variant_id": 10778,
-          "stripe_price_id": "price_1TuDoSImMzY0wzqJBqlCGQ5R",
+          "stripe_price_id": {
+            "test": "price_1TuDoSImMzY0wzqJBqlCGQ5R",
+            "live": "price_1U7iSbImMzY0wzqJNb4W0bcy"
+          },
           "image_url": "https://files.cdn.printful.com/files/15c/15c9ca5657bf08b547c6ed9c3b4331db_preview.png",
           "active": true
         }
@@ -275,7 +341,10 @@
         376418706,
         377338630
       ],
-      "stripe_product_id": "prod_Uu1sT89qSg2r4R",
+      "stripe_product_id": {
+        "test": "prod_Uu1sT89qSg2r4R",
+        "live": "prod_V7yPM1LcDtfKRm"
+      },
       "variants": [
         {
           "color": "Noir",
@@ -285,7 +354,10 @@
           "printful_sync_product_id": 376418706,
           "printful_sync_variant_id": 4739109534,
           "printful_catalog_variant_id": 7854,
-          "stripe_price_id": "price_1TuDoTImMzY0wzqJaHxtMKUj",
+          "stripe_price_id": {
+            "test": "price_1TuDoTImMzY0wzqJaHxtMKUj",
+            "live": "price_1U7iSdImMzY0wzqJqx8RnjZH"
+          },
           "image_url": "https://files.cdn.printful.com/files/e28/e2841e982626fd73c5cca8cb7ffbf251_preview.png",
           "active": true
         },
@@ -297,7 +369,10 @@
           "printful_sync_product_id": 377338630,
           "printful_sync_variant_id": 4748683029,
           "printful_catalog_variant_id": 7853,
-          "stripe_price_id": "price_1TuDoUImMzY0wzqJsVULpZmK",
+          "stripe_price_id": {
+            "test": "price_1TuDoUImMzY0wzqJsVULpZmK",
+            "live": "price_1U7iSdImMzY0wzqJF56zrWYS"
+          },
           "image_url": "https://files.cdn.printful.com/files/15c/15c9ca5657bf08b547c6ed9c3b4331db_preview.png",
           "active": true
         }
@@ -311,7 +386,10 @@
         376418808,
         377338525
       ],
-      "stripe_product_id": "prod_Uu1sYUYqwqAoO7",
+      "stripe_product_id": {
+        "test": "prod_Uu1sYUYqwqAoO7",
+        "live": "prod_V7yPVN5Wvp9E7q"
+      },
       "variants": [
         {
           "color": "Noir",
@@ -321,7 +399,10 @@
           "printful_sync_product_id": 376418808,
           "printful_sync_variant_id": 4739110435,
           "printful_catalog_variant_id": 17388,
-          "stripe_price_id": "price_1TuDoVImMzY0wzqJluRYfZkZ",
+          "stripe_price_id": {
+            "test": "price_1TuDoVImMzY0wzqJluRYfZkZ",
+            "live": "price_1U7iSfImMzY0wzqJIzQ2MiE8"
+          },
           "image_url": "https://files.cdn.printful.com/products/693/17388_1686822409.jpg",
           "active": true
         },
@@ -333,7 +414,10 @@
           "printful_sync_product_id": 376418808,
           "printful_sync_variant_id": 4739110436,
           "printful_catalog_variant_id": 17389,
-          "stripe_price_id": "price_1TuDoWImMzY0wzqJzXdMIhGG",
+          "stripe_price_id": {
+            "test": "price_1TuDoWImMzY0wzqJzXdMIhGG",
+            "live": "price_1U7iSgImMzY0wzqJKZ4cbByM"
+          },
           "image_url": "https://files.cdn.printful.com/products/693/17389_1686822429.jpg",
           "active": true
         },
@@ -345,7 +429,10 @@
           "printful_sync_product_id": 376418808,
           "printful_sync_variant_id": 4739110437,
           "printful_catalog_variant_id": 17390,
-          "stripe_price_id": "price_1TuDoXImMzY0wzqJggSarwU2",
+          "stripe_price_id": {
+            "test": "price_1TuDoXImMzY0wzqJggSarwU2",
+            "live": "price_1U7iSgImMzY0wzqJFDKdxlvZ"
+          },
           "image_url": "https://files.cdn.printful.com/products/693/17390_1686822420.jpg",
           "active": true
         },
@@ -357,7 +444,10 @@
           "printful_sync_product_id": 376418808,
           "printful_sync_variant_id": 4739110438,
           "printful_catalog_variant_id": 17391,
-          "stripe_price_id": "price_1TuDoYImMzY0wzqJR9xLaDG1",
+          "stripe_price_id": {
+            "test": "price_1TuDoYImMzY0wzqJR9xLaDG1",
+            "live": "price_1U7iShImMzY0wzqJLvQSh7s7"
+          },
           "image_url": "https://files.cdn.printful.com/products/693/17391_1686822420.jpg",
           "active": true
         },
@@ -369,7 +459,10 @@
           "printful_sync_product_id": 376418808,
           "printful_sync_variant_id": 4739110439,
           "printful_catalog_variant_id": 17392,
-          "stripe_price_id": "price_1TuDoZImMzY0wzqJfumRw8nn",
+          "stripe_price_id": {
+            "test": "price_1TuDoZImMzY0wzqJfumRw8nn",
+            "live": "price_1U7iShImMzY0wzqJSixzaIsS"
+          },
           "image_url": "https://files.cdn.printful.com/products/693/17392_1686822420.jpg",
           "active": true
         },
@@ -381,7 +474,10 @@
           "printful_sync_product_id": 376418808,
           "printful_sync_variant_id": 4739110440,
           "printful_catalog_variant_id": 17393,
-          "stripe_price_id": "price_1TuDoaImMzY0wzqJlrTxwi5G",
+          "stripe_price_id": {
+            "test": "price_1TuDoaImMzY0wzqJlrTxwi5G",
+            "live": "price_1U7iSiImMzY0wzqJsX527uVa"
+          },
           "image_url": "https://files.cdn.printful.com/products/693/17393_1686822429.jpg",
           "active": true
         },
@@ -393,7 +489,10 @@
           "printful_sync_product_id": 376418808,
           "printful_sync_variant_id": 4739110441,
           "printful_catalog_variant_id": 17394,
-          "stripe_price_id": "price_1TuDobImMzY0wzqJd1uo5z1P",
+          "stripe_price_id": {
+            "test": "price_1TuDobImMzY0wzqJd1uo5z1P",
+            "live": "price_1U7iSiImMzY0wzqJX9zV0z80"
+          },
           "image_url": "https://files.cdn.printful.com/products/693/17394_1686822399.jpg",
           "active": true
         },
@@ -405,7 +504,10 @@
           "printful_sync_product_id": 377338525,
           "printful_sync_variant_id": 4748682317,
           "printful_catalog_variant_id": 17388,
-          "stripe_price_id": "price_1TuDocImMzY0wzqJnkobEfeu",
+          "stripe_price_id": {
+            "test": "price_1TuDocImMzY0wzqJnkobEfeu",
+            "live": "price_1U7iSjImMzY0wzqJ6wlLCvLh"
+          },
           "image_url": "https://files.cdn.printful.com/files/15c/15c9ca5657bf08b547c6ed9c3b4331db_preview.png",
           "active": true
         },
@@ -417,7 +519,10 @@
           "printful_sync_product_id": 377338525,
           "printful_sync_variant_id": 4748682318,
           "printful_catalog_variant_id": 17389,
-          "stripe_price_id": "price_1TuDocImMzY0wzqJjsPlLshE",
+          "stripe_price_id": {
+            "test": "price_1TuDocImMzY0wzqJjsPlLshE",
+            "live": "price_1U7iSjImMzY0wzqJAWDmvAR9"
+          },
           "image_url": "https://files.cdn.printful.com/files/15c/15c9ca5657bf08b547c6ed9c3b4331db_preview.png",
           "active": true
         },
@@ -429,7 +534,10 @@
           "printful_sync_product_id": 377338525,
           "printful_sync_variant_id": 4748682319,
           "printful_catalog_variant_id": 17390,
-          "stripe_price_id": "price_1TuDodImMzY0wzqJywp9DjkA",
+          "stripe_price_id": {
+            "test": "price_1TuDodImMzY0wzqJywp9DjkA",
+            "live": "price_1U7iSkImMzY0wzqJcvyouSWl"
+          },
           "image_url": "https://files.cdn.printful.com/files/15c/15c9ca5657bf08b547c6ed9c3b4331db_preview.png",
           "active": true
         },
@@ -441,7 +549,10 @@
           "printful_sync_product_id": 377338525,
           "printful_sync_variant_id": 4748682320,
           "printful_catalog_variant_id": 17391,
-          "stripe_price_id": "price_1TuDoeImMzY0wzqJ91th2Ibl",
+          "stripe_price_id": {
+            "test": "price_1TuDoeImMzY0wzqJ91th2Ibl",
+            "live": "price_1U7iSlImMzY0wzqJguQ0AliM"
+          },
           "image_url": "https://files.cdn.printful.com/files/15c/15c9ca5657bf08b547c6ed9c3b4331db_preview.png",
           "active": true
         },
@@ -453,7 +564,10 @@
           "printful_sync_product_id": 377338525,
           "printful_sync_variant_id": 4748682321,
           "printful_catalog_variant_id": 17392,
-          "stripe_price_id": "price_1TuDofImMzY0wzqJft5NyF6u",
+          "stripe_price_id": {
+            "test": "price_1TuDofImMzY0wzqJft5NyF6u",
+            "live": "price_1U7iSlImMzY0wzqJ7TNgVaYZ"
+          },
           "image_url": "https://files.cdn.printful.com/files/15c/15c9ca5657bf08b547c6ed9c3b4331db_preview.png",
           "active": true
         },
@@ -465,7 +579,10 @@
           "printful_sync_product_id": 377338525,
           "printful_sync_variant_id": 4748682323,
           "printful_catalog_variant_id": 17393,
-          "stripe_price_id": "price_1TuDogImMzY0wzqJxmxPCPMZ",
+          "stripe_price_id": {
+            "test": "price_1TuDogImMzY0wzqJxmxPCPMZ",
+            "live": "price_1U7iSmImMzY0wzqJfjsj6spB"
+          },
           "image_url": "https://files.cdn.printful.com/files/15c/15c9ca5657bf08b547c6ed9c3b4331db_preview.png",
           "active": true
         },
@@ -477,7 +594,10 @@
           "printful_sync_product_id": 377338525,
           "printful_sync_variant_id": 4748682324,
           "printful_catalog_variant_id": 17394,
-          "stripe_price_id": "price_1TuDohImMzY0wzqJqCTFtro2",
+          "stripe_price_id": {
+            "test": "price_1TuDohImMzY0wzqJqCTFtro2",
+            "live": "price_1U7iSmImMzY0wzqJO6Yef0jk"
+          },
           "image_url": "https://files.cdn.printful.com/files/15c/15c9ca5657bf08b547c6ed9c3b4331db_preview.png",
           "active": true
         }
@@ -491,7 +611,10 @@
         377417508,
         376418868
       ],
-      "stripe_product_id": "prod_Uu1sByUCxtSqm2",
+      "stripe_product_id": {
+        "test": "prod_Uu1sByUCxtSqm2",
+        "live": "prod_V7yPshkx8nPJ6A"
+      },
       "variants": [
         {
           "color": "Noir",
@@ -501,7 +624,10 @@
           "printful_sync_product_id": 377417508,
           "printful_sync_variant_id": 4749424609,
           "printful_catalog_variant_id": 16888,
-          "stripe_price_id": "price_1TuDojImMzY0wzqJNjLNlIYv",
+          "stripe_price_id": {
+            "test": "price_1TuDojImMzY0wzqJNjLNlIYv",
+            "live": "price_1U7iSoImMzY0wzqJLzYss8Al"
+          },
           "image_url": "https://files.cdn.printful.com/products/683/16888_1681967457.jpg",
           "active": true
         },
@@ -513,7 +639,10 @@
           "printful_sync_product_id": 377417508,
           "printful_sync_variant_id": 4749424610,
           "printful_catalog_variant_id": 16890,
-          "stripe_price_id": "price_1TuDojImMzY0wzqJP0fRBq84",
+          "stripe_price_id": {
+            "test": "price_1TuDojImMzY0wzqJP0fRBq84",
+            "live": "price_1U7iSpImMzY0wzqJdyuTRXBU"
+          },
           "image_url": "https://files.cdn.printful.com/products/683/16890_1681967457.jpg",
           "active": true
         },
@@ -525,7 +654,10 @@
           "printful_sync_product_id": 377417508,
           "printful_sync_variant_id": 4749424611,
           "printful_catalog_variant_id": 16892,
-          "stripe_price_id": "price_1TuDokImMzY0wzqJ6MLXpYtr",
+          "stripe_price_id": {
+            "test": "price_1TuDokImMzY0wzqJ6MLXpYtr",
+            "live": "price_1U7iSpImMzY0wzqJrmrXYuTU"
+          },
           "image_url": "https://files.cdn.printful.com/products/683/16892_1681967451.jpg",
           "active": true
         },
@@ -537,7 +669,10 @@
           "printful_sync_product_id": 377417508,
           "printful_sync_variant_id": 4749424612,
           "printful_catalog_variant_id": 16894,
-          "stripe_price_id": "price_1TuDolImMzY0wzqJLWFITDef",
+          "stripe_price_id": {
+            "test": "price_1TuDolImMzY0wzqJLWFITDef",
+            "live": "price_1U7iSqImMzY0wzqJcwp7TWKU"
+          },
           "image_url": "https://files.cdn.printful.com/products/683/16894_1681967461.jpg",
           "active": true
         },
@@ -549,7 +684,10 @@
           "printful_sync_product_id": 377417508,
           "printful_sync_variant_id": 4749424613,
           "printful_catalog_variant_id": 16898,
-          "stripe_price_id": "price_1TuDomImMzY0wzqJGZwaMe0C",
+          "stripe_price_id": {
+            "test": "price_1TuDomImMzY0wzqJGZwaMe0C",
+            "live": "price_1U7iSqImMzY0wzqJyMjRWHYL"
+          },
           "image_url": "https://files.cdn.printful.com/products/683/16898_1681967478.jpg",
           "active": true
         },
@@ -561,7 +699,10 @@
           "printful_sync_product_id": 377417508,
           "printful_sync_variant_id": 4749424614,
           "printful_catalog_variant_id": 16896,
-          "stripe_price_id": "price_1TuDonImMzY0wzqJB8YWtz3a",
+          "stripe_price_id": {
+            "test": "price_1TuDonImMzY0wzqJB8YWtz3a",
+            "live": "price_1U7iSrImMzY0wzqJQuKR716p"
+          },
           "image_url": "https://files.cdn.printful.com/products/683/16896_1681967473.jpg",
           "active": true
         },
@@ -573,7 +714,10 @@
           "printful_sync_product_id": 377417508,
           "printful_sync_variant_id": 4749424615,
           "printful_catalog_variant_id": 16900,
-          "stripe_price_id": "price_1TuDooImMzY0wzqJcsvWKBIu",
+          "stripe_price_id": {
+            "test": "price_1TuDooImMzY0wzqJcsvWKBIu",
+            "live": "price_1U7iSrImMzY0wzqJBT0rJbva"
+          },
           "image_url": "https://files.cdn.printful.com/products/683/16900_1681967467.jpg",
           "active": true
         },
@@ -585,7 +729,10 @@
           "printful_sync_product_id": 377417508,
           "printful_sync_variant_id": 4749424616,
           "printful_catalog_variant_id": 16902,
-          "stripe_price_id": "price_1TuDopImMzY0wzqJQggIrXJ0",
+          "stripe_price_id": {
+            "test": "price_1TuDopImMzY0wzqJQggIrXJ0",
+            "live": "price_1U7iSsImMzY0wzqJLAW8Ad7c"
+          },
           "image_url": "https://files.cdn.printful.com/products/683/16902_1681967483.jpg",
           "active": true
         },
@@ -597,7 +744,10 @@
           "printful_sync_product_id": 377417508,
           "printful_sync_variant_id": 4749424617,
           "printful_catalog_variant_id": 16906,
-          "stripe_price_id": "price_1TuDoqImMzY0wzqJMnfDXlKY",
+          "stripe_price_id": {
+            "test": "price_1TuDoqImMzY0wzqJMnfDXlKY",
+            "live": "price_1U7iStImMzY0wzqJGoZx8ych"
+          },
           "image_url": "https://files.cdn.printful.com/products/683/16906_1681967496.jpg",
           "active": true
         },
@@ -609,7 +759,10 @@
           "printful_sync_product_id": 377417508,
           "printful_sync_variant_id": 4749424618,
           "printful_catalog_variant_id": 16904,
-          "stripe_price_id": "price_1TuDorImMzY0wzqJ8ysM7adH",
+          "stripe_price_id": {
+            "test": "price_1TuDorImMzY0wzqJ8ysM7adH",
+            "live": "price_1U7iStImMzY0wzqJ4gPzjHRm"
+          },
           "image_url": "https://files.cdn.printful.com/products/683/16904_1681967488.jpg",
           "active": true
         },
@@ -621,7 +774,10 @@
           "printful_sync_product_id": 377417508,
           "printful_sync_variant_id": 4749424619,
           "printful_catalog_variant_id": 16908,
-          "stripe_price_id": "price_1TuDosImMzY0wzqJzor2FEvE",
+          "stripe_price_id": {
+            "test": "price_1TuDosImMzY0wzqJzor2FEvE",
+            "live": "price_1U7iSuImMzY0wzqJOTVkFU5h"
+          },
           "image_url": "https://files.cdn.printful.com/products/683/16908_1681967484.jpg",
           "active": true
         },
@@ -633,7 +789,10 @@
           "printful_sync_product_id": 377417508,
           "printful_sync_variant_id": 4749424620,
           "printful_catalog_variant_id": 16910,
-          "stripe_price_id": "price_1TuDotImMzY0wzqJw2G0vWwN",
+          "stripe_price_id": {
+            "test": "price_1TuDotImMzY0wzqJw2G0vWwN",
+            "live": "price_1U7iSuImMzY0wzqJUkQLiR0N"
+          },
           "image_url": "https://files.cdn.printful.com/products/683/16910_1681967517.jpg",
           "active": true
         },
@@ -645,7 +804,10 @@
           "printful_sync_product_id": 377417508,
           "printful_sync_variant_id": 4749424621,
           "printful_catalog_variant_id": 16914,
-          "stripe_price_id": "price_1TuDouImMzY0wzqJUijfQQiV",
+          "stripe_price_id": {
+            "test": "price_1TuDouImMzY0wzqJUijfQQiV",
+            "live": "price_1U7iSvImMzY0wzqJiTxF0OqJ"
+          },
           "image_url": "https://files.cdn.printful.com/products/683/16914_1681967519.jpg",
           "active": true
         },
@@ -657,7 +819,10 @@
           "printful_sync_product_id": 377417508,
           "printful_sync_variant_id": 4749424622,
           "printful_catalog_variant_id": 16912,
-          "stripe_price_id": "price_1TuDovImMzY0wzqJs7aUweri",
+          "stripe_price_id": {
+            "test": "price_1TuDovImMzY0wzqJs7aUweri",
+            "live": "price_1U7iSvImMzY0wzqJcDMmylM1"
+          },
           "image_url": "https://files.cdn.printful.com/products/683/16912_1681967516.jpg",
           "active": true
         },
@@ -669,7 +834,10 @@
           "printful_sync_product_id": 377417508,
           "printful_sync_variant_id": 4749424623,
           "printful_catalog_variant_id": 16916,
-          "stripe_price_id": "price_1TuDowImMzY0wzqJohszxc0Q",
+          "stripe_price_id": {
+            "test": "price_1TuDowImMzY0wzqJohszxc0Q",
+            "live": "price_1U7iSwImMzY0wzqJAJWmCwEs"
+          },
           "image_url": "https://files.cdn.printful.com/products/683/16916_1681967508.jpg",
           "active": true
         },
@@ -681,7 +849,10 @@
           "printful_sync_product_id": 377417508,
           "printful_sync_variant_id": 4749424624,
           "printful_catalog_variant_id": 17722,
-          "stripe_price_id": "price_1TuDoxImMzY0wzqJ9v9G58Sf",
+          "stripe_price_id": {
+            "test": "price_1TuDoxImMzY0wzqJ9v9G58Sf",
+            "live": "price_1U7iSwImMzY0wzqJu6yyb7xE"
+          },
           "image_url": "https://files.cdn.printful.com/products/683/17722_1693906251.jpg",
           "active": true
         },
@@ -693,7 +864,10 @@
           "printful_sync_product_id": 377417508,
           "printful_sync_variant_id": 4749424625,
           "printful_catalog_variant_id": 17724,
-          "stripe_price_id": "price_1TuDoyImMzY0wzqJDkOVnVhS",
+          "stripe_price_id": {
+            "test": "price_1TuDoyImMzY0wzqJDkOVnVhS",
+            "live": "price_1U7iSxImMzY0wzqJxpelSakb"
+          },
           "image_url": "https://files.cdn.printful.com/products/683/17724_1693906240.jpg",
           "active": true
         },
@@ -705,7 +879,10 @@
           "printful_sync_product_id": 377417508,
           "printful_sync_variant_id": 4749424626,
           "printful_catalog_variant_id": 17726,
-          "stripe_price_id": "price_1TuDozImMzY0wzqJ9FYrGQ8T",
+          "stripe_price_id": {
+            "test": "price_1TuDozImMzY0wzqJ9FYrGQ8T",
+            "live": "price_1U7iSyImMzY0wzqJU5i1uQnf"
+          },
           "image_url": "https://files.cdn.printful.com/products/683/17726_1693906251.jpg",
           "active": true
         },
@@ -717,7 +894,10 @@
           "printful_sync_product_id": 377417508,
           "printful_sync_variant_id": 4749424627,
           "printful_catalog_variant_id": 17728,
-          "stripe_price_id": "price_1TuDp0ImMzY0wzqJQG2GWyzn",
+          "stripe_price_id": {
+            "test": "price_1TuDp0ImMzY0wzqJQG2GWyzn",
+            "live": "price_1U7iSyImMzY0wzqJMgK2AOL2"
+          },
           "image_url": "https://files.cdn.printful.com/products/683/17728_1693906251.jpg",
           "active": true
         },
@@ -729,7 +909,10 @@
           "printful_sync_product_id": 377417508,
           "printful_sync_variant_id": 4749424628,
           "printful_catalog_variant_id": 20294,
-          "stripe_price_id": "price_1TuDp1ImMzY0wzqJMDVr2EHP",
+          "stripe_price_id": {
+            "test": "price_1TuDp1ImMzY0wzqJMDVr2EHP",
+            "live": "price_1U7iSzImMzY0wzqJzCJIO7Ke"
+          },
           "image_url": "https://files.cdn.printful.com/products/683/20294_1727078554.jpg",
           "active": true
         },
@@ -741,7 +924,10 @@
           "printful_sync_product_id": 377417508,
           "printful_sync_variant_id": 4749424629,
           "printful_catalog_variant_id": 20295,
-          "stripe_price_id": "price_1TuDp2ImMzY0wzqJ4JmSlnEf",
+          "stripe_price_id": {
+            "test": "price_1TuDp2ImMzY0wzqJ4JmSlnEf",
+            "live": "price_1U7iSzImMzY0wzqJYflRNEAK"
+          },
           "image_url": "https://files.cdn.printful.com/products/683/20295_1727078552.jpg",
           "active": true
         },
@@ -753,7 +939,10 @@
           "printful_sync_product_id": 377417508,
           "printful_sync_variant_id": 4749424630,
           "printful_catalog_variant_id": 20296,
-          "stripe_price_id": "price_1TuDp3ImMzY0wzqJymrZrMKR",
+          "stripe_price_id": {
+            "test": "price_1TuDp3ImMzY0wzqJymrZrMKR",
+            "live": "price_1U7iT0ImMzY0wzqJGLdlCZ50"
+          },
           "image_url": "https://files.cdn.printful.com/products/683/20296_1727078553.jpg",
           "active": true
         },
@@ -765,7 +954,10 @@
           "printful_sync_product_id": 377417508,
           "printful_sync_variant_id": 4749424631,
           "printful_catalog_variant_id": 20297,
-          "stripe_price_id": "price_1TuDp4ImMzY0wzqJrEzKSzXF",
+          "stripe_price_id": {
+            "test": "price_1TuDp4ImMzY0wzqJrEzKSzXF",
+            "live": "price_1U7iT0ImMzY0wzqJqu1tZhG0"
+          },
           "image_url": "https://files.cdn.printful.com/products/683/20297_1727078552.jpg",
           "active": true
         },
@@ -777,7 +969,10 @@
           "printful_sync_product_id": 376418868,
           "printful_sync_variant_id": 4739110998,
           "printful_catalog_variant_id": 16888,
-          "stripe_price_id": "price_1TuDp5ImMzY0wzqJ6q0OiUYP",
+          "stripe_price_id": {
+            "test": "price_1TuDp5ImMzY0wzqJ6q0OiUYP",
+            "live": "price_1U7iT1ImMzY0wzqJICDOX0ch"
+          },
           "image_url": "https://files.cdn.printful.com/files/cea/cea2815271d823facc281126f8ac85ac_preview.png",
           "active": true
         },
@@ -789,7 +984,10 @@
           "printful_sync_product_id": 376418868,
           "printful_sync_variant_id": 4739110999,
           "printful_catalog_variant_id": 16890,
-          "stripe_price_id": "price_1TuDp6ImMzY0wzqJpcrn2DHr",
+          "stripe_price_id": {
+            "test": "price_1TuDp6ImMzY0wzqJpcrn2DHr",
+            "live": "price_1U7iT1ImMzY0wzqJo61EyF5U"
+          },
           "image_url": "https://files.cdn.printful.com/files/cea/cea2815271d823facc281126f8ac85ac_preview.png",
           "active": true
         },
@@ -801,7 +999,10 @@
           "printful_sync_product_id": 376418868,
           "printful_sync_variant_id": 4739111000,
           "printful_catalog_variant_id": 16892,
-          "stripe_price_id": "price_1TuDp7ImMzY0wzqJnf8Sd4d4",
+          "stripe_price_id": {
+            "test": "price_1TuDp7ImMzY0wzqJnf8Sd4d4",
+            "live": "price_1U7iT2ImMzY0wzqJ0ZmWJl2C"
+          },
           "image_url": "https://files.cdn.printful.com/files/cea/cea2815271d823facc281126f8ac85ac_preview.png",
           "active": true
         },
@@ -813,7 +1014,10 @@
           "printful_sync_product_id": 376418868,
           "printful_sync_variant_id": 4739111001,
           "printful_catalog_variant_id": 16894,
-          "stripe_price_id": "price_1TuDp8ImMzY0wzqJBvX4vZLZ",
+          "stripe_price_id": {
+            "test": "price_1TuDp8ImMzY0wzqJBvX4vZLZ",
+            "live": "price_1U7iT3ImMzY0wzqJqUBms5ws"
+          },
           "image_url": "https://files.cdn.printful.com/files/cea/cea2815271d823facc281126f8ac85ac_preview.png",
           "active": true
         },
@@ -825,7 +1029,10 @@
           "printful_sync_product_id": 376418868,
           "printful_sync_variant_id": 4739111003,
           "printful_catalog_variant_id": 16898,
-          "stripe_price_id": "price_1TuDp9ImMzY0wzqJp6hHqslm",
+          "stripe_price_id": {
+            "test": "price_1TuDp9ImMzY0wzqJp6hHqslm",
+            "live": "price_1U7iT3ImMzY0wzqJCnaLPdHX"
+          },
           "image_url": "https://files.cdn.printful.com/files/cea/cea2815271d823facc281126f8ac85ac_preview.png",
           "active": true
         },
@@ -837,7 +1044,10 @@
           "printful_sync_product_id": 376418868,
           "printful_sync_variant_id": 4739111004,
           "printful_catalog_variant_id": 16896,
-          "stripe_price_id": "price_1TuDpAImMzY0wzqJvTmAXQsZ",
+          "stripe_price_id": {
+            "test": "price_1TuDpAImMzY0wzqJvTmAXQsZ",
+            "live": "price_1U7iT4ImMzY0wzqJYCU6wNOc"
+          },
           "image_url": "https://files.cdn.printful.com/files/cea/cea2815271d823facc281126f8ac85ac_preview.png",
           "active": true
         },
@@ -849,7 +1059,10 @@
           "printful_sync_product_id": 376418868,
           "printful_sync_variant_id": 4739111005,
           "printful_catalog_variant_id": 16900,
-          "stripe_price_id": "price_1TuDpBImMzY0wzqJw8AvOpNm",
+          "stripe_price_id": {
+            "test": "price_1TuDpBImMzY0wzqJw8AvOpNm",
+            "live": "price_1U7iT4ImMzY0wzqJkod4FuEy"
+          },
           "image_url": "https://files.cdn.printful.com/files/cea/cea2815271d823facc281126f8ac85ac_preview.png",
           "active": true
         },
@@ -861,7 +1074,10 @@
           "printful_sync_product_id": 376418868,
           "printful_sync_variant_id": 4739111006,
           "printful_catalog_variant_id": 16902,
-          "stripe_price_id": "price_1TuDpCImMzY0wzqJjE6whqQ8",
+          "stripe_price_id": {
+            "test": "price_1TuDpCImMzY0wzqJjE6whqQ8",
+            "live": "price_1U7iT5ImMzY0wzqJke7Up30p"
+          },
           "image_url": "https://files.cdn.printful.com/files/cea/cea2815271d823facc281126f8ac85ac_preview.png",
           "active": true
         },
@@ -873,7 +1089,10 @@
           "printful_sync_product_id": 376418868,
           "printful_sync_variant_id": 4739111008,
           "printful_catalog_variant_id": 16906,
-          "stripe_price_id": "price_1TuDpDImMzY0wzqJYpOxazhg",
+          "stripe_price_id": {
+            "test": "price_1TuDpDImMzY0wzqJYpOxazhg",
+            "live": "price_1U7iT5ImMzY0wzqJ3DJ4CASq"
+          },
           "image_url": "https://files.cdn.printful.com/files/cea/cea2815271d823facc281126f8ac85ac_preview.png",
           "active": true
         },
@@ -885,7 +1104,10 @@
           "printful_sync_product_id": 376418868,
           "printful_sync_variant_id": 4739111009,
           "printful_catalog_variant_id": 16904,
-          "stripe_price_id": "price_1TuDpEImMzY0wzqJPvnj1dcu",
+          "stripe_price_id": {
+            "test": "price_1TuDpEImMzY0wzqJPvnj1dcu",
+            "live": "price_1U7iT6ImMzY0wzqJVphqfrNB"
+          },
           "image_url": "https://files.cdn.printful.com/files/cea/cea2815271d823facc281126f8ac85ac_preview.png",
           "active": true
         },
@@ -897,7 +1119,10 @@
           "printful_sync_product_id": 376418868,
           "printful_sync_variant_id": 4739111010,
           "printful_catalog_variant_id": 16908,
-          "stripe_price_id": "price_1TuDpFImMzY0wzqJDkU2p0MW",
+          "stripe_price_id": {
+            "test": "price_1TuDpFImMzY0wzqJDkU2p0MW",
+            "live": "price_1U7iT6ImMzY0wzqJZjMxZbdQ"
+          },
           "image_url": "https://files.cdn.printful.com/files/cea/cea2815271d823facc281126f8ac85ac_preview.png",
           "active": true
         },
@@ -909,7 +1134,10 @@
           "printful_sync_product_id": 376418868,
           "printful_sync_variant_id": 4739111011,
           "printful_catalog_variant_id": 16910,
-          "stripe_price_id": "price_1TuDpGImMzY0wzqJgXzx883K",
+          "stripe_price_id": {
+            "test": "price_1TuDpGImMzY0wzqJgXzx883K",
+            "live": "price_1U7iT7ImMzY0wzqJWULg2Em6"
+          },
           "image_url": "https://files.cdn.printful.com/files/cea/cea2815271d823facc281126f8ac85ac_preview.png",
           "active": true
         },
@@ -921,7 +1149,10 @@
           "printful_sync_product_id": 376418868,
           "printful_sync_variant_id": 4739111012,
           "printful_catalog_variant_id": 16914,
-          "stripe_price_id": "price_1TuDpHImMzY0wzqJ5DmcQBeR",
+          "stripe_price_id": {
+            "test": "price_1TuDpHImMzY0wzqJ5DmcQBeR",
+            "live": "price_1U7iT8ImMzY0wzqJQ4VxuX7t"
+          },
           "image_url": "https://files.cdn.printful.com/files/cea/cea2815271d823facc281126f8ac85ac_preview.png",
           "active": true
         },
@@ -933,7 +1164,10 @@
           "printful_sync_product_id": 376418868,
           "printful_sync_variant_id": 4739111014,
           "printful_catalog_variant_id": 16912,
-          "stripe_price_id": "price_1TuDpIImMzY0wzqJm28oNYNU",
+          "stripe_price_id": {
+            "test": "price_1TuDpIImMzY0wzqJm28oNYNU",
+            "live": "price_1U7iT8ImMzY0wzqJHtAy0F7F"
+          },
           "image_url": "https://files.cdn.printful.com/files/cea/cea2815271d823facc281126f8ac85ac_preview.png",
           "active": true
         },
@@ -945,7 +1179,10 @@
           "printful_sync_product_id": 376418868,
           "printful_sync_variant_id": 4739111015,
           "printful_catalog_variant_id": 16916,
-          "stripe_price_id": "price_1TuDpJImMzY0wzqJvbqnIJnA",
+          "stripe_price_id": {
+            "test": "price_1TuDpJImMzY0wzqJvbqnIJnA",
+            "live": "price_1U7iT9ImMzY0wzqJfrS4rnMh"
+          },
           "image_url": "https://files.cdn.printful.com/files/cea/cea2815271d823facc281126f8ac85ac_preview.png",
           "active": true
         },
@@ -957,7 +1194,10 @@
           "printful_sync_product_id": 376418868,
           "printful_sync_variant_id": 4739111016,
           "printful_catalog_variant_id": 17722,
-          "stripe_price_id": "price_1TuDpKImMzY0wzqJg87LFQ6w",
+          "stripe_price_id": {
+            "test": "price_1TuDpKImMzY0wzqJg87LFQ6w",
+            "live": "price_1U7iT9ImMzY0wzqJuiENAMwu"
+          },
           "image_url": "https://files.cdn.printful.com/files/cea/cea2815271d823facc281126f8ac85ac_preview.png",
           "active": true
         },
@@ -969,7 +1209,10 @@
           "printful_sync_product_id": 376418868,
           "printful_sync_variant_id": 4739111017,
           "printful_catalog_variant_id": 17724,
-          "stripe_price_id": "price_1TuDpLImMzY0wzqJNCyx3Ngq",
+          "stripe_price_id": {
+            "test": "price_1TuDpLImMzY0wzqJNCyx3Ngq",
+            "live": "price_1U7iTAImMzY0wzqJ6XM4qgKz"
+          },
           "image_url": "https://files.cdn.printful.com/files/cea/cea2815271d823facc281126f8ac85ac_preview.png",
           "active": true
         },
@@ -981,7 +1224,10 @@
           "printful_sync_product_id": 376418868,
           "printful_sync_variant_id": 4739111019,
           "printful_catalog_variant_id": 17726,
-          "stripe_price_id": "price_1TuDpMImMzY0wzqJmGOXmJqJ",
+          "stripe_price_id": {
+            "test": "price_1TuDpMImMzY0wzqJmGOXmJqJ",
+            "live": "price_1U7iTAImMzY0wzqJGtMcu7m3"
+          },
           "image_url": "https://files.cdn.printful.com/files/cea/cea2815271d823facc281126f8ac85ac_preview.png",
           "active": true
         },
@@ -993,7 +1239,10 @@
           "printful_sync_product_id": 376418868,
           "printful_sync_variant_id": 4739111020,
           "printful_catalog_variant_id": 17728,
-          "stripe_price_id": "price_1TuDpNImMzY0wzqJ3u938eS8",
+          "stripe_price_id": {
+            "test": "price_1TuDpNImMzY0wzqJ3u938eS8",
+            "live": "price_1U7iTBImMzY0wzqJAXUDID1I"
+          },
           "image_url": "https://files.cdn.printful.com/files/cea/cea2815271d823facc281126f8ac85ac_preview.png",
           "active": true
         },
@@ -1005,7 +1254,10 @@
           "printful_sync_product_id": 376418868,
           "printful_sync_variant_id": 4739111021,
           "printful_catalog_variant_id": 20294,
-          "stripe_price_id": "price_1TuDpOImMzY0wzqJibpIAbhl",
+          "stripe_price_id": {
+            "test": "price_1TuDpOImMzY0wzqJibpIAbhl",
+            "live": "price_1U7iTCImMzY0wzqJdOH42O7Q"
+          },
           "image_url": "https://files.cdn.printful.com/files/cea/cea2815271d823facc281126f8ac85ac_preview.png",
           "active": true
         },
@@ -1017,7 +1269,10 @@
           "printful_sync_product_id": 376418868,
           "printful_sync_variant_id": 4739111022,
           "printful_catalog_variant_id": 20295,
-          "stripe_price_id": "price_1TuDpQImMzY0wzqJx535H3x8",
+          "stripe_price_id": {
+            "test": "price_1TuDpQImMzY0wzqJx535H3x8",
+            "live": "price_1U7iTCImMzY0wzqJ3AfJnM7f"
+          },
           "image_url": "https://files.cdn.printful.com/files/cea/cea2815271d823facc281126f8ac85ac_preview.png",
           "active": true
         },
@@ -1029,7 +1284,10 @@
           "printful_sync_product_id": 376418868,
           "printful_sync_variant_id": 4739111023,
           "printful_catalog_variant_id": 20296,
-          "stripe_price_id": "price_1TuDpQImMzY0wzqJkrqNWzW1",
+          "stripe_price_id": {
+            "test": "price_1TuDpQImMzY0wzqJkrqNWzW1",
+            "live": "price_1U7iTDImMzY0wzqJW915shC5"
+          },
           "image_url": "https://files.cdn.printful.com/files/cea/cea2815271d823facc281126f8ac85ac_preview.png",
           "active": true
         },
@@ -1041,7 +1299,10 @@
           "printful_sync_product_id": 376418868,
           "printful_sync_variant_id": 4739111025,
           "printful_catalog_variant_id": 20297,
-          "stripe_price_id": "price_1TuDpRImMzY0wzqJdm3G6Z7J",
+          "stripe_price_id": {
+            "test": "price_1TuDpRImMzY0wzqJdm3G6Z7J",
+            "live": "price_1U7iTDImMzY0wzqJQje879oV"
+          },
           "image_url": "https://files.cdn.printful.com/files/cea/cea2815271d823facc281126f8ac85ac_preview.png",
           "active": true
         }
@@ -1055,7 +1316,10 @@
         385121662,
         385122205
       ],
-      "stripe_product_id": "prod_Uu1utQaD0jvzOr",
+      "stripe_product_id": {
+        "test": "prod_Uu1utQaD0jvzOr",
+        "live": "prod_V7yQk1SOJCXjwL"
+      },
       "variants": [
         {
           "color": "Noir",
@@ -1065,7 +1329,10 @@
           "printful_sync_product_id": 385121662,
           "printful_sync_variant_id": 4862103662,
           "printful_catalog_variant_id": 8628,
-          "stripe_price_id": "price_1TuDqkImMzY0wzqJlULJ8rUV",
+          "stripe_price_id": {
+            "test": "price_1TuDqkImMzY0wzqJlULJ8rUV",
+            "live": "price_1U7iTFImMzY0wzqJbb7HOvlp"
+          },
           "image_url": "https://files.cdn.printful.com/files/e28/e2841e982626fd73c5cca8cb7ffbf251_preview.png",
           "active": true
         },
@@ -1077,7 +1344,10 @@
           "printful_sync_product_id": 385121662,
           "printful_sync_variant_id": 4862103663,
           "printful_catalog_variant_id": 8629,
-          "stripe_price_id": "price_1TuDqlImMzY0wzqJwIYqiwHy",
+          "stripe_price_id": {
+            "test": "price_1TuDqlImMzY0wzqJwIYqiwHy",
+            "live": "price_1U7iTFImMzY0wzqJtJZc3ZQY"
+          },
           "image_url": "https://files.cdn.printful.com/files/e28/e2841e982626fd73c5cca8cb7ffbf251_preview.png",
           "active": true
         },
@@ -1089,7 +1359,10 @@
           "printful_sync_product_id": 385121662,
           "printful_sync_variant_id": 4862103664,
           "printful_catalog_variant_id": 8630,
-          "stripe_price_id": "price_1TuDqnImMzY0wzqJKFxHNkuD",
+          "stripe_price_id": {
+            "test": "price_1TuDqnImMzY0wzqJKFxHNkuD",
+            "live": "price_1U7iTGImMzY0wzqJEgbaZXhT"
+          },
           "image_url": "https://files.cdn.printful.com/files/e28/e2841e982626fd73c5cca8cb7ffbf251_preview.png",
           "active": true
         },
@@ -1101,7 +1374,10 @@
           "printful_sync_product_id": 385121662,
           "printful_sync_variant_id": 4862103665,
           "printful_catalog_variant_id": 8631,
-          "stripe_price_id": "price_1TuDqoImMzY0wzqJtLPgOCrF",
+          "stripe_price_id": {
+            "test": "price_1TuDqoImMzY0wzqJtLPgOCrF",
+            "live": "price_1U7iTHImMzY0wzqJOIe1grJL"
+          },
           "image_url": "https://files.cdn.printful.com/files/e28/e2841e982626fd73c5cca8cb7ffbf251_preview.png",
           "active": true
         },
@@ -1113,7 +1389,10 @@
           "printful_sync_product_id": 385121662,
           "printful_sync_variant_id": 4862103666,
           "printful_catalog_variant_id": 8632,
-          "stripe_price_id": "price_1TuDqpImMzY0wzqJ4KqVbwi8",
+          "stripe_price_id": {
+            "test": "price_1TuDqpImMzY0wzqJ4KqVbwi8",
+            "live": "price_1U7iTHImMzY0wzqJPwSCvCAS"
+          },
           "image_url": "https://files.cdn.printful.com/files/e28/e2841e982626fd73c5cca8cb7ffbf251_preview.png",
           "active": true
         },
@@ -1125,7 +1404,10 @@
           "printful_sync_product_id": 385121662,
           "printful_sync_variant_id": 4862103667,
           "printful_catalog_variant_id": 8633,
-          "stripe_price_id": "price_1TuDqqImMzY0wzqJYQuiz2UW",
+          "stripe_price_id": {
+            "test": "price_1TuDqqImMzY0wzqJYQuiz2UW",
+            "live": "price_1U7iTIImMzY0wzqJPuc1D1l5"
+          },
           "image_url": "https://files.cdn.printful.com/files/e28/e2841e982626fd73c5cca8cb7ffbf251_preview.png",
           "active": true
         },
@@ -1137,7 +1419,10 @@
           "printful_sync_product_id": 385122205,
           "printful_sync_variant_id": 4862108082,
           "printful_catalog_variant_id": 8658,
-          "stripe_price_id": "price_1TuDqsImMzY0wzqJwNG72xKB",
+          "stripe_price_id": {
+            "test": "price_1TuDqsImMzY0wzqJwNG72xKB",
+            "live": "price_1U7iTIImMzY0wzqJarL6h5Bn"
+          },
           "image_url": "https://files.cdn.printful.com/files/15c/15c9ca5657bf08b547c6ed9c3b4331db_preview.png",
           "active": true
         },
@@ -1149,7 +1434,10 @@
           "printful_sync_product_id": 385122205,
           "printful_sync_variant_id": 4862108083,
           "printful_catalog_variant_id": 8659,
-          "stripe_price_id": "price_1TuDqtImMzY0wzqJZ0K6yKg1",
+          "stripe_price_id": {
+            "test": "price_1TuDqtImMzY0wzqJZ0K6yKg1",
+            "live": "price_1U7iTJImMzY0wzqJUOlMOZ1i"
+          },
           "image_url": "https://files.cdn.printful.com/files/15c/15c9ca5657bf08b547c6ed9c3b4331db_preview.png",
           "active": true
         },
@@ -1161,7 +1449,10 @@
           "printful_sync_product_id": 385122205,
           "printful_sync_variant_id": 4862108084,
           "printful_catalog_variant_id": 8660,
-          "stripe_price_id": "price_1TuDqvImMzY0wzqJrecQxbDK",
+          "stripe_price_id": {
+            "test": "price_1TuDqvImMzY0wzqJrecQxbDK",
+            "live": "price_1U7iTJImMzY0wzqJQgY8xrxe"
+          },
           "image_url": "https://files.cdn.printful.com/files/15c/15c9ca5657bf08b547c6ed9c3b4331db_preview.png",
           "active": true
         },
@@ -1173,7 +1464,10 @@
           "printful_sync_product_id": 385122205,
           "printful_sync_variant_id": 4862108085,
           "printful_catalog_variant_id": 8661,
-          "stripe_price_id": "price_1TuDqwImMzY0wzqJFQ3qYGZo",
+          "stripe_price_id": {
+            "test": "price_1TuDqwImMzY0wzqJFQ3qYGZo",
+            "live": "price_1U7iTKImMzY0wzqJUzd9LoFY"
+          },
           "image_url": "https://files.cdn.printful.com/files/15c/15c9ca5657bf08b547c6ed9c3b4331db_preview.png",
           "active": true
         },
@@ -1185,7 +1479,10 @@
           "printful_sync_product_id": 385122205,
           "printful_sync_variant_id": 4862108086,
           "printful_catalog_variant_id": 8662,
-          "stripe_price_id": "price_1TuDqyImMzY0wzqJexcMVEO3",
+          "stripe_price_id": {
+            "test": "price_1TuDqyImMzY0wzqJexcMVEO3",
+            "live": "price_1U7iTLImMzY0wzqJQ5C5nunj"
+          },
           "image_url": "https://files.cdn.printful.com/files/15c/15c9ca5657bf08b547c6ed9c3b4331db_preview.png",
           "active": true
         },
@@ -1197,7 +1494,10 @@
           "printful_sync_product_id": 385122205,
           "printful_sync_variant_id": 4862108087,
           "printful_catalog_variant_id": 8663,
-          "stripe_price_id": "price_1TuDqzImMzY0wzqJIun276xY",
+          "stripe_price_id": {
+            "test": "price_1TuDqzImMzY0wzqJIun276xY",
+            "live": "price_1U7iTLImMzY0wzqJy8MCK81u"
+          },
           "image_url": "https://files.cdn.printful.com/files/15c/15c9ca5657bf08b547c6ed9c3b4331db_preview.png",
           "active": true
         }
@@ -1210,7 +1510,10 @@
       "printful_sync_product_ids": [
         376418913
       ],
-      "stripe_product_id": "prod_Uu1uPHylnaxxnP",
+      "stripe_product_id": {
+        "test": "prod_Uu1uPHylnaxxnP",
+        "live": "prod_V7yQqEpowHXbkm"
+      },
       "variants": [
         {
           "color": "Noir",
@@ -1220,7 +1523,10 @@
           "printful_sync_product_id": 376418913,
           "printful_sync_variant_id": 4739111430,
           "printful_catalog_variant_id": 11414,
-          "stripe_price_id": "price_1TuDr1ImMzY0wzqJ2qJHlaGO",
+          "stripe_price_id": {
+            "test": "price_1TuDr1ImMzY0wzqJ2qJHlaGO",
+            "live": "price_1U7iTNImMzY0wzqJpYxlbv9g"
+          },
           "image_url": "https://files.cdn.printful.com/products/420/11414_1585808212.jpg",
           "active": true
         }
@@ -1233,7 +1539,10 @@
       "printful_sync_product_ids": [
         385122974
       ],
-      "stripe_product_id": "prod_Uu1ujnla5JrWZx",
+      "stripe_product_id": {
+        "test": "prod_Uu1ujnla5JrWZx",
+        "live": "prod_V7yQMGeQlospHN"
+      },
       "variants": [
         {
           "color": "Blanc",
@@ -1243,7 +1552,10 @@
           "printful_sync_product_id": 385122974,
           "printful_sync_variant_id": 4862113715,
           "printful_catalog_variant_id": 8759,
-          "stripe_price_id": "price_1TuDr3ImMzY0wzqJ9vaSC4Av",
+          "stripe_price_id": {
+            "test": "price_1TuDr3ImMzY0wzqJ9vaSC4Av",
+            "live": "price_1U7iTOImMzY0wzqJpnEU34nz"
+          },
           "image_url": "https://files.cdn.printful.com/files/cea/cea2815271d823facc281126f8ac85ac_preview.png",
           "active": true
         }
@@ -1256,7 +1568,10 @@
       "printful_sync_product_ids": [
         385123410
       ],
-      "stripe_product_id": "prod_Uu1uBnn47zedL5",
+      "stripe_product_id": {
+        "test": "prod_Uu1uBnn47zedL5",
+        "live": "prod_V7yQcXCbNIleX2"
+      },
       "variants": [
         {
           "color": "Blanc",
@@ -1266,7 +1581,10 @@
           "printful_sync_product_id": 385123410,
           "printful_sync_variant_id": 4862120979,
           "printful_catalog_variant_id": 16588,
-          "stripe_price_id": "price_1TuDr4ImMzY0wzqJF0KRnQaq",
+          "stripe_price_id": {
+            "test": "price_1TuDr4ImMzY0wzqJF0KRnQaq",
+            "live": "price_1U7iTQImMzY0wzqJMHpiRin0"
+          },
           "image_url": "https://files.cdn.printful.com/products/332/16588_1678099175.jpg",
           "active": true
         },
@@ -1278,7 +1596,10 @@
           "printful_sync_product_id": 385123410,
           "printful_sync_variant_id": 4862120980,
           "printful_catalog_variant_id": 9811,
-          "stripe_price_id": "price_1TuDr6ImMzY0wzqJnCLKr5Mf",
+          "stripe_price_id": {
+            "test": "price_1TuDr6ImMzY0wzqJnCLKr5Mf",
+            "live": "price_1U7iTRImMzY0wzqJ4InkWpky"
+          },
           "image_url": "https://files.cdn.printful.com/products/332/9811_1582103520.jpg",
           "active": true
         },
@@ -1290,7 +1611,10 @@
           "printful_sync_product_id": 385123410,
           "printful_sync_variant_id": 4862120981,
           "printful_catalog_variant_id": 9812,
-          "stripe_price_id": "price_1TuDr7ImMzY0wzqJBCGl0PZe",
+          "stripe_price_id": {
+            "test": "price_1TuDr7ImMzY0wzqJBCGl0PZe",
+            "live": "price_1U7iTRImMzY0wzqJSthZiwAa"
+          },
           "image_url": "https://files.cdn.printful.com/products/332/9812_1582103517.jpg",
           "active": true
         },
@@ -1302,7 +1626,10 @@
           "printful_sync_product_id": 385123410,
           "printful_sync_variant_id": 4862120982,
           "printful_catalog_variant_id": 9813,
-          "stripe_price_id": "price_1TuDr8ImMzY0wzqJmuGFJm4B",
+          "stripe_price_id": {
+            "test": "price_1TuDr8ImMzY0wzqJmuGFJm4B",
+            "live": "price_1U7iTSImMzY0wzqJzZuNrgQ5"
+          },
           "image_url": "https://files.cdn.printful.com/products/332/9813_1582103515.jpg",
           "active": true
         },
@@ -1314,7 +1641,10 @@
           "printful_sync_product_id": 385123410,
           "printful_sync_variant_id": 4862120983,
           "printful_catalog_variant_id": 9814,
-          "stripe_price_id": "price_1TuDrAImMzY0wzqJqBulRLyd",
+          "stripe_price_id": {
+            "test": "price_1TuDrAImMzY0wzqJqBulRLyd",
+            "live": "price_1U7iTSImMzY0wzqJCpbQtQPH"
+          },
           "image_url": "https://files.cdn.printful.com/products/332/9814_1582103514.jpg",
           "active": true
         },
@@ -1326,7 +1656,10 @@
           "printful_sync_product_id": 385123410,
           "printful_sync_variant_id": 4862120984,
           "printful_catalog_variant_id": 9815,
-          "stripe_price_id": "price_1TuDrCImMzY0wzqJU5um45Rp",
+          "stripe_price_id": {
+            "test": "price_1TuDrCImMzY0wzqJU5um45Rp",
+            "live": "price_1U7iTTImMzY0wzqJp9MGHb4p"
+          },
           "image_url": "https://files.cdn.printful.com/products/332/9815_1582103518.jpg",
           "active": true
         },
@@ -1338,7 +1671,10 @@
           "printful_sync_product_id": 385123410,
           "printful_sync_variant_id": 4862120985,
           "printful_catalog_variant_id": 9816,
-          "stripe_price_id": "price_1TuDrDImMzY0wzqJQGLYP5vt",
+          "stripe_price_id": {
+            "test": "price_1TuDrDImMzY0wzqJQGLYP5vt",
+            "live": "price_1U7iTTImMzY0wzqJqywp5zA6"
+          },
           "image_url": "https://files.cdn.printful.com/products/332/9816_1582103511.jpg",
           "active": true
         },
@@ -1350,7 +1686,10 @@
           "printful_sync_product_id": 385123410,
           "printful_sync_variant_id": 4862120986,
           "printful_catalog_variant_id": 9817,
-          "stripe_price_id": "price_1TuDrEImMzY0wzqJGM9QJkrP",
+          "stripe_price_id": {
+            "test": "price_1TuDrEImMzY0wzqJGM9QJkrP",
+            "live": "price_1U7iTUImMzY0wzqJQ5E6aw9O"
+          },
           "image_url": "https://files.cdn.printful.com/products/332/9816_1582103511.jpg",
           "active": true
         },
@@ -1362,7 +1701,10 @@
           "printful_sync_product_id": 385123410,
           "printful_sync_variant_id": 4862120987,
           "printful_catalog_variant_id": 16342,
-          "stripe_price_id": "price_1TuDrGImMzY0wzqJpR4LvDrw",
+          "stripe_price_id": {
+            "test": "price_1TuDrGImMzY0wzqJpR4LvDrw",
+            "live": "price_1U7iTUImMzY0wzqJBVk2Sw9G"
+          },
           "image_url": "https://files.cdn.printful.com/products/332/16342_1677831450.jpg",
           "active": true
         },
@@ -1374,7 +1716,10 @@
           "printful_sync_product_id": 385123410,
           "printful_sync_variant_id": 4862120988,
           "printful_catalog_variant_id": 16343,
-          "stripe_price_id": "price_1TuDrHImMzY0wzqJ6qWmAEZi",
+          "stripe_price_id": {
+            "test": "price_1TuDrHImMzY0wzqJ6qWmAEZi",
+            "live": "price_1U7iTVImMzY0wzqJV6HwMXdS"
+          },
           "image_url": "https://files.cdn.printful.com/products/332/16343_1677831450.jpg",
           "active": true
         },
@@ -1386,7 +1731,10 @@
           "printful_sync_product_id": 385123410,
           "printful_sync_variant_id": 4862120989,
           "printful_catalog_variant_id": 16344,
-          "stripe_price_id": "price_1TuDrJImMzY0wzqJYBObtMx1",
+          "stripe_price_id": {
+            "test": "price_1TuDrJImMzY0wzqJYBObtMx1",
+            "live": "price_1U7iTWImMzY0wzqJ0CVf3lNR"
+          },
           "image_url": "https://files.cdn.printful.com/products/332/16344_1677831450.jpg",
           "active": true
         }

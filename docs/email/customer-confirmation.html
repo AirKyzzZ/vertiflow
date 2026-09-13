@@ -1,0 +1,142 @@
+<!--
+VertiFlow — customer order confirmation
+EmailJS template: paste this whole file into the template's CONTENT/HTML tab.
+
+VARIABLES USED IN THIS BODY (sent by functions/lib/emailjs.js -> sendCustomerConfirmation):
+  {{first_name}}         customer first name, HTML-escaped server-side
+  {{last_name}}          customer last name, HTML-escaped server-side
+  {{preheader_text}}     short hidden inbox-preview line
+  {{order_reference}}    VertiFlow order reference (Printful external ID, e.g. vf_xxxxxxxx)
+  {{order_lines_html}}   pre-rendered <tr> rows: thumbnail, product/colour/size/qty, line price
+  {{order_total}}        order total, formatted "36,98 €"
+  {{shipping_name}}      recipient name, HTML-escaped server-side
+  {{shipping_address1}}  address line 1, HTML-escaped server-side
+  {{shipping_address2}}  address line 2, empty string or "<escaped text><br />"
+  {{shipping_city}}      city, HTML-escaped server-side
+  {{shipping_zip}}       postal code, HTML-escaped server-side
+  {{shipping_country}}   ISO country code (e.g. FR), HTML-escaped server-side
+
+ALSO SENT BY emailjs.js BUT NOT PART OF THIS HTML BODY — set these in the EmailJS
+template SETTINGS tab (not the content editor), or the email will send to nobody:
+  {{to_email}}   -> "To Email" field
+  {{reply_to}}   -> "Reply To" field
+  {{subject}}    -> "Subject" field
+-->
+<!doctype html>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="color-scheme" content="light" />
+<meta name="supported-color-schemes" content="light" />
+<meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+<title>Confirmation de commande VertiFlow</title>
+</head>
+<body style="margin:0;padding:0;background-color:#f7f4ef;">
+<div style="display:none;font-size:1px;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;mso-hide:all;">{{preheader_text}}&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f7f4ef;">
+  <tr>
+    <td align="center" style="padding:24px 16px;">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;background-color:#ffffff;">
+        <tr>
+          <td align="center" style="background-color:#0b0b0c;padding:28px 24px;">
+            <img src="https://vertiflow.fr/images/logo-transparent.png" width="56" height="56" alt="VertiFlow" style="display:block;width:56px;height:56px;border:0;outline:none;text-decoration:none;" />
+            <div style="font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:12px;letter-spacing:3px;color:#e8912d;text-transform:uppercase;margin-top:14px;">Commande confirmée</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:32px 32px 8px 32px;font-family:Arial,Helvetica,sans-serif;color:#0b0b0c;">
+            <p style="margin:0 0 16px 0;font-size:18px;line-height:1.4;">Bonjour {{first_name}},</p>
+            <p style="margin:0 0 16px 0;font-size:15px;line-height:1.6;color:#3d3d42;">Ta commande est confirmée et le paiement est passé. On la prépare maintenant, impression et expédition comprises.</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:0 32px 24px 32px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f7f4ef;border:1px solid #e4e2de;">
+              <tr>
+                <td style="padding:14px 18px;font-family:Arial,Helvetica,sans-serif;">
+                  <div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#6e6e76;margin-bottom:4px;">Référence de commande</div>
+                  <div style="font-size:15px;color:#0b0b0c;font-weight:700;">{{order_reference}}</div>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:0 32px;">
+            <div style="font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#0b0b0c;border-top:1px solid #e4e2de;padding-top:20px;margin-bottom:4px;">Ce que tu as commandé</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:8px 32px 0 32px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+              {{order_lines_html}}
+              <tr>
+                <td style="padding:16px 0 4px 0;" colspan="2"></td>
+                <td style="padding:16px 0 4px 0;text-align:right;font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#6e6e76;white-space:nowrap;">Total</td>
+              </tr>
+              <tr>
+                <td colspan="2"></td>
+                <td style="text-align:right;font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:20px;color:#0b0b0c;white-space:nowrap;">{{order_total}}</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:28px 32px 0 32px;">
+            <div style="font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#0b0b0c;border-top:1px solid #e4e2de;padding-top:20px;margin-bottom:10px;">Adresse de livraison</div>
+            <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.6;color:#3d3d42;">
+              {{shipping_name}}<br />
+              {{shipping_address1}}<br />
+              {{shipping_address2}}
+              {{shipping_zip}} {{shipping_city}}<br />
+              {{shipping_country}}
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:28px 32px 0 32px;">
+            <div style="font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#0b0b0c;border-top:1px solid #e4e2de;padding-top:20px;margin-bottom:12px;">Et maintenant</div>
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td style="padding:0 0 10px 0;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.6;color:#3d3d42;" valign="top">
+                  <span style="color:#e8912d;font-weight:700;">1.</span>&nbsp; Impression à la demande, chez Printful.
+                </td>
+              </tr>
+              <tr>
+                <td style="padding:0 0 10px 0;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.6;color:#3d3d42;" valign="top">
+                  <span style="color:#e8912d;font-weight:700;">2.</span>&nbsp; Expédition sous 7 à 10 jours ouvrés.
+                </td>
+              </tr>
+              <tr>
+                <td style="padding:0 0 4px 0;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.6;color:#3d3d42;" valign="top">
+                  <span style="color:#e8912d;font-weight:700;">3.</span>&nbsp; Email de suivi automatique dès que le colis part.
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:28px 32px 32px 32px;">
+            <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.6;color:#3d3d42;">Une question sur ta commande&nbsp;? Réponds directement à cet email, ça arrive chez Maxime.</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="background-color:#0b0b0c;padding:28px 32px;">
+            <p style="margin:0 0 10px 0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.7;color:#b4b4bc;">VertiFlow&reg; — micro-entreprise, SIRET 941 572 364 00011.<br />30 cours Henri Brunet, 33000 Bordeaux.</p>
+            <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.7;">
+              <a href="https://vertiflow.fr/cgv" style="color:#e8912d;text-decoration:underline;">Conditions générales de vente</a>
+              <span style="color:#3d3d42;">&nbsp;·&nbsp;</span>
+              <a href="https://vertiflow.fr/cgv#retractation" style="color:#e8912d;text-decoration:underline;">Droit de rétractation (14 jours)</a>
+              <span style="color:#3d3d42;">&nbsp;·&nbsp;</span>
+              <a href="https://vertiflow.fr/mentions-legales" style="color:#e8912d;text-decoration:underline;">Mentions légales</a>
+            </p>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

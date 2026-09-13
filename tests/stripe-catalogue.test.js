@@ -261,8 +261,8 @@ test('reconcileCatalogue creates Stripe products and prices and records IDs', as
 
   const result = await reconcileCatalogue(stripe, catalogueFixture());
 
-  assert.equal(result.products[0].stripe_product_id, 'prod_1');
-  assert.equal(result.products[0].variants[0].stripe_price_id, 'price_1');
+  assert.deepEqual(result.products[0].stripe_product_id, { test: 'prod_1', live: null });
+  assert.deepEqual(result.products[0].variants[0].stripe_price_id, { test: 'price_1', live: null });
   assert.equal(stripe.calls[0][0], 'products.create');
   assert.equal(stripe.calls[1][0], 'prices.create');
   assert.equal(stripe.calls[1][1].unit_amount, 6499);
@@ -316,11 +316,11 @@ test('concurrent reconciliation safely retries after an idempotency-key-in-use e
   const rejected = results.find((result) => result.status === 'rejected');
   const retried = await reconcileCatalogue(stripe, catalogueFixture());
 
-  assert.equal(fulfilled.value.products[0].stripe_product_id, 'prod_1');
-  assert.equal(fulfilled.value.products[0].variants[0].stripe_price_id, 'price_1');
+  assert.deepEqual(fulfilled.value.products[0].stripe_product_id, { test: 'prod_1', live: null });
+  assert.deepEqual(fulfilled.value.products[0].variants[0].stripe_price_id, { test: 'price_1', live: null });
   assert.equal(rejected.reason.code, 'idempotency_key_in_use');
-  assert.equal(retried.products[0].stripe_product_id, 'prod_1');
-  assert.equal(retried.products[0].variants[0].stripe_price_id, 'price_1');
+  assert.deepEqual(retried.products[0].stripe_product_id, { test: 'prod_1', live: null });
+  assert.deepEqual(retried.products[0].variants[0].stripe_price_id, { test: 'price_1', live: null });
   assert.equal(stripe.productsByIdempotencyKey.size, 1);
   assert.equal(stripe.pricesByIdempotencyKey.size, 1);
   assert.deepEqual(
@@ -365,8 +365,8 @@ test('reconcileCatalogue reuses matching prices without creating duplicates', as
 
   const result = await reconcileCatalogue(stripe, catalogueFixture());
 
-  assert.equal(result.products[0].stripe_product_id, 'prod_existing');
-  assert.equal(result.products[0].variants[0].stripe_price_id, 'price_existing');
+  assert.deepEqual(result.products[0].stripe_product_id, { test: 'prod_existing', live: null });
+  assert.deepEqual(result.products[0].variants[0].stripe_price_id, { test: 'price_existing', live: null });
   assert.equal(stripe.calls.some(([name]) => name === 'prices.create'), false);
   assert.deepEqual(
     stripe.calls.find(([name, id]) => name === 'prices.update' && id === 'price_existing'),
@@ -401,7 +401,7 @@ test('reconcileCatalogue replaces changed immutable prices and archives the old 
 
   const result = await reconcileCatalogue(stripe, catalogueFixture());
 
-  assert.equal(result.products[0].variants[0].stripe_price_id, 'price_1');
+  assert.deepEqual(result.products[0].variants[0].stripe_price_id, { test: 'price_1', live: null });
   const createCall = stripe.calls.find(([name]) => name === 'prices.create');
   assert.equal(createCall[1].transfer_lookup_key, true);
   assert.deepEqual(
@@ -437,7 +437,7 @@ test('reconcileCatalogue recovers a created replacement after archival failure w
 
   const result = await reconcileCatalogue(stripe, catalogueFixture());
 
-  assert.equal(result.products[0].variants[0].stripe_price_id, 'price_1');
+  assert.deepEqual(result.products[0].variants[0].stripe_price_id, { test: 'price_1', live: null });
   assert.equal(stripe.calls.filter(([name]) => name === 'prices.create').length, 1);
   assert.equal(stripe.priceRecords.get('price_1').active, true);
   assert.equal(stripe.priceRecords.get('price_old').active, false);

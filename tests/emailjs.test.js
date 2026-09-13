@@ -3,6 +3,8 @@ const test = require('node:test');
 
 const { EmailJsClient, EmailJsError } = require('../functions/lib/emailjs');
 
+const NBSP = '\u00a0';
+
 function sampleOrder(overrides = {}) {
   return {
     firstName: 'Léa',
@@ -47,7 +49,7 @@ function createClient(fetchImpl, overrides = {}) {
   });
 }
 
-test('customer email is authenticated and uses the exact approved server-built French copy', async () => {
+test('customer email is authenticated and carries the full branded order contract', async () => {
   let request;
   const client = createClient(async (url, options) => {
     request = { url, options };
@@ -77,24 +79,105 @@ test('customer email is authenticated and uses the exact approved server-built F
     last_name: 'Martin',
     reply_to: 'vertiflow.pro@gmail.com',
     subject: 'Confirmation de votre commande VertiFlow',
-    message: [
-      'Bonjour Léa Martin,',
-      '',
-      'VertiFlow confirme la bonne réception de votre commande. Tout est en ordre : la préparation est en cours et la livraison est estimée à environ 7-10 jours ouvrés.',
-      '',
-      'Pour toute question ou modification, il suffit de répondre à ce message.',
-      '',
-      'Cordialement,',
-      '',
-      'Maxime Mansiet',
-      'Fondateur — VertiFlow',
-      'vertiflow.pro@gmail.com',
-      '07 83 97 23 60',
-    ].join('\n'),
+    preheader_text: 'Commande vf_01234567890123456789012345678 confirmée, livraison estimée sous 7 à 10 jours ouvrés.',
+    order_reference: 'vf_01234567890123456789012345678',
+    order_lines_html: '<tr>'
+      + '<td style="padding:14px 0;border-bottom:1px solid #e4e2de;width:72px;" valign="top">'
+      + '<img src="https://vertiflow.fr/images/product/front_tshirt.png" width="64" height="64" alt="T-shirt CLIMB — Noir" '
+      + 'style="display:block;width:64px;height:64px;border-radius:6px;object-fit:cover;background-color:#f7f4ef;" />'
+      + '</td>'
+      + '<td style="padding:14px 12px;border-bottom:1px solid #e4e2de;font-family:Arial,Helvetica,sans-serif;'
+      + 'color:#0b0b0c;font-size:14px;line-height:1.5;" valign="top">'
+      + 'T-shirt CLIMB<br />'
+      + '<span style="color:#6e6e76;">Noir &middot; M &middot; Qté 1</span>'
+      + '</td>'
+      + '<td style="padding:14px 0;border-bottom:1px solid #e4e2de;font-family:Arial,Helvetica,sans-serif;'
+      + `color:#0b0b0c;font-size:14px;text-align:right;white-space:nowrap;" valign="top">29,99${NBSP}€`
+      + '</td>'
+      + '</tr>',
+    order_total: `36,98${NBSP}€`,
+    shipping_name: 'Léa Martin',
+    shipping_address1: '1 rue du Test',
+    shipping_address2: '',
+    shipping_city: 'Bordeaux',
+    shipping_zip: '33000',
+    shipping_country: 'FR',
   });
 });
 
-test('owner email keeps structured facts and legacy aliases for a prepared order', async () => {
+test('customer order lines escape hostile catalogue text and fall back cleanly for an unmatched product', async () => {
+  let request;
+  const client = createClient(async (_url, options) => {
+    request = options;
+    return new Response('OK', { status: 200 });
+  });
+
+  await client.sendCustomerConfirmation(sampleOrder({
+    firstName: "Léa O'Connor",
+    lastName: 'Martin & Fils',
+    recipient: {
+      ...sampleOrder().recipient,
+      name: "Léa O'Connor & Fils",
+      address1: "1 rue O'Connor & Sons",
+      address2: '<b>Bat A</b>',
+      city: 'Bordeaux & Cie',
+    },
+    lines: [
+      {
+        name: 'T-shirt <img src=x onerror=alert(1)>',
+        color: 'Noir & <script>alert(1)</script>',
+        size: 'M" onclick="alert(1)',
+        quantity: 1,
+        syncVariantId: 4736126964,
+      },
+      {
+        name: 'Printful product 999',
+        color: 'Printful variant 111',
+        size: 'Printful variant 111',
+        quantity: 2,
+        syncVariantId: 4736126965,
+      },
+    ],
+  }));
+
+  const params = JSON.parse(request.body).template_params;
+  assert.equal(params.first_name, 'Léa O&#39;Connor');
+  assert.equal(params.last_name, 'Martin &amp; Fils');
+  assert.equal(params.shipping_name, 'Léa O&#39;Connor &amp; Fils');
+  assert.equal(params.shipping_address1, '1 rue O&#39;Connor &amp; Sons');
+  assert.equal(params.shipping_address2, '&lt;b&gt;Bat A&lt;/b&gt;<br />');
+  assert.equal(params.shipping_city, 'Bordeaux &amp; Cie');
+  assert.match(params.order_lines_html, /T-shirt &lt;img src=x onerror=alert\(1\)&gt;/);
+  assert.match(params.order_lines_html, /Noir &amp; &lt;script&gt;alert\(1\)&lt;\/script&gt;/);
+  assert.match(params.order_lines_html, /M&quot; onclick=&quot;alert\(1\)/);
+  assert.match(params.order_lines_html, /https:\/\/vertiflow\.fr\/images\/logo-transparent\.png/);
+  assert.doesNotMatch(
+    JSON.stringify(params),
+    /<(?!\/?(?:tr|td|img|span|br)\b)/,
+  );
+});
+
+test('customer thumbnail and price resolve per catalogue product and colour', async () => {
+  let request;
+  const client = createClient(async (_url, options) => {
+    request = options;
+    return new Response('OK', { status: 200 });
+  });
+
+  await client.sendCustomerConfirmation(sampleOrder({
+    lines: [
+      { name: 'Hoodie VF Definition', color: 'Blanc', size: 'L', quantity: 2, syncVariantId: 1 },
+      { name: 'Cache-cou VF', color: 'Noir', size: 'Unique', quantity: 1, syncVariantId: 2 },
+    ],
+  }));
+
+  const params = JSON.parse(request.body).template_params;
+  assert.match(params.order_lines_html, /https:\/\/vertiflow\.fr\/images\/product\/front_hoodie_white\.png/);
+  assert.match(params.order_lines_html, new RegExp(`129,98${NBSP}€`));
+  assert.match(params.order_lines_html, /https:\/\/vertiflow\.fr\/images\/product\/cachecou3\.png/);
+});
+
+test('owner email keeps structured facts, legacy aliases, and an empty flag banner for a routine prepared order', async () => {
   let request;
   const client = createClient(async (url, options) => {
     request = { url, options };
@@ -147,6 +230,8 @@ test('owner email keeps structured facts and legacy aliases for a prepared order
     address: 'Léa Martin\n1 rue du Test\n33000 Bordeaux\nFR\nlea@example.com',
     total: '36.98',
     cartItems: '<tr><td>T-shirt CLIMB — Noir — M</td><td>1</td><td>Prix unitaire non disponible</td></tr>',
+    unusual_flags_html: '',
+    mismatch_details_html: '',
   });
   assert.equal(Object.hasOwn(body.template_params, 'orders'), false);
 });
@@ -199,6 +284,8 @@ test('owner legacy aliases remain usable for a permanent failure without recipie
     '<tr><td>Aucune ligne canonique disponible</td><td>0</td><td>Prix unitaire non disponible</td></tr>',
   );
   assert.equal(params.failure_details, 'catalogue_mismatch: Paid lines require manual review.');
+  assert.equal(params.unusual_flags_html, '');
+  assert.equal(params.mismatch_details_html, '');
 });
 
 test('owner legacy double-brace aliases stay raw while cartItems safely owns all HTML', async () => {
@@ -262,7 +349,55 @@ test('owner mismatch email separates bounded expected and actual Printful lines'
   const params = JSON.parse(request.body).template_params;
   assert.equal(params.expected_printful_lines, '2 × sync_variant_id 501');
   assert.equal(params.actual_printful_lines, '1 × sync_variant_id 999');
+  assert.match(params.mismatch_details_html, /2 × sync_variant_id 501/);
+  assert.match(params.mismatch_details_html, /1 × sync_variant_id 999/);
   assert.doesNotMatch(JSON.stringify(params), /private-token|provider_body|customer/);
+});
+
+test('owner email flags a non-French shipping address', async () => {
+  let request;
+  const client = createClient(async (_url, options) => {
+    request = options;
+    return new Response('OK', { status: 200 });
+  });
+
+  await client.sendOwnerReview(sampleOrder({
+    recipient: { ...sampleOrder().recipient, name: 'Klaus Weber', country_code: 'DE' },
+  }));
+
+  const params = JSON.parse(request.body).template_params;
+  assert.match(params.unusual_flags_html, /Adresse hors France/);
+  assert.match(params.unusual_flags_html, /DE/);
+});
+
+test('owner email flags an unusually large order by amount', async () => {
+  let request;
+  const client = createClient(async (_url, options) => {
+    request = options;
+    return new Response('OK', { status: 200 });
+  });
+
+  await client.sendOwnerReview(sampleOrder({ amountTotal: 20_000 }));
+
+  const params = JSON.parse(request.body).template_params;
+  assert.match(params.unusual_flags_html, /Montant ou quantité inhabituels/);
+});
+
+test('owner email flags an unusually large order by total quantity', async () => {
+  let request;
+  const client = createClient(async (_url, options) => {
+    request = options;
+    return new Response('OK', { status: 200 });
+  });
+
+  await client.sendOwnerReview(sampleOrder({
+    lines: [{
+      name: 'T-shirt CLIMB', color: 'Noir', size: 'M', quantity: 8, syncVariantId: 4736126964,
+    }],
+  }));
+
+  const params = JSON.parse(request.body).template_params;
+  assert.match(params.unusual_flags_html, /Montant ou quantité inhabituels/);
 });
 
 test('EmailJS input validation is strict and happens before network access', async () => {
@@ -274,6 +409,14 @@ test('EmailJS input validation is strict and happens before network access', asy
 
   await assert.rejects(
     () => client.sendCustomerConfirmation(sampleOrder({ customerEmail: 'not-an-email' })),
+    /Invalid email order data/,
+  );
+  await assert.rejects(
+    () => client.sendCustomerConfirmation(sampleOrder({ lines: [] })),
+    /Invalid email order data/,
+  );
+  await assert.rejects(
+    () => client.sendCustomerConfirmation(sampleOrder({ recipient: null })),
     /Invalid email order data/,
   );
   await assert.rejects(

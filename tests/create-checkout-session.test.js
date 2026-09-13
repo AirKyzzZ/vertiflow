@@ -108,7 +108,7 @@ test('handler uses the Netlify deploy URL when SITE_URL is not configured', asyn
   assert.equal(response.statusCode, 200);
   assert.equal(
     calls[0].return_url,
-    'https://deploy-preview-42--vertiflow.netlify.app/success.html?session_id={CHECKOUT_SESSION_ID}',
+    'https://deploy-preview-42--vertiflow.netlify.app/commande/succes?session_id={CHECKOUT_SESSION_ID}',
   );
 });
 
@@ -136,8 +136,8 @@ test('handler prefers SITE_URL and falls back to Netlify URL last', async () => 
     stripe, catalogue: catalogueFixture(), environment: netlifyUrlOnly,
   })(eventFixture())).statusCode, 200);
   assert.deepEqual(returnUrls, [
-    'https://vertiflow.fr/success.html?session_id={CHECKOUT_SESSION_ID}',
-    'https://vertiflow.netlify.app/success.html?session_id={CHECKOUT_SESSION_ID}',
+    'https://vertiflow.fr/commande/succes?session_id={CHECKOUT_SESSION_ID}',
+    'https://vertiflow.netlify.app/commande/succes?session_id={CHECKOUT_SESSION_ID}',
   ]);
 });
 
@@ -198,13 +198,44 @@ test('handler validates promo codes and rejects mixed Stripe key modes before ch
   assert.equal(calls.length, 1);
 });
 
-test('handler rejects live Stripe keys until a live catalogue is available', async () => {
+function liveCatalogueFixture() {
+  const fixture = catalogueFixture();
+  fixture.products[0].stripe_product_id = { test: 'prod_test_hoodie', live: 'prod_live_hoodie' };
+  fixture.products[0].variants[0].stripe_price_id = {
+    test: 'price_test_hoodie_black_m', live: 'price_live_hoodie_black_m',
+  };
+  return fixture;
+}
+
+test('handler accepts live Stripe keys with a live-priced catalogue and skips the test-access gate', async () => {
+  const calls = [];
+  const stripe = { checkout: { sessions: { create: async (params) => {
+    calls.push(params);
+    return { id: 'cs_live_123', client_secret: 'cs_live_secret' };
+  } } } };
+  const handler = createCheckoutHandler({
+    stripe,
+    catalogue: liveCatalogueFixture(),
+    environment: environmentFixture({ STRIPE_SECRET_KEY: 'sk_live_example', STRIPE_PUBLISHABLE_KEY: 'pk_live_example' }),
+  });
+
+  const response = await handler(eventFixture({ headers: {} }));
+
+  assert.equal(response.statusCode, 200);
+  assert.deepEqual(calls[0].line_items, [{ price: 'price_live_hoodie_black_m', quantity: 1 }]);
+  assert.equal(calls[0].metadata.vf_livemode, 'live');
+  assert.deepEqual(JSON.parse(response.body), {
+    clientSecret: 'cs_live_secret', sessionId: 'cs_live_123', publishableKey: 'pk_live_example',
+  });
+});
+
+test('handler still rejects mismatched live/test Stripe key modes', async () => {
   let calls = 0;
   const stripe = { checkout: { sessions: { create: async () => { calls += 1; } } } };
   const handler = createCheckoutHandler({
     stripe,
-    catalogue: catalogueFixture(),
-    environment: environmentFixture({ STRIPE_SECRET_KEY: 'sk_live_example', STRIPE_PUBLISHABLE_KEY: 'pk_live_example' }),
+    catalogue: liveCatalogueFixture(),
+    environment: environmentFixture({ STRIPE_SECRET_KEY: 'sk_live_example', STRIPE_PUBLISHABLE_KEY: 'pk_test_example' }),
   });
 
   const response = await handler(eventFixture());
@@ -260,4 +291,39 @@ test('legacy PaymentIntent endpoint is permanently retired', async () => {
   const response = await legacyPaymentIntent.handler(eventFixture());
   assert.equal(response.statusCode, 410);
   assert.deepEqual(JSON.parse(response.body), { error: 'Checkout endpoint replaced' });
+});
+
+function liveCatalogueFixture() {
+  const catalogue = catalogueFixture();
+  catalogue.products[0].stripe_product_id = { test: 'prod_test_hoodie', live: 'prod_live_hoodie' };
+  catalogue.products[0].variants[0].stripe_price_id = {
+    test: 'price_test_hoodie_black_m',
+    live: 'price_live_hoodie_black_m',
+  };
+  return catalogue;
+}
+
+test('live mode does not require VERTIFLOW_TEST_ACCESS_TOKEN', async () => {
+  const stripe = { checkout: { sessions: { create: async () => ({ id: 'cs_live_1', client_secret: 'cs_live_secret' }) } } };
+  const environment = environmentFixture({
+    STRIPE_SECRET_KEY: 'sk_live_example',
+    STRIPE_PUBLISHABLE_KEY: 'pk_live_example',
+    VERTIFLOW_TEST_ACCESS_TOKEN: undefined,
+  });
+  delete environment.VERTIFLOW_TEST_ACCESS_TOKEN;
+  const event = eventFixture({ headers: {} });
+
+  const response = await createCheckoutHandler({ stripe, catalogue: liveCatalogueFixture(), environment })(event);
+
+  assert.equal(response.statusCode, 200);
+});
+
+test('test mode still refuses to configure without VERTIFLOW_TEST_ACCESS_TOKEN', async () => {
+  const stripe = { checkout: { sessions: { create: async () => ({ id: 'cs_test_1', client_secret: 'cs_test_secret' }) } } };
+  const environment = environmentFixture();
+  delete environment.VERTIFLOW_TEST_ACCESS_TOKEN;
+
+  const response = await createCheckoutHandler({ stripe, catalogue: catalogueFixture(), environment })(eventFixture());
+
+  assert.equal(response.statusCode, 500);
 });

@@ -7,8 +7,8 @@ function validSessionId(sessionId) {
 }
 
 function validateEnvironment(environment) {
-  if (!/^(?:sk|rk)_test_[A-Za-z0-9_]+$/.test(environment?.STRIPE_SECRET_KEY || '')) {
-    throw new Error('A Stripe test secret is required');
+  if (!/^(?:sk|rk)_(?:test|live)_[A-Za-z0-9_]+$/.test(environment?.STRIPE_SECRET_KEY || '')) {
+    throw new Error('A Stripe secret is required');
   }
 }
 

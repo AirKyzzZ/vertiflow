@@ -107,6 +107,10 @@ function checkoutMetadata(lines, mode) {
   };
 }
 
+function isVertiflowCheckoutSession(metadata) {
+  return typeof metadata?.vf_checkout_version === 'string';
+}
+
 // This tag protects the delayed-payment handoff from accidental or out-of-band
 // mutation. Stripe account writers can replace both the facts and this tag, so
 // they remain trusted administrators rather than cryptographic adversaries.
@@ -117,6 +121,7 @@ module.exports = {
   checkoutDigest,
   checkoutMetadata,
   checkoutTuples,
+  isVertiflowCheckoutSession,
   matchesCheckoutDigest,
   matchesTestAccess,
   testAccessDigest,

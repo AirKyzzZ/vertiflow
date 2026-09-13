@@ -316,6 +316,17 @@ function assertNullableString(value, path) {
   }
 }
 
+function assertNullableModeKeyedId(value, path) {
+  if (value === null || typeof value === 'string') return;
+  if (value && typeof value === 'object' && !Array.isArray(value)) {
+    assertExactKeys(value, ['test', 'live'], path);
+    assertNullableString(value.test, `${path}.test`);
+    assertNullableString(value.live, `${path}.live`);
+    return;
+  }
+  throw new Error(`${path} must be a string, null, or a {test, live} object`);
+}
+
 function assertPositiveInteger(value, path) {
   if (!Number.isInteger(value) || value <= 0) {
     throw new Error(`${path} must be a positive integer`);
@@ -396,7 +407,7 @@ function validateCommercialCatalogue(catalogue, config) {
     product.printful_sync_product_ids.forEach((id, index) => {
       assertPositiveInteger(id, `${productPath}.printful_sync_product_ids[${index}]`);
     });
-    assertNullableString(product.stripe_product_id, `${productPath}.stripe_product_id`);
+    assertNullableModeKeyedId(product.stripe_product_id, `${productPath}.stripe_product_id`);
     if (!Array.isArray(product.variants) || product.variants.length === 0) {
       throw new Error(`${productPath}.variants must be a non-empty array`);
     }
@@ -417,7 +428,7 @@ function validateCommercialCatalogue(catalogue, config) {
       assertPositiveInteger(variant.printful_sync_product_id, `${variantPath}.printful_sync_product_id`);
       assertPositiveInteger(variant.printful_sync_variant_id, `${variantPath}.printful_sync_variant_id`);
       assertPositiveInteger(variant.printful_catalog_variant_id, `${variantPath}.printful_catalog_variant_id`);
-      assertNullableString(variant.stripe_price_id, `${variantPath}.stripe_price_id`);
+      assertNullableModeKeyedId(variant.stripe_price_id, `${variantPath}.stripe_price_id`);
       assertNullableString(variant.image_url, `${variantPath}.image_url`);
       if (variant.active !== true) throw new Error(`${variantPath}.active must be true`);
     });
