@@ -25,8 +25,19 @@ const WEBHOOK_ENV = [
 const results = [];
 const record = (ok, label, detail) => results.push({ ok, label, detail });
 
-function stripe(args) {
-  return JSON.parse(execFileSync('stripe', args, { encoding: 'utf8', maxBuffer: 1024 * 1024 * 32 }));
+function sleep(ms) {
+  Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
+}
+
+function stripe(args, attempt = 1) {
+  try {
+    return JSON.parse(execFileSync('stripe', args, { encoding: 'utf8', maxBuffer: 1024 * 1024 * 32 }));
+  } catch (error) {
+    const transient = /can't assign requested address|connection reset|timeout|EAI_AGAIN|no such host/i.test(String(error.stderr || error.message));
+    if (!transient || attempt >= 4) throw error;
+    sleep(attempt * 1500);
+    return stripe(args, attempt + 1);
+  }
 }
 
 function netlifyProductionEnv() {
