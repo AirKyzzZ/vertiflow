@@ -32,7 +32,7 @@ dormant, et c'est aussi ce qui transforme un curieux en essai au club.
 
 ## Calendrier, deux posts par semaine
 
-Le mercredi et le dimanche, 18h30. Tout est produit à partir des 21 photos de Bordeaux et
+Le mercredi et le dimanche, 18h30. En 2026 les dimanches de la période tombent les 13, 20 et 27 septembre puis les 4 et 11 octobre. Tout est produit à partir des 21 photos de Bordeaux et
 des photos du club déjà versionnées dans le repo PKBA. Aucun tournage, aucune génération.
 
 | Date | Sujet | Sert quoi | Source visuelle |
@@ -40,13 +40,13 @@ des photos du club déjà versionnées dans le repo PKBA. Aucun tournage, aucune
 | jeu 10/09 | « On a tout refait » — publié | notoriété | `2026-09-retour` |
 | dim 13/09 | « L'année du club » — programmé | club | `2026-09-club-year` |
 | mer 17/09 | T-shirt CLIMB porté | boutique | `img-0808`, `img-0946` |
-| dim 21/09 | Où s'entraîner à Bordeaux, les vrais spots | audience locale | `img-1136`, `img-1161` |
+| dim 20/09 | Avant ta première séance, quatre réponses | club | `img-0740`, `img-1029`, `img-0993`, `img-1026` |
 | mer 24/09 | Hoodie VF Definition, le dos imprimé | boutique | `img-6549`, `img-6561` |
-| dim 28/09 | Trois choses à savoir avant ta première séance | club | `img-0839`, club |
+| dim 27/09 | Où s'entraîner à Bordeaux, les vrais spots | audience locale | `img-1136`, `img-1161` |
 | mer 01/10 | Les shorts, portés là où on s'entraîne | boutique | `img-1153`, `img-1171` |
-| dim 05/10 | Stage de la Toussaint, 23 au 30 octobre | club | photos club |
+| dim 04/10 | Stage de la Toussaint, 23 au 30 octobre | club | photos club |
 | mer 08/10 | Bob et casquette | boutique | `img-0737`, `img-0931` |
-| dim 12/10 | Un mois de reprise, ce qui a changé | notoriété | `img-1026`, `img-0993` |
+| dim 11/10 | Un mois de reprise, ce qui a changé | notoriété | `img-0732`, `img-0856` |
 
 Un post boutique pour un post club ou marque. La règle des captions de lancement tient :
 jamais plus d'un post produit sur quatre qui ouvre sur le prix.
