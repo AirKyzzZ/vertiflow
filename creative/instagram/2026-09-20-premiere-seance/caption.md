@@ -1,6 +1,6 @@
 # Avant ta première séance — 4 slides
 
-Compte : **@vertiflowfreerun**. Prévu : dimanche 21 septembre, 18h30. Posted: _(not yet)_
+Compte : **@vertiflowfreerun**. Prévu : dimanche 20 septembre, 18h30. Le 21 est un lundi, la roadmap avait la mauvaise date. Posted: _(not yet)_
 
 ## Caption
 
