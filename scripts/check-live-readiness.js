@@ -79,8 +79,15 @@ function checkCatalogueMetadata() {
 function checkProductionEnv(env) {
   const missing = WEBHOOK_ENV.filter((name) => !(name in env));
   record(missing.length === 0, 'Production env vars', missing.length ? `missing: ${missing.join(', ')}` : 'all present');
-  const sameTemplate = env.EMAILJS_CUSTOMER_TEMPLATE_ID && env.EMAILJS_CUSTOMER_TEMPLATE_ID === env.EMAILJS_OWNER_TEMPLATE_ID;
-  record(!sameTemplate, 'EmailJS templates', sameTemplate ? 'customer and owner point at the same template' : 'two distinct templates');
+  const customer = env.EMAILJS_CUSTOMER_TEMPLATE_ID;
+  const owner = env.EMAILJS_OWNER_TEMPLATE_ID;
+  const bothSet = Boolean(customer && owner);
+  const combined = bothSet && customer === owner;
+  record(bothSet, 'EmailJS templates', !bothSet
+    ? 'a template id is missing'
+    : combined
+      ? `both emails go through ${customer}, which must branch on order_reference`
+      : 'two distinct templates');
 }
 
 function main() {
