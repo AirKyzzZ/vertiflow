@@ -1,5 +1,19 @@
 # Email setup — VertiFlow order pipeline
 
+> **Correction du 2026-09-13.** Ce document décrit une configuration à deux modèles
+> distincts. Elle n'est plus applicable : le plan EmailJS gratuit plafonne à deux modèles
+> pour tout le compte, et les deux emplacements sont pris par « Commande VertiFlow » et
+> « Contact Klyx », ce dernier appartenant à un autre projet.
+>
+> Les deux emails passent désormais par **un seul modèle**, `template_22lvzgl`, dont le
+> corps est `combined-order-template.html`. Il bascule sur `order_reference`, une variable
+> que seul le payload client envoie : `{{#order_reference}}` rend la confirmation client,
+> `{{^order_reference}}` rend la notification propriétaire. `EMAILJS_CUSTOMER_TEMPLATE_ID`
+> et `EMAILJS_OWNER_TEMPLATE_ID` pointent volontairement sur le même identifiant.
+>
+> `customer-confirmation.html` et `owner-notification.html` restent les sources à éditer.
+> Après toute modification, régénérer le fichier combiné et le recoller dans EmailJS.
+
 Two files here are HTML email templates, pasted by hand into the EmailJS dashboard
 (EmailJS templates live in their UI, not in this repo, so there is nothing to deploy).
 Two more are rendered previews with sample data, kept for reference.
