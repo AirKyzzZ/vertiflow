@@ -15,6 +15,11 @@ const {
 } = require('./lib/printful-catalogue');
 const { loadProductsSchema, validateProductsCatalogue } = require('./lib/products-schema');
 const { reviewedUnitAmount } = require('../functions/lib/catalogue');
+const { productMetadata, priceMetadata } = require('./lib/stripe-catalogue');
+
+function metadataArgs(metadata) {
+  return Object.entries(metadata).flatMap(([key, value]) => ['-d', `metadata[${key}]=${value}`]);
+}
 
 const CATALOGUE_PATH = path.resolve(__dirname, '../data/products.json');
 const PRODUCT_COPY_PATH = 'src/lib/product-copy.ts';
@@ -101,6 +106,7 @@ function ensureStripeProduct(runner, mode, product) {
     '--name', product.name,
     '--shippable=true',
     '-d', `metadata[vf_slug]=${product.slug}`,
+    ...metadataArgs(productMetadata(product)),
   ]);
 }
 
@@ -115,6 +121,11 @@ function listAllStripePrices(runner, mode, stripeProductId) {
 }
 
 function ensureStripePrice(runner, mode, product, variant, stripeProductId, currency) {
+  for (const field of ['printful_sync_product_id', 'printful_sync_variant_id', 'printful_catalog_variant_id']) {
+    if (variant[field] === undefined || variant[field] === null) {
+      throw new Error(`${product.slug} ${variant.color}/${variant.size} is missing ${field}; the webhook needs it on the Stripe price`);
+    }
+  }
   const unitAmount = reviewedUnitAmount(product.price);
   const existingPrices = listAllStripePrices(runner, mode, stripeProductId);
   const existing = existingPrices.find((price) => price.metadata?.vf_slug === product.slug
@@ -130,6 +141,7 @@ function ensureStripePrice(runner, mode, product, variant, stripeProductId, curr
     '-d', `metadata[vf_slug]=${product.slug}`,
     '-d', `metadata[vf_color]=${variant.color}`,
     '-d', `metadata[vf_size]=${variant.size}`,
+    ...metadataArgs(priceMetadata(product, variant)),
   ]);
 }
 

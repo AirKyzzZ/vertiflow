@@ -70,7 +70,14 @@ function fakeProduct(overrides = {}) {
 }
 
 function fakeVariant(overrides = {}) {
-  return { color: 'Noir', size: 'M', printful_sync_variant_id: 4242, ...overrides };
+  return {
+    color: 'Noir',
+    size: 'M',
+    printful_sync_product_id: 777,
+    printful_sync_variant_id: 4242,
+    printful_catalog_variant_id: 11546,
+    ...overrides,
+  };
 }
 
 test('assertSlugAvailable rejects an invalid slug', () => {
@@ -208,4 +215,34 @@ test('attachStripeIds keeps test IDs and reports the error when live mode fails'
   assert.ok(product.variants[0].stripe_price_id.test);
   assert.equal(product.variants[0].stripe_price_id.live, null);
   assert.match(reportedError.message, /more_permissions_required/);
+});
+
+test('Stripe objects carry the metadata the webhook checks before creating a Printful order', () => {
+  const runner = createFakeStripeRunner();
+  const product = fakeProduct();
+  const variant = fakeVariant();
+
+  const stripeProduct = ensureStripeProduct(runner, 'live', product);
+  assert.equal(stripeProduct.metadata.integration, 'vertiflow');
+  assert.equal(stripeProduct.metadata.commercial_slug, 'veste-shell-vf');
+  assert.equal(stripeProduct.metadata.vf_slug, 'veste-shell-vf');
+
+  const price = ensureStripePrice(runner, 'live', product, variant, stripeProduct.id, 'EUR');
+  assert.equal(price.metadata.integration, 'vertiflow');
+  assert.equal(price.metadata.commercial_slug, 'veste-shell-vf');
+  assert.equal(price.metadata.printful_sync_product_id, '777');
+  assert.equal(price.metadata.printful_sync_variant_id, '4242');
+  assert.equal(price.metadata.printful_catalog_variant_id, '11546');
+  assert.equal(price.metadata.vf_color, 'Noir');
+});
+
+test('ensureStripePrice refuses a variant missing the Printful ids the webhook needs', () => {
+  const runner = createFakeStripeRunner();
+  const product = fakeProduct();
+  const variant = fakeVariant({ printful_catalog_variant_id: undefined });
+
+  assert.throws(
+    () => ensureStripePrice(runner, 'live', product, variant, 'prod_x', 'EUR'),
+    /printful_catalog_variant_id/,
+  );
 });

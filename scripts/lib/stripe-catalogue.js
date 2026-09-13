@@ -306,6 +306,8 @@ async function reconcileCatalogue(stripe, catalogue) {
 }
 
 module.exports = {
+  productMetadata,
+  priceMetadata,
   listAllProducts,
   listActiveProductPrices,
   findPrices,
