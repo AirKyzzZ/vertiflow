@@ -163,7 +163,7 @@ const fr: Dictionary = {
       timeline: [
         { when: '8 ans', what: 'FFG, niveau national' },
         { when: 'nov. 2024', what: 'VertiFlow' },
-        { when: '—', what: 'Une blessure, puis un retour' },
+        { when: 'entre les deux', what: 'Une blessure, puis un retour' },
         { when: "aujourd'hui", what: 'Neuf pièces, imprimées à la demande' },
       ],
     },
@@ -293,7 +293,7 @@ const en: Dictionary = {
       timeline: [
         { when: '8 years', what: 'FFG, national level' },
         { when: 'Nov. 2024', what: 'VertiFlow' },
-        { when: '—', what: 'An injury, then a comeback' },
+        { when: 'in between', what: 'An injury, then a comeback' },
         { when: 'Today', what: 'Nine pieces, printed to order' },
       ],
     },
